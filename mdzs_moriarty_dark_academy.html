@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mo Dao Zu Shi & Moriarty the Patriot - Análise Comparativa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: #0a0a0a;
+            color: #d4d4d4;
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        /* Background texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(139, 0, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(75, 0, 130, 0.1) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 80px 50px;
+            background: linear-gradient(180deg, rgba(20, 20, 20, 0.95) 0%, rgba(10, 10, 10, 0.98) 100%);
+            border: 1px solid #2a2a2a;
+            border-radius: 5px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #8b0000, #4b0082, #8b0000, transparent);
+        }
+
+        header::after {
+            content: '⛧ ⚰️ ⛧';
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            opacity: 0.3;
+            letter-spacing: 20px;
+        }
+
+        .ornament {
+            font-size: 2em;
+            color: #8b0000;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8em;
+            font-weight: 900;
+            color: #f5f5f5;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            text-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+        }
+
+        header .subtitle {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.3em;
+            color: #8b0000;
+            font-style: italic;
+            letter-spacing: 2px;
+        }
+
+        /* Section styling */
+        section {
+            background: linear-gradient(145deg, #121212 0%, #0d0d0d 100%);
+            border: 1px solid #1a1a1a;
+            border-radius: 5px;
+            padding: 50px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20px;
+            right: 20px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #333, transparent);
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #8b0000;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #2a2a2a;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        h2::before {
+            content: '§ ';
+            color: #4b0082;
+        }
+
+        h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #c9a227;
+            margin: 30px 0 20px 0;
+            letter-spacing: 2px;
+        }
+
+        h3::before {
+            content: '† ';
+            color: #8b0000;
+        }
+
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+            font-size: 1.15em;
+            color: #b8b8b8;
+        }
+
+        /* Quote blocks */
+        .quote {
+            background: linear-gradient(135deg, #1a0a0a 0%, #0d0505 100%);
+            border-left: 4px solid #8b0000;
+            padding: 25px 30px;
+            margin: 30px 0;
+            font-style: italic;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-size: 4em;
+            color: #8b0000;
+            opacity: 0.3;
+            font-family: 'Cinzel', serif;
+        }
+
+        .quote p {
+            color: #d4d4d4;
+            padding-left: 20px;
+        }
+
+        .quote .author {
+            text-align: right;
+            color: #666;
+            font-size: 0.95em;
+            margin-top: 10px;
+        }
+
+        /* Character cards */
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .character-card {
+            background: linear-gradient(145deg, #151515 0%, #0a0a0a 100%);
+            border: 1px solid #2a2a2a;
+            border-radius: 5px;
+            padding: 35px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+        }
+
+        .character-card.mdzs::before {
+            background: linear-gradient(90deg, transparent, #8b0000, transparent);
+        }
+
+        .character-card.moriarty::before {
+            background: linear-gradient(90deg, transparent, #4b0082, transparent);
+        }
+
+        .character-card h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .character-card.mdzs h4 {
+            color: #8b0000;
+        }
+
+        .character-card.moriarty h4 {
+            color: #6a0dad;
+        }
+
+        .character-card .title {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        /* Comparison table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            border: 1px solid #2a2a2a;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #c9a227;
+            padding: 18px 20px;
+            text-align: left;
+            border-bottom: 2px solid #8b0000;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.95em;
+        }
+
+        .comparison-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #1a1a1a;
+            background: rgba(15, 15, 15, 0.8);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(139, 0, 0, 0.08);
+        }
+
+        .comparison-table .category {
+            color: #8b0000;
+            font-weight: 600;
+            width: 25%;
+        }
+
+        /* List styling */
+        .dark-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .dark-list li {
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #121212 0%, #0a0a0a 100%);
+            border-left: 3px solid #4b0082;
+            position: relative;
+        }
+
+        .dark-list li::before {
+            content: '绖';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8b0000;
+            font-size: 1.2em;
+            opacity: 0;
+        }
+
+        .dark-list li:hover {
+            border-left-color: #8b0000;
+            background: linear-gradient(135deg, #1a0a0a 0%, #0d0505 100%);
+        }
+
+        .dark-list li strong {
+            color: #c9a227;
+        }
+
+        /* Highlight boxes */
+        .insight-box {
+            background: linear-gradient(135deg, #1a0f0f 0%, #0d0a0a 100%);
+            border: 1px solid #3a1a1a;
+            border-radius: 5px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .insight-box h4 {
+            font-family: 'Cinzel', serif;
+            color: #8b0000;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        /* Decorative elements */
+        .divider {
+            text-align: center;
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #333, transparent);
+        }
+
+        .divider span {
+            background: #0a0a0a;
+            padding: 0 30px;
+            position: relative;
+            color: #8b0000;
+            font-size: 1.8em;
+            letter-spacing: 15px;
+        }
+
+        /* Philosophy section */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .philosophy-item {
+            background: linear-gradient(145deg, #121212 0%, #0a0a0a 100%);
+            border: 1px solid #1a1a1a;
+            padding: 30px;
+            border-radius: 5px;
+        }
+
+        .philosophy-item h5 {
+            font-family: 'Cinzel', serif;
+            color: #c9a227;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(180deg, #0d0d0d 0%, #050505 100%);
+            border: 1px solid #1a1a1a;
+            border-radius: 5px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            color: #666;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+
+        footer .closing-ornament {
+            margin-top: 30px;
+            font-size: 2em;
+            color: #8b0000;
+            opacity: 0.5;
+            letter-spacing: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .characters-grid,
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 30px 25px;
+            }
+        }
+
+        /* Special text styles */
+        .gothic-text {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+        }
+
+        .blood-red {
+            color: #8b0000;
+        }
+
+        .royal-purple {
+            color: #4b0082;
+        }
+
+        .gold-accent {
+            color: #c9a227;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="ornament">⚰️ 🥀 ⚰️</div>
+            <h1>Mo Dao Zu Shi & Moriarty the Patriot</h1>
+            <p class="subtitle">Rebeldes contra a Ordem Estabelecida — Uma Análise Comparativa</p>
+        </header>
+
+        <section>
+            <h2>Introdução: O Anti-Herói Contra o Sistema</h2>
+            <p>
+                Na vasta paisagem da ficção contemporânea, poucos arquétipes são tão cativantes quanto o <span class="blood-red">anti-herói</span> — aquele que desafia as normas estabelecidas, questiona a autoridade e busca justiça através de meios moralmente ambíguos. Duas obras que encapsulam perfeitamente essa essência são <strong class="gold-accent">Mo Dao Zu Shi</strong> (O Caminho do Patriarca Demônio) e <strong class="royal-purple">Moriarty the Patriot</strong>.
+            </p>
+            <p>
+                Embora pertencentes a gêneros e culturas distintas — uma sendo uma <em>xianxia</em> chinesa e a outra um <em>mystery/thriller</em> japonês —, ambas compartilham uma vigilância sociológica impressionante sobre a natureza do poder, a corrupção das instituições e a legitimidade da rebelião contra sistemas opressores.
+            </p>
+        </section>
+
+        <div class="divider"><span>⛧ ☠️ ⛧</span></div>
+
+        <section>
+            <h2>Os Protagonistas: Gênios Marginalizados</h2>
+            
+            <div class="characters-grid">
+                <div class="character-card mdzs">
+                    <h4>Wei Wuxian</h4>
+                    <p class="title">O Patriarca de Yiling — O Demônio que Desafiou o Mundo</p>
+                    <p>
+                        Wei Wuxian é um gênio nato que, após traumas profundos e rejeição pelo sistema de <em>cultivation</em>, abandona o caminho ortodoxo para trilhar o <span class="blood-red">Caminho Demônio</span>. Ele se torna o inimigo público número um das grandes seitas, não por maldade, mas por ousar desafiar a ordem estabelecida e proteger os fracos contra os poderosos.
+                    </p>
+                    <p>
+                        Sua filosofia é radical: se o sistema é corrupto, então o sistema deve ser destruído. Ele não busca vingança pessoal, mas uma <strong class="gold-accent">transformação estrutural</strong> da sociedade de cultivation.
+                    </p>
+                </div>
+
+                <div class="character-card moriarty">
+                    <h4>William James Moriarty</h4>
+                    <p class="title">O Criminologista Consultor — O Imperador do Crime</p>
+                    <p>
+                        William James Moriarty é um professor de matemática brilhante que, após ascender socialmente através de meios sombrios, decide dedicar sua vida a <span class="royal-purple">destruir a aristocracia britânica</span> e seu sistema de classes opressor. Para ele, Sherlock Holmes é apenas um obstáculo temporário em seu plano maior.
+                    </p>
+                    <p>
+                        Diferente do Holmes de Conan Doyle, este Moriarty é o <strong class="gold-accent">herói de sua própria história</strong> — um revolucionário que usa o crime como ferramenta política para nivelar as desigualdades sociais.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Pontos em Comum: A Sociologia da Rebelião</h2>
+
+            <div class="quote">
+                <p>"Se o sistema é injusto, então a obediência ao sistema é cumplicidade com a injustiça."</p>
+                <div class="author">— Princípio que guia ambos os protagonistas</div>
+            </div>
+
+            <h3>1. A Corrupção das Instituições</h3>
+            <p>
+                Tanto em <em>Mo Dao Zu Shi</em> quanto em <em>Moriarty the Patriot</em>, as instituições estabelecidas são retratadas como fundamentalmente corruptas. Na primeira, as <strong class="blood-red">Grandes Seitas</strong> (Gusu Lan, Yanmengao, etc.) mantêm uma fachada de retidão enquanto praticam hipocrisia, política suja e opressão. Na segunda, a <strong class="royal-purple">aristocracia britânica</strong> do século XIX é um sistema hereditário que perpetua desigualdades abismais através da exploração dos mais pobres.
+            </p>
+
+            <h3>2. A Legitimidade da Revolução</h3>
+            <ul class="dark-list">
+                <li>
+                    <strong>Wei Wuxian</strong> argumenta que o sistema de <em>cultivation</em> é uma meritocracia falsa — os poderosos permanecem poderosos não por mérito, mas por repressão e manipulação histórica. Sua "descida ao demônio" é um ato político, não moral.
+                </li>
+                <li>
+                    <strong>Moriarty</strong> articula explicitamente que a aristocracia é um "parasita" que precisa ser removido para que a sociedade evolua. Seus crimes são calculados para expor e destruir as estruturas de poder hereditário.
+                </li>
+            </ul>
+
+            <h3>3. A Relação com o "Herói Legítimo"</h3>
+            <p>
+                Ambos os protagonistas mantêm relações complexas com figuras que representam a "ordem" — <strong class="gold-accent">Lan Wangji</strong> para Wei Wuxian e <strong class="gold-accent">Sherlock Holmes</strong> para Moriarty. Essas relações funcionam como um espelho que revela as contradições do sistema:
+            </p>
+
+            <div class="comparison-table">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>Wei Wuxian & Lan Wangji</th>
+                            <th>Moriarty & Holmes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="category">Natureza do Conflito</td>
+                            <td>Lan Wangji pertence à seita mais ortodoxa, mas reconhece a corrupção do sistema</td>
+                            <td>Holmes é o "guardião da ordem", mas seu método é tão irregular quanto o de Moriarty</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Desenvolvimento</td>
+                            <td>Lan Wangji gradualmente questiona os valores de sua própria seita ao ver Wei Wuxian ser perseguido</td>
+                            <td>Holmes começa a questionar se seu “senso de justiça” não é apenas维持ar um sistema corrupto</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Resolução</td>
+                            <td>Ambos unem forças contra o verdadeiro vilão (Jin Guangyao), que personifica a corrupção do sistema</td>
+                            <td>A “rivalidade” é na verdade um jogo polític onde ambos buscam justiça por meios diferentes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="divider"><span>⚰️ 🥀 ⚰️</span></div>
+
+        <section>
+            <h2>Ideais Sociológicos Comparados</h2>
+
+            <div class="philosophy-grid">
+                <div class="philosophy-item">
+                    <h5>Crítica ao Mérito Hereditário</h5>
+                    <p>
+                        Ambas as obras desafiam a noção de que o poder ou status deve ser determinado por nascimento. Wei Wuxian é rejeitado por não seguir as regras do sistema, enquanto Moriarty demonstra que a aristocracia britânica mantém seu poder através da repressão, não do mérito.
+                    </p>
+                </div>
+
+                <div class="philosophy-item">
+                    <h5>O Papel do "Demônio" na Sociedade</h5>
+                    <p>
+                        Tanto Wei Wuxian quanto Moriarty são rotulados como "monstros" pelo sistema que eles desafiam. Essa demonização é uma ferramenta de controle social — ao definir o opositor como "mal", o sistema evita que suas injustiças sejam questionadas.
+                    </p>
+                </div>
+
+                <div class="philosophy-item">
+                    <h5>Justiça vs. Legalidade</h5>
+                    <p>
+                        Ambos os protagonistas operam em uma zona cinzenta onde a lei e a justiça nem sempre coincidem. Wei Wuxian usa magia proibida para proteger inocentes; Moriarty comete crimes para destruir um sistema maior e mais prejudicial.
+                    </p>
+                </div>
+
+                <div class="philosophy-item">
+                    <h5>O Custo da Rebelião</h5>
+                    <p>
+                        As obras não romantizam a rebelião — ambas mostram o preço pessoal e emocional de desafiar o sistema. Wei Wuxian perde sua vida e reputação; Moriarty sacrifica sua humanidade e relações para alcançar seus objetivos revolucionários.
+                    </p>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <h4>Nota Acadêmica</h4>
+                <p>
+                    Ambas as obras podem ser lidas através do prisma da <strong class="gold-accent">teoria do conflito social</strong> de Karl Marx — onde as classes oprimidas (ou seus representantes) entram em conflito com as estruturas de poder estabelecidas. Wei Wuxian representa o "proletariado" do mundo de cultivation; Moriarty é o intelectual revolucionário que usa seus dotes para minar a aristocracia.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Conclusão: O Eterno Retorno da Rebelião</h2>
+            <p>
+                <em>Mo Dao Zu Shi</em> e <em>Moriarty the Patriot</em> são mais do que histórias de entretenimento — são <span class="blood-red">análises sociológicas disfarçadas de ficção</span>. Ambas questionam a legitimidade das estruturas de poder, exploram a moralidade da rebelião e demonstram que os verdadeiros "vilões" são frequentemente aqueles que mantêm o status quo.
+            </p>
+            <p>
+                Wei Wuxian e Moriarty, cada um à sua maneira, nos lembram que a justiça nem sempre vem embalada em respeitabilidade — e que às vezes, é preciso se tornar o "monstro" que o sistema teme para finalmente destruí-lo.
+            </p>
+
+            <div class="quote">
+                <p>"O verdadeiro monstro não é aquele que desafia o sistema, mas aquele que o mantém funcionando enquanto devora os inocentes."</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>"Non scholae sed vitae discimus" — Não aprendemos para a escola, mas para a vida.</p>
+            <p style="margin-top: 15px; font-size: 0.9em; color: #444;">
+                Uma análise comparativa entre a rebelião em Mo Dao Zu Shi e Moriarty the Patriot
+            </p>
+            <div class="closing-ornament">⛧ ☠️ ⛧</div>
+        </footer>
+    </div>
+</body>
+</html>
