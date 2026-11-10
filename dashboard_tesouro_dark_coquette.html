@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tesouro Nacional · Gastos 2025 — Dark Coquette</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0e080d; --bg2:#160c14;
+  --panel:#1c1119; --panel2:#251522;
+  --lace:#4a2c3f; --lace2:#6b3d58;
+  --rose:#e8a0bf; --rose-hot:#ff6f9f; --rose-pale:#f9d2e2;
+  --gold:#d4af7a; --gold2:#f0d9a8;
+  --ink:#f3e6ec; --muted:#b896a6;
+  --shadow:0 12px 40px #000000aa;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#2b1224 0%,var(--bg) 60%),var(--bg);color:var(--ink);font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.6}
+a{color:var(--rose)}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 70px}
+/* lace frame */
+.frame{border:1px solid var(--lace);outline:3px double var(--lace2);outline-offset:6px;border-radius:18px;background:linear-gradient(180deg,#1e121bcc,#0e080d);box-shadow:var(--shadow)}
+header.hero{text-align:center;padding:56px 30px 36px;position:relative;overflow:hidden;border-radius:18px;background:linear-gradient(180deg,#2a1424cc,#120a10),url('https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=1400&q=60&auto=format&fit=crop') center/cover}
+header.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,#00000033,#0e080dee);pointer-events:none}
+header.hero>*{position:relative;z-index:1}
+.script{font-family:'Dancing Script',cursive;color:var(--rose);font-size:26px}
+h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(28px,4.6vw,52px);margin:.2em 0;color:#fff;text-shadow:0 2px 24px #ff6f9f55}
+h1 em{color:var(--rose);font-style:italic}
+.sub{font-style:italic;color:var(--rose-pale);max-width:720px;margin:0 auto}
+.orn{color:var(--gold);letter-spacing:.4em;margin:12px 0}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.badge{border:1px solid var(--rose);border-radius:999px;padding:6px 16px;font-size:14px;letter-spacing:.06em;background:#00000088;color:var(--rose-pale);font-family:'Playfair Display',serif}
+.badge.gold{border-color:var(--gold);color:var(--gold2)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0}
+.kpi{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--lace2);border-radius:14px;padding:16px;text-align:center;box-shadow:var(--shadow);position:relative}
+.kpi::before{content:'♡';position:absolute;top:8px;right:12px;color:var(--rose);opacity:.5}
+.kpi .n{font-family:'Playfair Display',serif;font-size:24px;color:#fff}
+.kpi .n.pink{color:var(--rose-hot)}
+.kpi .l{font-style:italic;color:var(--muted);font-size:15px}
+.chapter{margin-top:28px;padding:26px;border-radius:16px;background:linear-gradient(180deg,#19101acc,#0e080d);border:1px solid var(--lace)}
+.chapter h2{font-family:'Playfair Display',serif;color:var(--rose-pale);margin:0 0 4px;font-size:24px}
+.chapter h2 span{color:var(--gold);font-size:14px;letter-spacing:.2em;margin-right:10px}
+.desc{color:var(--muted);font-style:italic;margin-top:0}
+.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+@media(max-width:880px){.grid2{grid-template-columns:1fr}}
+.card{background:#120a11;border:1px solid #3d2336;border-radius:12px;padding:16px}
+.card h3{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold2);margin:0 0 10px}
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin:12px 0}
+.controls label{font-style:italic;color:var(--muted);font-size:16px;display:flex;flex-direction:column;gap:6px}
+input[type=text],select,input[type=range]{background:#0f080e;color:var(--ink);border:1px solid var(--rose);border-radius:10px;padding:9px 12px;font-family:inherit;font-size:16px}
+button{font-family:'Playfair Display',serif;background:linear-gradient(135deg,var(--rose-hot),#b83a65);color:#fff;border:none;border-radius:999px;padding:10px 22px;cursor:pointer;letter-spacing:.04em}
+button.ghost{background:transparent;border:1px solid var(--rose);color:var(--rose-pale)}
+button:hover{filter:brightness(1.15)}
+table{width:100%;border-collapse:collapse;font-size:16px;margin-top:8px}
+th{font-family:'Playfair Display',serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);text-align:left;border-bottom:1px solid var(--rose);padding:10px 8px;cursor:pointer;user-select:none}
+td{border-bottom:1px solid #33202e;padding:9px 8px}
+tr:hover td{background:#ff6f9f11}
+.pos{font-family:'Playfair Display',serif;color:var(--gold2)}
+.bar-track{height:8px;background:#33202e;border-radius:99px;overflow:hidden;min-width:120px}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--rose-hot),var(--gold));border-radius:99px}
+.lace-div{border:none;border-top:1px dashed var(--lace2);margin:22px 0;position:relative}
+.lace-div::after{content:'❦ ♡ ❦';position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--bg);padding:0 14px;color:var(--rose)}
+.note{border-left:3px solid var(--rose-hot);background:#1d0f19;padding:14px 16px;border-radius:0 12px 12px 0;color:#e9cbd8;font-style:italic}
+code{background:#00000088;border:1px solid #3d2336;border-radius:8px;padding:2px 8px;font-size:14px;color:var(--gold2)}
+pre{background:#0a0509;border:1px solid #3d2336;border-radius:12px;padding:14px;overflow:auto;font-size:13px;color:#e9cbd8}
+footer{text-align:center;color:var(--muted);font-style:italic;padding:30px 10px}
+canvas{max-height:420px}
+.val{font-variant-numeric:tabular-nums;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero frame">
+<div class="orn">✦ ─── ❦ ─── ✦</div>
+<div class="script">coquette · veludo &amp; renda</div>
+<h1>Tesouro Nacional <em>· Gastos 2025</em></h1>
+<p class="sub">Dashboard interativo em estilo dark coquette clássico, a partir da API oficial <code>apidatalake.tesouro.gov.br — Custos / demais</code>. Amostra: 10.000 primeiros registros de 2025.</p>
+<div class="badges">
+<span class="badge">ANO 2025</span>
+<span class="badge">ENDPOINT /demais</span>
+<span class="badge gold">AMOSTRA 10.000 REGISTROS</span>
+<span class="badge">FONTE STN · Data Lake</span>
+</div>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<div class="chapter">
+<h2><span>I.</span> Salão dos Espelhos — Ranking</h2>
+<p class="desc">Passe o cursor nos gráficos. Use os controles para filtrar, trocar a escala e escolher o Top N.</p>
+<div class="controls">
+<label>Buscar órgão<input type="text" id="q" placeholder="ex.: saúde, defesa..."></label>
+<label>Top N <span id="nLab">10</span><input type="range" id="topN" min="3" max="10" value="10"></label>
+<label>Escala<select id="scale"><option value="bi">Bilhões / Milhões</option><option value="full">Valor completo R$</option></select></label>
+<button class="ghost" id="btnCsv">Baixar CSV</button>
+</div>
+<div class="grid2">
+<div class="card"><h3>❦ Barras — soma por ministério (amostra)</h3><canvas id="chBar"></canvas></div>
+<div class="card"><h3>❦ Camafeu — participação</h3><canvas id="chPie"></canvas><p class="desc" id="pieLeg" style="font-size:15px"></p></div>
+</div>
+</div>
+
+<div class="chapter">
+<h2><span>II.</span> Livro de Renda — Tabela interativa</h2>
+<p class="desc">Clique no cabeçalho para ordenar. A barra rosé mostra a proporção do maior gasto.</p>
+<div class="card" style="overflow:auto">
+<table id="tbl">
+<thead><tr>
+<th data-k="i"># ♡</th><th data-k="orgao">Órgão ⇅</th><th data-k="valor">Valor 2025 ⇅</th><th>Proporção</th><th data-k="pct">% ⇅</th>
+</tr></thead>
+<tbody id="tb"></tbody>
+</table>
+</div>
+<hr class="lace-div">
+<div class="note">Aviso clássico: isto é uma <b>amostra dos primeiros 10.000 registros</b> do endpoint <code>demais?ano=2025</code>, ordenado pela API por órgão. O TOP 10 definitivo exige paginar até <code>hasMore=false</code> (limite 1 req/s) e somar <code>va_custo</code> por <code>ds_siorg_n05</code>. O endpoint <code>teto_gastos/baseclassificada?Ano=2025</code> estava 404 na consulta.</div>
+</div>
+
+<div class="chapter">
+<h2><span>III.</span> Grimório — como reproduzir</h2>
+<div class="grid2">
+<div class="card"><h3>❦ Endpoint</h3><pre>GET https://apidatalake.tesouro.gov.br/ords/cdwhprd/custos/tt/demais?ano=2025&limit=1000&offset=0
+→ { items:[{ ds_siorg_n05, va_custo }], hasMore, limit, offset }</pre></div>
+<div class="card"><h3>❦ Agregação PowerShell</h3><pre>$agg=@{}; $off=0
+do {
+ $j=(Invoke-WebRequest "...&offset=$off" -UseBasicParsing |
+  % {[Text.Encoding]::UTF8.GetString($_.RawContentStream.ToArray())})|ConvertFrom-Json
+ $j.items | % { $agg[$_.ds_siorg_n05]+=[double]$_.va_custo }
+ $off+=1000; Start-Sleep 1
+} while($j.hasMore)</pre></div>
+</div>
+</div>
+
+<footer>Feito em veludo noir &amp; laços rosé — dados: STN Data Lake · 13 out 2026 · valores em R$ — ❦</footer>
+</div>
+
+<script>
+const DATA=[
+ {orgao:"MINISTERIO DA PREVIDENCIA SOCIAL",valor:4508998099.81},
+ {orgao:"MINISTERIO DA EDUCACAO",valor:1063803966.21},
+ {orgao:"MINISTERIO DA SAUDE",valor:202920195.77},
+ {orgao:"MINISTERIO DA DEFESA",valor:177756551.80},
+ {orgao:"CODIGO INVALIDO",valor:114230638.69},
+ {orgao:"MINISTERIO DA JUSTICA E SEGURANCA PUBLICA",valor:87697042.02},
+ {orgao:"NAO SE APLICA",valor:48611972.95},
+ {orgao:"MINISTERIO DE MINAS E ENERGIA",valor:29376721.25},
+ {orgao:"MINISTERIO DO MEIO AMBIENTE E MUDANCA DO CLIMA",valor:28849022.15},
+ {orgao:"MINISTERIO DOS DIREITOS HUMANOS E DA CIDADANIA",valor:26817318.50}
+];
+const total=DATA.reduce((s,d)=>s+d.valor,0);
+const fmtFull=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2});
+const fmtShort=v=>v>=1e9?(v/1e9).toFixed(2).replace('.',',')+' bi':(v/1e6).toFixed(1).replace('.',',')+' mi';
+let sortK='valor',sortDir=-1,topN=10,query='',scale='bi';
+const fmt=v=>scale==='bi'?fmtShort(v):fmtFull(v);
+
+function filtered(){
+ let f=DATA.filter(d=>d.orgao.toLowerCase().includes(query.toLowerCase()));
+ f=[...f].sort((a,b)=>sortK==='orgao'?sortDir*a.orgao.localeCompare(b.orgao):sortDir*(a.valor-b.valor));
+ return f.slice(0,topN);
+}
+// KPIs
+(function(){
+ const max=DATA[0];
+ const el=document.getElementById('kpis');
+ el.innerHTML=`
+ <div class="kpi"><div class="n pink">${fmtShort(total)}</div><div class="l">soma da amostra · 10 mil registros</div></div>
+ <div class="kpi"><div class="n">${(max.valor/total*100).toFixed(1).replace('.',',')}%</div><div class="l">Previdência domina o salão</div></div>
+ <div class="kpi"><div class="n">${fmtShort(max.valor)}</div><div class="l">maior gasto · Previdência Social</div></div>
+ <div class="kpi"><div class="n">10</div><div class="l">órgãos no ranking · ano 2025</div></div>`;
+})();
+
+const rose=['#ff6f9f','#e8a0bf','#d4af7a','#c86b92','#a85d7f','#8e4a6b','#f9d2e2','#7a3a55','#5c2a40','#3d1c2b'];
+let bar,pic;
+function draw(){
+ const f=filtered();
+ const labels=f.map(d=>d.orgao.length>28?d.orgao.slice(0,27)+'…':d.orgao);
+ const vals=f.map(d=>d.valor);
+ if(bar)bar.destroy(); if(pic)pic.destroy();
+ Chart.defaults.color='#d9b9c9'; Chart.defaults.font.family="'Cormorant Garamond',serif"; Chart.defaults.font.size=14;
+ bar=new Chart(document.getElementById('chBar'),{type:'bar',
+  data:{labels,datasets:[{data:vals,backgroundColor:rose,borderColor:'#f9d2e2',borderWidth:1,borderRadius:8}]},
+  options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fmt(c.raw)}}},scales:{x:{grid:{color:'#33202e'},ticks:{callback:v=>fmtShort(v)}},y:{grid:{display:false}}}}
+ });
+ pic=new Chart(document.getElementById('chPie'),{type:'doughnut',
+  data:{labels,datasets:[{data:vals,backgroundColor:rose,borderColor:'#0e080d',borderWidth:3}]},
+  options:{cutout:'58%',plugins:{legend:{position:'bottom',labels:{boxWidth:12}},tooltip:{callbacks:{label:c=>' '+c.label+': '+fmt(c.raw)}}}}
+ });
+ document.getElementById('pieLeg').textContent='Previdência + Educação somam '+((DATA[0].valor+DATA[1].valor)/total*100).toFixed(1).replace('.',',')+'% da amostra.';
+ // tabela
+ const maxV=Math.max(...f.map(d=>d.valor));
+ document.getElementById('tb').innerHTML=f.map((d,i)=>`<tr>
+  <td class="pos">${String(i+1).padStart(2,'0')}</td><td>${d.orgao}</td>
+  <td class="val">${fmt(d.valor)}</td>
+  <td><div class="bar-track"><div class="bar-fill" style="width:${(d.valor/maxV*100).toFixed(1)}%"></div></div></td>
+  <td class="val">${(d.valor/total*100).toFixed(2).replace('.',',')}%</td></tr>`).join('');
+}
+document.getElementById('q').addEventListener('input',e=>{query=e.target.value;draw();});
+document.getElementById('topN').addEventListener('input',e=>{topN=+e.target.value;document.getElementById('nLab').textContent=topN;draw();});
+document.getElementById('scale').addEventListener('change',e=>{scale=e.target.value;draw();});
+document.querySelectorAll('#tbl th[data-k]').forEach(th=>th.addEventListener('click',()=>{
+ const k=th.dataset.k; if(sortK===k)sortDir*=-1; else{sortK=k;sortDir=k==='orgao'?1:-1;} draw();
+}));
+document.getElementById('btnCsv').addEventListener('click',()=>{
+ const f=filtered();
+ const csv='posicao;orgao;valor_rs;percentual\n'+f.map((d,i)=>`${i+1};"${d.orgao}";${d.valor.toFixed(2)};${(d.valor/total*100).toFixed(2)}`).join('\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='tesouro_2025_top.csv';a.click();
+});
+draw();
+</script>
+</body>
+</html>
