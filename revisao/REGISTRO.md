@@ -30,6 +30,32 @@ Em 2 nov. 2026 os marcadores de tempo foram retirados de todos os decks (ver his
 
 ## Histórico
 
+### 14 nov. 2026, avaliação geral, regra de slide autossuficiente e tempos do módulo 15
+
+Avaliação dos 15 módulos e plano de atualização em `revisao/PLANO-DE-ATUALIZACAO.md`, aplicado ao restante de 2026.2 a partir do módulo 11.
+
+Pedido do professor: toda a explicação deve estar no próprio slide, sem depender de outro material nem do professor, e os slides não devem trazer marcação de tempo. A regra entrou no guia.
+
+Módulo 15: retirados os tempos da apresentação do aluno, que haviam ficado em 2 nov. Slide 5 ("dez minutos" virou "quatro blocos"), slide 10 (título "A apresentação em quatro blocos", faixa sem minutos, sem aviso e corte), slide 14 (passo 3 sem cronômetro) e slide 16. Conferência visual do slide 10 no navegador. O modelo `entregas/roteiro-apresentacao.md` gravado pelo `atividade_modulo15.py` perdeu os tempos no mesmo dia (ver abaixo). O roteiro do professor mantém os tempos.
+
+Número do encontro retirado dos 15 decks, por decisão do professor. Foram 117 trocas de "encontro N" por "módulo N − 1" (por exemplo, "o painel do encontro 9" virou "o painel do módulo 8"), e as 15 capas perderam o prefixo "Encontro N ·" do subtítulo. Ficaram 12 ocorrências dentro de blocos de saída de script (módulo 8, slide 25, e módulo 15, slides 6 e 20), porque os scripts dos módulos 8 e 15 imprimem "encontro N". Esses três slides receberam uma nota de correspondência, retirada no mesmo dia quando os scripts passaram a imprimir módulo. Auditoria de linguagem sem sinais novos. Conferência visual no navegador dos slides que ganharam texto (módulo 8, slide 25, e módulo 15, slides 6 e 10). Os roteiros do professor continuam numerados por encontro.
+
+Scripts, com autorização do professor para alterá-los durante o semestre:
+
+- `atividade_modulo15.py`: a lista `ENTREGAS` do comando `c2` passou a usar os nomes que os scripts gravam (`modulo3-diario-de-alucinacao`, `modulo5-mapa-de-dados`, `modulo9-fluxo.csv` e `modulo9-relatorio.md`, `modulo10-codificacao.csv` e `modulo10-relatorio.md`). Antes, um aluno com tudo entregue via os módulos 3, 5, 9 e 10 como ausentes. Rótulos por módulo (2 a 15) no `c2` e no `portfolio`. O modelo do roteiro de apresentação perdeu "Dez minutos, cronometrados" e os minutos por bloco. O `portfolio` passou a ler `prompts/`. As mensagens deixaram de mandar o aluno digitar `python ...` e passaram a indicar o pedido ao agente.
+- `atividade_modulo11.py`: o `conferir` aceita "não" com acento (função `normalizar`).
+- `atividade_modulo12.py`: o `conferir` aceita "nao - revisado" quando nenhuma linha é eliminável, como a própria mensagem do script pedia.
+- `atividade_modulo13.py`: o `conferir` aceita "todas as categorias constam" no mapa do documento, além de NAO CONSTA.
+- Scripts 2, 4, 5, 7, 8, 9, 10, 13 e 14: "encontro N" trocado por "modulo N − 1" em rótulos, docstrings e mensagens.
+
+Teste: pasta de aluno fictícia com os arquivos de todos os módulos, 11 verificações (c2 completo e incompleto, roteiro sem tempos, portfólio, acento no 11, "revisado" no 12, frase de cobertura e NÃO CONSTA no 13). As versões novas passam nas 11. As versões anteriores falham nas 8 que testam os defeitos corrigidos. O script de teste ficou fora do repositório.
+
+Slides alinhados aos scripts: módulo 8, slide 25 (saída do `b1`), módulo 11, slide 28 (dúvida sobre acento), módulo 12, slide 12 (linha "revisado" e acento), módulo 13, slide 13 (frase de cobertura), módulo 14, slide 24 ("apresentação de dez minutos", marcação de tempo que escapou da primeira varredura), módulo 15, slides 4 (números dos módulos e nomes de arquivo do `c2`), 6, 20, 21 e 22. Conferência no navegador dos slides 4 e 6 do módulo 15 e 13 do módulo 13. Medição de estouro da área útil nos slides 28 do módulo 11 e 12 do módulo 12, sem estouro.
+
+Atenção: os alunos recebem cópia dos scripts na turma virtual. As versões novas dos scripts 11 a 15 precisam ser publicadas lá antes do módulo correspondente. Quem já tem a cópia antiga do `atividade_modulo15.py` verá os módulos 3, 5, 9 e 10 como ausentes.
+
+Os demais 14 decks foram varridos por minutos, horas e cronômetro. As ocorrências restantes são dado de exemplo (tempo de espera, tempo de tarefa, prazo de chamado) e não marcação de aula.
+
 ### 2 nov. 2026, módulos 1, 2, 3 e 4, decks inteiros
 
 Os módulos 2 a 4 mantiveram a adaptação de setembro para turma sem contato prévio (componentes `.conceito` e `.duas`). O módulo 1 recebeu o componente `.conceito`, que não tinha. Auditoria com zero sinais nos módulos 2 a 4 e um falso positivo no módulo 1. Conferência visual com Liberation Sans e DejaVu Sans.
@@ -154,18 +180,18 @@ Defeitos nos scripts encontrados na revisão de 2 nov. 2026. Os scripts não for
 - Roteiro 7: notas fora do escopo ainda têm ponto e vírgula e "valiosa".
 - `atividade_modulo10.py`: o comando `b2` confere 10 itens, mas não verifica `entregas/modulo10-fontes.csv` nem se o `conferir` foi aprovado. O `conferir` acusa a falta da codificação enquanto o ciclo 10.3 não termina (o deck avisa).
 - Roteiro 10, ciclo 10.3: fala em duplas e diz que o ciclo não usa modelo de linguagem, mas o script prevê a coluna `categoria_agente`. O deck segue o script. Decidir qual desenho vale.
-- `atividade_modulo11.py`: o `conferir` recusa "não" com acento, porque compara com "nao" (o deck avisa).
+- `atividade_modulo11.py`: o `conferir` recusa "não" com acento, porque compara com "nao" (o deck avisa). Resolvido em 14 nov. 2026.
 - Roteiro 11: diz que o encontro não tem entrega avaliada, mas o deck tem slide de entrega com critério de correção. Decidir.
 - `atividade_modulo1.py`: a linha de exemplo diz "quatro vezes por mes", mas a conta de 6 h só fecha com quatro unidades. Tarefa com texto igual ao do exemplo é ignorada. No encontro 2 não há opencode: confirmar quem executa o `conferir`.
 - `atividade_modulo2.py`: a prática 2.2 pede o comando `criar` antes da instalação do opencode, que só ocorre no 2.3 (o deck manda rodar logo após a instalação). Em repositório clonado em outra máquina, o `conferir` conta zero versões. Confirmar se a conexão ao OpenCode Zen pede cartão.
 - `atividade_modulo3.py`: só aceita rótulos e vereditos sem acento ("nao verificavel"). O deck orienta escrever sem acento. "sem erro" conta como um dos três tipos mínimos.
 - `atividade_modulo4.py`: a mensagem "Esta URL e o que uma ferramenta de MCP executaria" não vale para `municipios` (o script chama o IBGE direto, e o MCP passa pela BrasilAPI). O CNPJ é pedido "so numeros", e há CNPJ alfanumérico desde jul. 2026. Parâmetros do PNCP vieram de fontes secundárias.
 - Acentos: os scripts dos módulos 3, 11 e outros recusam "não" e rótulos acentuados. Uma normalização de acentos na leitura dos formulários resolveria o problema em todos de uma vez.
-- `atividade_modulo15.py`, lista `ENTREGAS` usada pelo comando `c2`: para os encontros 10 e 11 espera arquivos que começam por `entregas/modulo9-ciclo4` e `entregas/modulo10-ciclo3`, que nenhum deck nem script manda criar (as entregas reais são `modulo9-relatorio.md`, `modulo9-fluxo.csv` e `modulo10-codificacao.csv`). No encontro 4, o prefixo `modulo3-ciclo` não encontra o diário de alucinação. Um aluno que fez tudo verá esses encontros como ausentes na conferência da C2. Correção recomendada antes do encontro 16. O deck orienta o aluno a mostrar o arquivo e o commit.
-- `atividade_modulo13.py`: o `conferir` exige "nao consta" mesmo quando o documento trata das cinco categorias (o deck orienta a escrever "categorias que nao constam: nenhuma"). A docstring fala em quatro seções, e o modelo tem cinco. O `c1` só confere se os arquivos dos encontros 12 e 13 existem. A comparação com o critério escrito em casa foi para a seção 3 da devolutiva, porque o script não prevê arquivo próprio. Confirmar.
+- Resolvido em 14 nov. 2026. `atividade_modulo15.py`, lista `ENTREGAS` usada pelo comando `c2`: para os encontros 10 e 11 espera arquivos que começam por `entregas/modulo9-ciclo4` e `entregas/modulo10-ciclo3`, que nenhum deck nem script manda criar (as entregas reais são `modulo9-relatorio.md`, `modulo9-fluxo.csv` e `modulo10-codificacao.csv`). No encontro 4, o prefixo `modulo3-ciclo` não encontra o diário de alucinação. Um aluno que fez tudo verá esses encontros como ausentes na conferência da C2. Correção recomendada antes do encontro 16. O deck orienta o aluno a mostrar o arquivo e o commit.
+- Resolvido em 14 nov. 2026 o primeiro item. `atividade_modulo13.py`: o `conferir` exige "nao consta" mesmo quando o documento trata das cinco categorias (o deck orienta a escrever "categorias que nao constam: nenhuma"). A docstring fala em quatro seções, e o modelo tem cinco. O `c1` só confere se os arquivos dos encontros 12 e 13 existem. A comparação com o critério escrito em casa foi para a seção 3 da devolutiva, porque o script não prevê arquivo próprio. Confirmar.
 - `atividade_modulo14.py`: aceita público genérico ("os gestores da secretaria") e história que descreve solução em vez de necessidade ("quero um botão de exportar para PDF"). O deck mostra o segundo caso como aceito e inadequado. O deck pede dois pedidos longos ao modelo por história, e o planejamento fala em dois por ciclo prático. Decidir.
 - Roteiros 13, 14 e 15: trechos antigos, fora das descrições atualizadas, ainda têm travessão em títulos, ponto e vírgula e "vale mais que".
-- `atividade_modulo12.py`: quando nenhuma linha é eliminável, o script manda escrever "nao - revisado", e a conferência recusa (só aceita linha que começa com "s"). A recusa de responsável vago compara o texto exato ("a equipe de TI" passa). Falta a base do art. 11, II, g (prevenção à fraude). Não confere `entregas/modulo12-ciclo3-exemplo.md`.
+- Resolvido em 14 nov. 2026 o primeiro item. `atividade_modulo12.py`: quando nenhuma linha é eliminável, o script manda escrever "nao - revisado", e a conferência recusa (só aceita linha que começa com "s"). A recusa de responsável vago compara o texto exato ("a equipe de TI" passa). Falta a base do art. 11, II, g (prevenção à fraude). Não confere `entregas/modulo12-ciclo3-exemplo.md`.
 
 - Em 2 nov. 2026 os decks (e os dois .pptx antigos) foram movidos para `slides/` e os scripts das atividades para `scripts/`. Na mesma data, os roteiros foram para `roteiros/`. Foram atualizados `index.html`, `README.md`, `indice-material-2026-2.md`, os roteiros e as ferramentas de `revisao/`. Os scripts receberam um ajuste de poucas linhas que muda o diretório de trabalho para a raiz quando estão em `scripts/`. O texto dos decks continua dizendo "execute atividade_moduloN.py", porque na turma o script é copiado para a raiz do projeto do aluno. Os endereços antigos do GitHub Pages (sem `slides/`) deixam de funcionar depois do próximo push.
 

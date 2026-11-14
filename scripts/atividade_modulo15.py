@@ -7,18 +7,18 @@ O QUE ESTE SCRIPT FAZ
 
 Ele confere a entrega C2 do semestre inteiro, cria o roteiro da apresentacao,
 cria o formulario de avaliacao por pares e gera o portfolio: o indice de tudo
-que voce produziu, com data, agrupado por encontro.
+que voce produziu, com data, agrupado por modulo.
 
 Nao usa biblioteca externa, nao acessa a rede e nao usa modelo de linguagem.
 
 COMO USAR (peca ao agente do opencode que execute cada comando)
 
   python atividade_modulo15.py c2
-      Percorre as entregas dos encontros 2 a 16 e lista o que existe e o que
+      Percorre as entregas dos modulos 2 a 15 e lista o que existe e o que
       falta. O que ele apontar como pendente conta como nao entregue.
 
   python atividade_modulo15.py apresentacao
-      Cria entregas/roteiro-apresentacao.md com os quatro blocos e o tempo
+      Cria entregas/roteiro-apresentacao.md com os quatro blocos e os campos
       de cada um.
 
   python atividade_modulo15.py pares
@@ -28,7 +28,7 @@ COMO USAR (peca ao agente do opencode que execute cada comando)
   python atividade_modulo15.py portfolio
       Gera saidas/portfolio.md com o indice do semestre.
 
-ORDEM NO ENCONTRO: c2 -> corrigir -> apresentacao -> pares -> portfolio.
+ORDEM NO MODULO: c2 -> corrigir -> apresentacao -> pares -> portfolio.
 """
 
 import os
@@ -50,23 +50,24 @@ PORTFOLIO = os.path.join(PASTA_SAIDAS, "portfolio.md")
 
 TEXTO_ROTEIRO = """# Roteiro da apresentacao
 
-Dez minutos, cronometrados. Escreva antes, e nao improvise na hora.
+Quatro blocos, nesta ordem. Escreva antes, e nao improvise na hora.
+A duracao da apresentacao e informada em sala.
 
-## Bloco 1 - O problema e quem o tem (2 min)
+## Bloco 1 - O problema e quem o tem
 usuario_cargo: (o cargo de quem usa)
 o_que_ele_faz_hoje: (o caminho atual, resumido)
 quanto_custa_hoje: (tempo por execucao e frequencia, com numero)
 
-## Bloco 2 - O que voce construiu (2 min)
+## Bloco 2 - O que voce construiu
 escopo_da_versao: (o que o produto resolve, do comeco ao fim)
 o_que_ficou_de_fora: (e por que voce cortou)
 decisao_de_corte: (a razao da escolha, em uma frase)
 
-## Bloco 3 - Demonstracao ao vivo (4 min)
+## Bloco 3 - Demonstracao ao vivo
 caso_completo: (o caso que voce vai rodar na frente da turma)
 caso_com_dado_errado: (o dado invalido que voce vai usar, e o que o produto faz com ele)
 
-## Bloco 4 - O que ainda nao funciona (2 min)
+## Bloco 4 - O que ainda nao funciona
 achados_nao_resolvidos: (o que veio do teste com usuario e ficou de fora)
 proximo_item_da_fila: (o que voce faria primeiro)
 o_que_faria_com_mais_um_encontro: (uma frase)
@@ -103,31 +104,34 @@ voce_usaria_no_seu_setor_3: (sim/nao) | (justificativa)
 ideia_que_voce_leva_3: (uma coisa que voce vai usar no seu produto)
 """
 
-# entregas do semestre, por encontro
+# entregas do semestre, por modulo
+# Cada item e um caminho exato ou um prefixo de nome. Os nomes sao os que os
+# scripts dos modulos gravam.
 ENTREGAS = [
-    (3, "Ambiente montado e A1", ["AGENTS.md", "README.md"]),
-    (4, "Diario de alucinacao", ["entregas/modulo3-ciclo"]),
-    (5, "AGENTS.md testado e diagnostico de APIs", ["dados/api-diagnostico.md"]),
-    (6, "Mapa de dados e A2", ["entregas/mapa-de-dados"]),
-    (7, "Perfil da base e decisao sobre atipicos", ["entregas/modulo6-"]),
-    (8, "Consulta e juncao", ["entregas/modulo7-"]),
-    (9, "Painel e entrega B1", ["entregas/painel.html"]),
-    (10, "Fluxo documentado com ganho medido", ["entregas/modulo9-ciclo4"]),
-    (11, "Codificacao, concordancia e entrega B2", ["entregas/modulo10-ciclo3"]),
-    (12, "Modelo avaliado contra o palpite simples", ["modelo/ficha-modelo.md", "modelo/resultado.md"]),
-    (13, "Inventario, uso seguro e plano de incidente",
+    (2, "Ambiente montado e A1", ["AGENTS.md", "README.md"]),
+    (3, "Diario de alucinacao", ["entregas/modulo3-diario-de-alucinacao"]),
+    (4, "AGENTS.md testado e diagnostico de APIs", ["dados/api-diagnostico.md"]),
+    (5, "Mapa de dados e A2", ["entregas/modulo5-mapa-de-dados"]),
+    (6, "Perfil da base e decisao sobre atipicos", ["entregas/modulo6-"]),
+    (7, "Consulta e juncao", ["entregas/modulo7-"]),
+    (8, "Painel e entrega B1", ["entregas/painel.html"]),
+    (9, "Fluxo documentado com ganho medido",
+     ["entregas/modulo9-fluxo.csv", "entregas/modulo9-relatorio.md"]),
+    (10, "Codificacao, concordancia e entrega B2",
+     ["entregas/modulo10-codificacao.csv", "entregas/modulo10-relatorio.md"]),
+    (11, "Modelo avaliado contra o palpite simples", ["modelo/ficha-modelo.md", "modelo/resultado.md"]),
+    (12, "Inventario, uso seguro e plano de incidente",
      ["saidas/varredura-dados-pessoais.md", "entregas/inventario-dados.csv",
       "entregas/plano-resposta-incidente.md", ".gitignore"]),
-    (14, "Matriz, mapa do documento e devolutiva (C1)",
+    (13, "Matriz, mapa do documento e devolutiva (C1)",
      ["entregas/matriz-decisao.csv", "saidas/resultado-decisao.md",
       "entregas/mapa-documento.md", "entregas/devolutiva.md"]),
-    (15, "Ficha do produto, backlog e teste com usuario",
+    (14, "Ficha do produto, backlog e teste com usuario",
      ["entregas/ficha-produto.md", "entregas/backlog.csv",
       "saidas/backlog-priorizado.md", "entregas/registro-teste.md"]),
-    (16, "Apresentacao e avaliacao por pares",
+    (15, "Apresentacao e avaliacao por pares",
      ["entregas/roteiro-apresentacao.md", "entregas/avaliacao-pares.md"]),
 ]
-
 
 def existe(padrao):
     """Aceita caminho exato ou prefixo de nome dentro da pasta."""
@@ -188,15 +192,15 @@ def cmd_c2():
     print("=" * 66)
     print()
     faltando = []
-    for encontro, nome, arquivos in ENTREGAS:
+    for modulo, nome, arquivos in ENTREGAS:
         achados = [(a, existe(a)) for a in arquivos]
         completo = all(c for _, c in achados)
         parcial = any(c for _, c in achados)
         marca = "x" if completo else ("~" if parcial else " ")
-        print("  [%s] encontro %2d  %s" % (marca, encontro, nome))
+        print("  [%s] modulo %2d  %s" % (marca, modulo, nome))
         for pedido, achado in achados:
             if not achado:
-                faltando.append((encontro, pedido))
+                faltando.append((modulo, pedido))
     print()
     print("  [x] completo   [~] parcial   [ ] ausente")
     print()
@@ -204,25 +208,25 @@ def cmd_c2():
     if faltando:
         print("Faltam %d arquivos:" % len(faltando))
         atual = None
-        for encontro, pedido in faltando:
-            if encontro != atual:
-                print("  encontro %d:" % encontro)
-                atual = encontro
+        for modulo, pedido in faltando:
+            if modulo != atual:
+                print("  modulo %d:" % modulo)
+                atual = modulo
             print("    - %s" % pedido)
         print()
-        print("Rode a conferencia de cada encontro para o detalhe do conteudo:")
-        print("  python atividade_modulo13.py c1     (encontros 12, 13 e 14)")
-        print("  python atividade_modulo14.py conferir  (encontro 15)")
+        print("Peca ao agente a conferencia de cada modulo para o detalhe do conteudo:")
+        print("  atividade_modulo13.py com o comando c1        (modulos 11, 12 e 13)")
+        print("  atividade_modulo14.py com o comando conferir  (modulo 14)")
         print()
         print("O que ficar pendente hoje conta como nao entregue. Esta e a ultima janela.")
         sys.exit(1)
 
     print("Todos os arquivos do semestre estao na pasta.")
     print()
-    print("Rode agora, para conferir o conteudo:")
-    print("  python atividade_modulo13.py c1")
-    print("  python atividade_modulo14.py conferir")
-    print("  python atividade_modulo15.py pares")
+    print("Peca agora ao agente, para conferir o conteudo:")
+    print("  atividade_modulo13.py com o comando c1")
+    print("  atividade_modulo14.py com o comando conferir")
+    print("  atividade_modulo15.py com o comando pares")
 
 
 def cmd_apresentacao():
@@ -298,7 +302,7 @@ def cmd_pares():
 
 
 def cmd_portfolio():
-    pastas = ["entregas", "saidas", "modelo", "dados"]
+    pastas = ["entregas", "saidas", "modelo", "dados", "prompts"]
     arquivos = []
     for pasta in pastas:
         if not os.path.isdir(pasta):
@@ -318,7 +322,7 @@ def cmd_portfolio():
             arquivos.append((solto, st.st_size, st.st_mtime))
 
     if not arquivos:
-        print("Nao ha arquivos nas pastas de entrega. Rode os scripts dos encontros anteriores.")
+        print("Nao ha arquivos nas pastas de entrega. Rode os scripts dos modulos anteriores.")
         sys.exit(1)
 
     arquivos.sort(key=lambda x: x[2])
@@ -328,13 +332,13 @@ def cmd_portfolio():
         f.write("# Portfolio do semestre\n\n")
         f.write("DECC0294 - Tecnologia da Informacao e Comunicacao Aplicada a Administracao\n")
         f.write("Gerado em %s\n\n" % time.strftime("%d/%m/%Y"))
-        f.write("## O que voce produziu, por encontro\n\n")
-        for encontro, nome, pedidos in ENTREGAS:
+        f.write("## O que voce produziu, por modulo\n\n")
+        for modulo, nome, pedidos in ENTREGAS:
             achados = [existe(p) for p in pedidos]
             achados = [a for a in achados if a]
             if not achados:
                 continue
-            f.write("### Encontro %d - %s\n\n" % (encontro, nome))
+            f.write("### Modulo %d - %s\n\n" % (modulo, nome))
             for a in achados:
                 try:
                     st = os.stat(a)

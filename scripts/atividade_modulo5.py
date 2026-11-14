@@ -413,7 +413,7 @@ def conferir_a2():
     print("Concluidos: %d de %d." % (ok_n, len(itens)))
 
     L = ["# Relatorio da entrega A2", "",
-         "Modulo 5, encontro 6. DECC0294, UFMA, Curso de Administracao.",
+         "Modulo 5. DECC0294, UFMA, Curso de Administracao.",
          "Gerado em %s pelo script atividade_modulo5.py."
          % datetime.now().strftime("%d/%m/%Y as %H:%M"), "",
          "Situacao: %d de %d itens concluidos." % (ok_n, len(itens)), "",

@@ -213,7 +213,7 @@ def criar_banco(arquivos):
     print("Banco criado em: " + BANCO)
     print()
     print("PROXIMO PASSO")
-    print("  Confira as contagens contra o perfil do encontro 7.")
+    print("  Confira as contagens contra o perfil do modulo 6.")
     print("  Coluna de valor que ficou TEXT e virgula decimal: corrija o CSV e refaca.")
     return 0
 

@@ -27,7 +27,7 @@ COMO USAR (peca ao agente do opencode que execute cada comando)
       Confere as entregas deste encontro.
 
   python atividade_modulo13.py c1
-      Confere a entrega C1 inteira, dos encontros 12, 13 e 14.
+      Confere a entrega C1 inteira, dos modulos 11, 12 e 13.
 
 ORDEM: matriz -> preencher criterios e pesos -> dar notas -> avaliar ->
 devolutiva -> preencher -> conferir -> c1.
@@ -383,10 +383,11 @@ def conferir_modulo(problemas):
         if '"' not in mapa and "“" not in mapa:
             problemas.append("mapa-documento.md: nao ha nenhum trecho transcrito entre aspas. "
                              "Cada item precisa do trecho de origem.")
-        if "nao consta" not in baixo and "não consta" not in mapa.lower():
+        if "nao consta" not in baixo and "todas as categorias constam" not in baixo \
+                and "todas constam" not in baixo:
             problemas.append("mapa-documento.md: nenhuma categoria marcada como NAO CONSTA e "
-                             "nenhum registro de que todas constam. Se o documento cobre tudo, "
-                             "escreva isso.")
+                             "nenhum registro de que todas constam. Se o documento cobre as "
+                             "cinco, escreva a frase: todas as categorias constam.")
 
     if not os.path.exists(DEVOLUTIVA):
         problemas.append("devolutiva.md nao existe. Rode: python atividade_modulo13.py devolutiva")
@@ -464,17 +465,17 @@ def cmd_conferir():
 
 
 ITENS_C1 = [
-    ("modelo/ficha-modelo.md", "encontro 12: a ficha do modelo preditivo"),
-    ("modelo/resultado.md", "encontro 12: o resultado comparado com o palpite simples"),
-    ("saidas/varredura-dados-pessoais.md", "encontro 13: a varredura de dado pessoal"),
-    ("entregas/inventario-dados.csv", "encontro 13: o inventario com base legal"),
-    ("AGENTS.md", "encontro 13: a secao de uso seguro"),
-    (".gitignore", "encontro 13: a pasta de dados restritos declarada"),
-    ("entregas/plano-resposta-incidente.md", "encontro 13: o plano de resposta a incidente"),
-    ("entregas/matriz-decisao.csv", "encontro 14: a matriz de decisao"),
-    ("saidas/resultado-decisao.md", "encontro 14: a avaliacao com teste de sensibilidade"),
-    ("entregas/mapa-documento.md", "encontro 14: o mapa do documento"),
-    ("entregas/devolutiva.md", "encontro 14: a devolutiva fundamentada"),
+    ("modelo/ficha-modelo.md", "modulo 11: a ficha do modelo preditivo"),
+    ("modelo/resultado.md", "modulo 11: o resultado comparado com o palpite simples"),
+    ("saidas/varredura-dados-pessoais.md", "modulo 12: a varredura de dado pessoal"),
+    ("entregas/inventario-dados.csv", "modulo 12: o inventario com base legal"),
+    ("AGENTS.md", "modulo 12: a secao de uso seguro"),
+    (".gitignore", "modulo 12: a pasta de dados restritos declarada"),
+    ("entregas/plano-resposta-incidente.md", "modulo 12: o plano de resposta a incidente"),
+    ("entregas/matriz-decisao.csv", "modulo 13: a matriz de decisao"),
+    ("saidas/resultado-decisao.md", "modulo 13: a avaliacao com teste de sensibilidade"),
+    ("entregas/mapa-documento.md", "modulo 13: o mapa do documento"),
+    ("entregas/devolutiva.md", "modulo 13: a devolutiva fundamentada"),
 ]
 
 

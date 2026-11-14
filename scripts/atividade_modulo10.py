@@ -31,7 +31,7 @@ COMO USAR (peca ao agente, no opencode desktop)
        Valida a ficha de fontes e a codificacao, e gera o relatorio.
 
     6) "execute atividade_modulo10.py com o comando b2"
-       Percorre os encontros 10 e 11 e diz o que falta para a entrega B2.
+       Percorre os modulos 9 e 10 e diz o que falta para a entrega B2.
 
     Sem nenhum comando, o script imprime estas instrucoes.
 
@@ -502,19 +502,19 @@ def gerar_relatorio(fontes, dados, avisos):
 
 
 ITENS_B2 = [
-    ("Decomposicao da tarefa (encontro 10)",
+    ("Decomposicao da tarefa (modulo 9)",
      [os.path.join("entregas", "modulo9-ciclo1-decomposicao.md")]),
-    ("Modelo com variaveis (encontro 10)", [os.path.join("prompts", "modulo9-modelo.md")]),
-    ("Ponto de conferencia declarado (encontro 10)",
+    ("Modelo com variaveis (modulo 9)", [os.path.join("prompts", "modulo9-modelo.md")]),
+    ("Ponto de conferencia declarado (modulo 9)",
      [os.path.join("entregas", "modulo9-ciclo3-conferencia.md")]),
-    ("Fluxo medido (encontro 10)", [os.path.join("entregas", "modulo9-relatorio.md")]),
-    ("Sintese em camadas (encontro 11)",
+    ("Fluxo medido (modulo 9)", [os.path.join("entregas", "modulo9-relatorio.md")]),
+    ("Sintese em camadas (modulo 10)",
      [os.path.join("entregas", "modulo10-ciclo1-sintese.md")]),
-    ("Comparacao com ficha de fontes (encontro 11)",
+    ("Comparacao com ficha de fontes (modulo 10)",
      [os.path.join("entregas", "modulo10-ciclo2-comparacao.md")]),
-    ("Livro de codigos (encontro 11)", [LIVRO]),
-    ("Dupla codificacao (encontro 11)", [CODIFICACAO]),
-    ("Resumo legislativo conferido (encontro 11)",
+    ("Livro de codigos (modulo 10)", [LIVRO]),
+    ("Dupla codificacao (modulo 10)", [CODIFICACAO]),
+    ("Resumo legislativo conferido (modulo 10)",
      [os.path.join("entregas", "modulo10-ciclo4-legislacao.md")]),
 ]
 
@@ -564,7 +564,7 @@ def conferir_b2():
     print("Concluidos: %d de %d." % (ok_n, len(itens)))
 
     L = ["# Relatorio da entrega B2", "",
-         "Modulo 10, encontro 11. DECC0294, UFMA, Curso de Administracao.",
+         "Modulo 10. DECC0294, UFMA, Curso de Administracao.",
          "Gerado em %s pelo script atividade_modulo10.py."
          % datetime.now().strftime("%d/%m/%Y as %H:%M"), "",
          "Situacao: %d de %d itens concluidos." % (ok_n, len(itens)), "",

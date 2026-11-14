@@ -31,7 +31,7 @@ COMO USAR (peca ao agente, no opencode desktop)
        Valida o formulario e o painel.
 
     6) "execute atividade_modulo8.py com o comando b1"
-       Percorre os encontros 7, 8 e 9 e diz o que falta para a entrega B1.
+       Percorre os modulos 6, 7 e 8 e diz o que falta para a entrega B1.
 
     Sem nenhum comando, o script imprime estas instrucoes.
 
@@ -164,7 +164,7 @@ def iniciar():
     print()
     print("  fonte               De que tabela saiu e com que filtro.")
     print()
-    print("  consulta            O arquivo .sql do encontro 8 que produziu o numero.")
+    print("  consulta            O arquivo .sql do modulo 7 que produziu o numero.")
     print()
     print("Sao necessarios tres indicadores. A primeira linha e exemplo: substitua.")
     return 0
@@ -374,7 +374,7 @@ def painel(args):
 </main>
 <footer>
   Gerado em %s pelo script atividade_modulo8.py. Os numeros vieram das consultas
-  registradas no encontro 8 e podem ser refeitos a partir dos arquivos .sql citados.
+  registradas no modulo 7 e podem ser refeitos a partir dos arquivos .sql citados.
 </footer>
 </body>
 </html>
@@ -445,26 +445,26 @@ def conferir():
 
 
 ITENS_B1 = [
-    ("Perguntas formuladas (encontro 7)",
+    ("Perguntas formuladas (modulo 6)",
      [os.path.join("entregas", "modulo6-ciclo1-perguntas.md")]),
-    ("Perfil da base (encontro 7)",
+    ("Perfil da base (modulo 6)",
      [os.path.join("entregas", "modulo6-ciclo2-perfil.md")]),
-    ("Tratamento de ausentes e atipicos (encontro 7)",
+    ("Tratamento de ausentes e atipicos (modulo 6)",
      [os.path.join("entregas", "modulo6-tratamento.csv")]),
-    ("Log de verificacao (encontro 7)",
+    ("Log de verificacao (modulo 6)",
      [os.path.join("entregas", "modulo6-log-verificacao.csv")]),
-    ("Banco povoado (encontro 8)", ["projeto.db"]),
-    ("Modelo das tabelas (encontro 8)",
+    ("Banco povoado (modulo 7)", ["projeto.db"]),
+    ("Modelo das tabelas (modulo 7)",
      [os.path.join("entregas", "modulo7-ciclo2-modelo.md")]),
-    ("Cinco consultas registradas (encontro 8)",
+    ("Cinco consultas registradas (modulo 7)",
      [os.path.join("entregas", "modulo7-consultas.csv")]),
-    ("Juncao validada (encontro 8)",
+    ("Juncao validada (modulo 7)",
      [os.path.join("entregas", "modulo7-ciclo4-juncao.md")]),
-    ("Reconstrucao de grafico (encontro 9)",
+    ("Reconstrucao de grafico (modulo 8)",
      [os.path.join("entregas", "modulo8-ciclo1-reconstrucao.md")]),
-    ("Escolha de formas (encontro 9)",
+    ("Escolha de formas (modulo 8)",
      [os.path.join("entregas", "modulo8-ciclo2-formas.md")]),
-    ("Painel (encontro 9)", [PAINEL]),
+    ("Painel (modulo 8)", [PAINEL]),
 ]
 
 
@@ -513,7 +513,7 @@ def conferir_b1():
     print("Concluidos: %d de %d." % (ok_n, len(itens)))
 
     L = ["# Relatorio da entrega B1", "",
-         "Modulo 8, encontro 9. DECC0294, UFMA, Curso de Administracao.",
+         "Modulo 8. DECC0294, UFMA, Curso de Administracao.",
          "Gerado em %s pelo script atividade_modulo8.py."
          % datetime.now().strftime("%d/%m/%Y as %H:%M"), "",
          "Situacao: %d de %d itens concluidos." % (ok_n, len(itens)), "",

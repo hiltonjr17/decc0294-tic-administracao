@@ -342,7 +342,7 @@ def conferir():
 
 def gerar_relatorio(dados, numeros, economia, equilibrio, gerados):
     L = ["# Fluxo automatizado", "",
-         "Modulo 9, encontro 10. DECC0294, UFMA, Curso de Administracao.",
+         "Modulo 9. DECC0294, UFMA, Curso de Administracao.",
          "Gerado em %s pelo script atividade_modulo9.py." % date.today().strftime("%d/%m/%Y"),
          "", "Nome e matricula: ______________________________", "",
          "## Medicao", "", "| Item | Valor |", "|---|---|"]

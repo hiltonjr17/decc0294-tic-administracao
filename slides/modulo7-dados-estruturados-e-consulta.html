@@ -275,7 +275,7 @@ body.mexeu #ajuda{opacity:1}
       <span class="mod">MÓDULO 7</span>
       <h1>Dados estruturados e consulta</h1>
       <span class="tracinho"></span>
-      <p class="sub">Encontro 8 · Tabelas tipadas, chaves, consultas gravadas e junção conferida</p>
+      <p class="sub">Tabelas tipadas, chaves, consultas gravadas e junção conferida</p>
       <p class="pe">DECC0294 · Tecnologia da Informação e Comunicação Aplicada à Administração · 2026.2</p>
     </section>
 <section class="slide conteudo">
@@ -441,7 +441,7 @@ TABELA municipios  (de dados/municipios.csv)
   colunas: cod_ibge INTEGER, municipio TEXT, populacao INTEGER</pre>
     <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:12px">
       <div class="caixa dourado"><span class="rot">CONTAGEM E TIPO</span>
-        <p>As 12.466 linhas coincidem com o perfil do encontro 7 depois da remoção das 14 duplicadas. A coluna custo saiu REAL. Se tivesse saído TEXT, a vírgula decimal continuaria no CSV.</p></div>
+        <p>As 12.466 linhas coincidem com o perfil do módulo 6 depois da remoção das 14 duplicadas. A coluna custo saiu REAL. Se tivesse saído TEXT, a vírgula decimal continuaria no CSV.</p></div>
       <div class="caixa vinho"><span class="rot">VALORES PERDIDOS</span>
         <p>Gravadas igual a linhas no CSV não prova que todos os valores entraram. Confira com <span class="mono">sql "SELECT COUNT(*), COUNT(custo) FROM atendimentos"</span> e compare com os vazios do perfil.</p></div>
     </div>
@@ -459,7 +459,7 @@ TABELA municipios  (de dados/municipios.csv)
     <p class="sub">Individual</p>
     <div class="corpo"><ol class="steps cols-1 " style="--linhas:4">
     <li><span class="num">1</span>
-      <div><strong>Rode o comando banco com as suas duas bases</strong><p>A base tratada no encontro 7 e a base pública do encontro 6, as duas em dados/.</p></div>
+      <div><strong>Rode o comando banco com as suas duas bases</strong><p>A base tratada no módulo 6 e a base pública do módulo 5, as duas em dados/.</p></div>
     </li>
     <li><span class="num">2</span>
       <div><strong>Confira as contagens contra o perfil</strong><p>Linhas no CSV, gravadas e rejeitadas, ao lado do total do perfil. Diferença sem explicação precisa ser resolvida antes do ciclo 7.2.</p></div>
@@ -484,7 +484,7 @@ TABELA municipios  (de dados/municipios.csv)
     <div class="corpo"><div class="entrega">
     <section class="lista">
       <header>O QUE ENTREGAR</header>
-      <ul><li>O arquivo projeto.db, com as duas tabelas.</li><li>O esquema impresso pelo comando esquema.</li><li>Para cada tabela, as linhas no CSV, as gravadas e o total do perfil do encontro 7.</li><li>Para cada coluna numérica, os valores preenchidos no banco comparados com o perfil.</li><li>Cada correção feita no CSV, com o motivo.</li></ul>
+      <ul><li>O arquivo projeto.db, com as duas tabelas.</li><li>O esquema impresso pelo comando esquema.</li><li>Para cada tabela, as linhas no CSV, as gravadas e o total do perfil do módulo 6.</li><li>Para cada coluna numérica, os valores preenchidos no banco comparados com o perfil.</li><li>Cada correção feita no CSV, com o motivo.</li></ul>
     </section>
     <div class="lado">
       <section class="box onde">
@@ -547,7 +547,7 @@ TABELA municipios  (de dados/municipios.csv)
     <p class="sub">A escolha da chave decide se o cruzamento entre as bases funciona</p>
     <div class="corpo"><div class="duascol" style="--esq:1fr;--dir:1.05fr">
     <div class="col"><svg class="fig" viewBox="0 0 560 330" xmlns="http://www.w3.org/2000/svg"><defs><marker id="sc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6B6B6B"/></marker></defs><text x="0" y="14" font-size="13.5" font-weight="700" fill="#6B6B6B">AGRUPAMENTO PELO NOME DO MUNICÍPIO</text><rect x="0" y="24" width="132" height="36" fill="#FFF3D1" stroke="#C9962E" stroke-width="2"/><text x="66" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">São Luís</text><path d="M66,62 V88" stroke="#6B6B6B" stroke-width="2" marker-end="url(#sc)"/><rect x="0" y="92" width="132" height="36" fill="#fff" stroke="#8D0333" stroke-width="2"/><text x="66" y="116" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">2.870</text><rect x="142" y="24" width="132" height="36" fill="#FFF3D1" stroke="#C9962E" stroke-width="2"/><text x="208" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">Sao Luis</text><path d="M208,62 V88" stroke="#6B6B6B" stroke-width="2" marker-end="url(#sc)"/><rect x="142" y="92" width="132" height="36" fill="#fff" stroke="#8D0333" stroke-width="2"/><text x="208" y="116" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">806</text><rect x="284" y="24" width="132" height="36" fill="#FFF3D1" stroke="#C9962E" stroke-width="2"/><text x="350" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">S. Luís</text><path d="M350,62 V88" stroke="#6B6B6B" stroke-width="2" marker-end="url(#sc)"/><rect x="284" y="92" width="132" height="36" fill="#fff" stroke="#8D0333" stroke-width="2"/><text x="350" y="116" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">301</text><rect x="426" y="24" width="132" height="36" fill="#FFF3D1" stroke="#C9962E" stroke-width="2"/><text x="492" y="48" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">SAO LUIS</text><path d="M492,62 V88" stroke="#6B6B6B" stroke-width="2" marker-end="url(#sc)"/><rect x="426" y="92" width="132" height="36" fill="#fff" stroke="#8D0333" stroke-width="2"/><text x="492" y="116" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">125</text><text x="0" y="150" font-size="14" fill="#8D0333" font-weight="700">4 grupos, com os 4.102 atendimentos de São Luís divididos</text><text x="0" y="196" font-size="13.5" font-weight="700" fill="#6B6B6B">AGRUPAMENTO PELO CÓDIGO IBGE</text><rect x="0" y="206" width="132" height="36" fill="#E2F5F4" stroke="#0AB0AB" stroke-width="2"/><text x="66" y="230" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">2111300</text><path d="M66,244 L208,272" stroke="#6B6B6B" stroke-width="2" marker-end="url(#sc)"/><rect x="142" y="206" width="132" height="36" fill="#E2F5F4" stroke="#0AB0AB" stroke-width="2"/><text x="208" y="230" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">2111300</text><path d="M208,244 L256,272" stroke="#6B6B6B" stroke-width="2" marker-end="url(#sc)"/><rect x="284" y="206" width="132" height="36" fill="#E2F5F4" stroke="#0AB0AB" stroke-width="2"/><text x="350" y="230" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">2111300</text><path d="M350,244 L303,272" stroke="#6B6B6B" stroke-width="2" marker-end="url(#sc)"/><rect x="426" y="206" width="132" height="36" fill="#E2F5F4" stroke="#0AB0AB" stroke-width="2"/><text x="492" y="230" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">2111300</text><path d="M492,244 L350,272" stroke="#6B6B6B" stroke-width="2" marker-end="url(#sc)"/><rect x="130" y="276" width="300" height="36" fill="#fff" stroke="#0AB0AB" stroke-width="2"/><text x="280" y="300" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">2111300 · 4.102 atendimentos</text></svg>
-      <p class="rodape-corpo" style="margin-top:2px">Contagens ilustrativas. 2.870 + 806 + 301 + 125 = 4.102. Foi este o defeito do cruzamento do encontro 6.</p>
+      <p class="rodape-corpo" style="margin-top:2px">Contagens ilustrativas. 2.870 + 806 + 301 + 125 = 4.102. Foi este o defeito do cruzamento do módulo 5.</p>
     </div>
     <div class="col">
       <div class="def"><span class="rot">Chave primária e chave estrangeira</span>
@@ -975,7 +975,7 @@ Registre as cinco contagens acima na entrega do ciclo 7.4.</pre>
         <div class="bloco">
           <span class="rule" style="background:#D4B277"></span>
           <span class="rot">Uso seguinte</span>
-          <p>Fonte do painel do encontro 9 e do projeto final.</p>
+          <p>Fonte do painel do módulo 8 e do projeto final.</p>
         </div>
     </article>
     <article class="card">
@@ -1016,10 +1016,10 @@ Registre as cinco contagens acima na entrega do ciclo 7.4.</pre>
     <span class="barra"></span>
     <span class="eyebrow">PRÓXIMOS PASSOS</span>
     <h2>Módulo 8: o que preparar</h2>
-    <p class="sub">Visualização de dados e painéis. O encontro 9 tem a entrega B1</p>
+    <p class="sub">Visualização de dados e painéis. O módulo 8 tem a entrega B1</p>
     <div class="corpo"><ol class="steps cols-1 " style="--linhas:5">
     <li><span class="num">1</span>
-      <div><strong>Mantenha projeto.db e saidas/ na pasta do projeto</strong><p>O painel do encontro 9 usa as consultas gravadas, e não uma planilha nova.</p></div>
+      <div><strong>Mantenha projeto.db e saidas/ na pasta do projeto</strong><p>O painel do módulo 8 usa as consultas gravadas, e não uma planilha nova.</p></div>
     </li>
     <li><span class="num">2</span>
       <div><strong>Escolha três dos cinco indicadores</strong><p>Os três que um gestor consultaria primeiro. Anote a razão da escolha.</p></div>
@@ -1031,7 +1031,7 @@ Registre as cinco contagens acima na entrega do ciclo 7.4.</pre>
       <div><strong>Traga um gráfico ruim de relatório, jornal ou apresentação</strong><p>Ele será reconstruído em sala. Leia a parte de visualização do capítulo 3 de Sharda, Delen e Turban.</p></div>
     </li>
     <li><span class="num">5</span>
-      <div><strong>A entrega B1 reúne os encontros 7, 8 e 9</strong><p>Base, modelo, consultas, junção e painel. O comando b1 do script do módulo 8 lista o que falta.</p></div>
+      <div><strong>A entrega B1 reúne os módulos 6, 7 e 8</strong><p>Base, modelo, consultas, junção e painel. O comando b1 do script do módulo 8 lista o que falta.</p></div>
     </li></ol></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>

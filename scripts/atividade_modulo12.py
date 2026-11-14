@@ -403,7 +403,8 @@ def conferir_inventario(problemas):
             problemas.append("inventario-dados.csv, %s: coluna sensivel precisa ser sim ou nao." % rot)
 
     eliminaveis = [l for l in linhas if normalizar(l.get("poderia_ser_eliminado") or "").startswith("s")]
-    if linhas and not eliminaveis:
+    revisadas = [l for l in linhas if "revisad" in normalizar(l.get("poderia_ser_eliminado") or "")]
+    if linhas and not eliminaveis and not revisadas:
         problemas.append("inventario-dados.csv: nenhuma linha marcada como eliminavel. "
                          "O principio da necessidade pede essa revisao. Se nenhum campo "
                          "sobra mesmo, escreva 'nao - revisado' em vez de deixar em branco.")

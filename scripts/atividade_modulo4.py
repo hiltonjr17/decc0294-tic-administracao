@@ -142,7 +142,7 @@ def iniciar():
     if not os.path.exists(AGENTS):
         print()
         print("Nao encontrei o arquivo AGENTS.md nesta pasta.")
-        print("Ele foi criado no encontro 3, pelo script atividade_modulo2.py.")
+        print("Ele foi criado no modulo 2, pelo script atividade_modulo2.py.")
         print("Confirme que voce abriu a pasta certa do projeto.")
         return 1
 

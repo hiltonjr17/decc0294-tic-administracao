@@ -50,7 +50,17 @@ Exemplos tirados do módulo 5:
 
 O imperativo continua adequado nos slides de prática e entrega, porque são instruções ao aluno.
 
-Os slides não trazem marcadores de tempo (minutos por ciclo, por etapa ou por prática). Os tempos ficam só no roteiro do professor. Os divisores mostram apenas as etapas do ciclo (Teoria · Demonstração · Prática · Entrega) e o subtítulo das práticas indica só a forma de trabalho (Individual, Turma inteira).
+Slide autossuficiente (regra de 14 nov. 2026). Toda a explicação fica no próprio slide. O aluno deve entender o conceito e executar a prática só com o deck, sem consultar outro material e sem depender da fala do professor. Na prática:
+
+- todo termo técnico é definido no slide em que aparece pela primeira vez no deck, mesmo que já tenha sido definido em módulo anterior (basta uma linha, com o módulo de origem)
+- o slide não remete a roteiro, livro, documentação ou "explicação em sala" para completar o raciocínio. A fonte é citada como origem da informação, e não como leitura necessária
+- cada prática traz no slide o passo a passo, o texto do pedido ao agente, o resultado esperado e o que fazer quando o resultado for outro
+- cada exemplo traz os dados e a conta, de modo que o leitor refaça o número
+- quando o conteúdo não couber, o slide é dividido em dois. Não se reduz a fonte nem se retira a definição
+
+Os slides não trazem marcadores de tempo (minutos por ciclo, por etapa, por prática ou por apresentação). A duração é ajustada pelo professor em sala. Os tempos ficam só no roteiro do professor.
+
+Os slides também não citam o número do encontro, porque o calendário é ajustado durante o semestre. A referência a outro ponto da disciplina é feita pelo módulo ("o painel do módulo 8", "a C1, no módulo 13"). O módulo N corresponde ao encontro N + 1 no planejamento. A palavra encontro sem número ("neste encontro", "próximo encontro") continua em uso. A única exceção são os blocos de saída de script (`pre.terminal`), que reproduzem o texto impresso pelo script, ainda numerado por encontro. O slide que mostra essa saída traz a nota "Na saída do script, o encontro N corresponde ao módulo N − 1". Os divisores mostram apenas as etapas do ciclo (Teoria · Demonstração · Prática · Entrega) e o subtítulo das práticas indica só a forma de trabalho (Individual, Turma inteira).
 
 ## Conteúdo técnico sobre IA
 

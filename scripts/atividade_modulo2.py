@@ -61,7 +61,7 @@ UFMA, Curso de Administracao, 2026.2
 ## Organizacao ou base de dados escolhida
 
 PREENCHER: qual organizacao ou base publica voce vai usar no semestre, e por que.
-Duas ou tres linhas bastam. A escolha pode ser trocada ate o encontro 6.
+Duas ou tres linhas bastam. A escolha pode ser trocada ate o modulo 5.
 
 ## Como este projeto esta organizado
 
@@ -156,7 +156,7 @@ LEIAME_ENTREGAS = """# Pasta de entregas
 Aqui ficam os arquivos que valem nota. Um arquivo por atividade, com o nome
 que o roteiro do encontro indicar.
 
-Nomes esperados ate o encontro 3:
+Nomes esperados ate o modulo 2:
 
 - modulo1-ciclo1-verificacao.md
 - modulo1-ciclo2-comparacao.md
@@ -409,7 +409,7 @@ def gerar_relatorio(itens, g, ok_n):
     L = []
     L.append("# Relatorio da entrega A1")
     L.append("")
-    L.append("Modulo 2, encontro 3. DECC0294, UFMA, Curso de Administracao.")
+    L.append("Modulo 2. DECC0294, UFMA, Curso de Administracao.")
     L.append("Gerado em %s pelo script atividade_modulo2.py."
              % datetime.now().strftime("%d/%m/%Y as %H:%M"))
     L.append("")

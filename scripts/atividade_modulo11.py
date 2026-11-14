@@ -358,6 +358,16 @@ def vazio(valor):
     return t == "" or t.startswith("(")
 
 
+def normalizar(t):
+    """Minusculas e sem acento, para aceitar 'não' e 'nao' do mesmo jeito."""
+    t = (t or "").strip().lower()
+    for de, para in (("á", "a"), ("à", "a"), ("ã", "a"), ("â", "a"), ("é", "e"),
+                     ("ê", "e"), ("í", "i"), ("ó", "o"), ("õ", "o"), ("ô", "o"),
+                     ("ú", "u"), ("ç", "c")):
+        t = t.replace(de, para)
+    return t
+
+
 def cmd_conferir():
     problemas = []
     print("=" * 62)
@@ -389,16 +399,16 @@ def cmd_conferir():
             problemas.append("ficha-modelo.md: falta " + nome + " (campo " + chave + ")")
 
     # o custo do erro nao pode ser a mesma frase dos dois lados
-    a = (ficha.get("erro_para_mais") or "").strip().lower()
-    b = (ficha.get("erro_para_menos") or "").strip().lower()
+    a = normalizar(ficha.get("erro_para_mais"))
+    b = normalizar(ficha.get("erro_para_menos"))
     if a and b and a == b:
         problemas.append("ficha-modelo.md: errar para mais e errar para menos estao com a mesma "
                          "resposta. Se o custo fosse igual dos dois lados, a decisao seria outra. "
                          "Escreva o que muda em cada direcao.")
 
     # a resposta sobre o palpite simples tem que bater com o resultado
-    declarado = (ficha.get("o_modelo_ganhou_do_palpite_simples") or "").strip().lower()
-    apurado = (res.get("ganhou_do_palpite_simples") or "").strip().lower()
+    declarado = normalizar(ficha.get("o_modelo_ganhou_do_palpite_simples"))
+    apurado = normalizar(res.get("ganhou_do_palpite_simples"))
     if not vazio(declarado) and apurado and not declarado.startswith(apurado):
         problemas.append("ficha-modelo.md: voce escreveu '%s' em ganhou do palpite simples, "
                          "mas o resultado apurado foi '%s'. Confira o arquivo resultado.md."
@@ -418,7 +428,7 @@ def cmd_conferir():
         problemas.append("resultado.md: a secao Leitura sumiu do arquivo.")
 
     # decisao de uso coerente com o resultado
-    uso = (ficha.get("o_que_voce_faria_com_esse_modelo") or "").strip().lower()
+    uso = normalizar(ficha.get("o_que_voce_faria_com_esse_modelo"))
     if apurado == "nao" and uso.startswith("usar") and "ressalva" not in uso and "nao" not in uso:
         problemas.append("ficha-modelo.md: o modelo perdeu para o palpite simples e voce escreveu "
                          "que usaria mesmo assim, sem ressalva. Justifique ou mude a resposta.")

@@ -440,7 +440,7 @@ def cmd_conferir():
     print("  backlog-priorizado.md     ordem por valor sobre esforco e o que cabe na versao 1")
     print("  registro-teste.md         achados classificados e proxima versao definida")
     print()
-    print("Faca o commit pelo GitHub Desktop. No encontro 16 voce apresenta o produto,")
+    print("Faca o commit pelo GitHub Desktop. No modulo 15 voce apresenta o produto,")
     print("inclusive o que ainda nao funciona.")
 
 
