@@ -23,7 +23,9 @@ COMO USAR (peca ao agente do opencode que execute cada comando)
 
   python atividade_modulo15.py pares
       Cria entregas/avaliacao-pares.md, com as quatro perguntas para tres
-      apresentacoes. Rodado de novo, confere se as justificativas foram escritas.
+      apresentacoes. Rodado de novo, confere se as justificativas foram escritas
+      e se cada apresentacao esta identificada pelo codigo da ordem publicada
+      (como A05), sem o nome do colega.
 
   python atividade_modulo15.py portfolio
       Gera saidas/portfolio.md com o indice do semestre.
@@ -79,8 +81,13 @@ Preencha durante a apresentacao, e nao depois. Sim ou nao, mais uma frase
 de justificativa em cada resposta. Justificativa vazia ou elogio generico
 nao conta: escreva o que, especificamente, ficou claro ou nao ficou.
 
+Quem voce avalia: as tres apresentacoes que vem logo depois da sua na ordem
+publicada. A ordem e circular: depois da ultima vem a primeira.
+Identifique cada apresentacao pelo codigo da ordem publicada (como A05).
+Nao escreva o nome do colega: este arquivo vai para o repositorio.
+
 ## Apresentacao 1
-quem_apresentou_1: (nome ou identificacao)
+quem_apresentou_1: (codigo da ordem publicada, como A05)
 problema_ficou_claro_1: (sim/nao) | (justificativa)
 demonstracao_funcionou_1: (sim/nao) | (justificativa)
 disse_o_que_nao_funciona_1: (sim/nao) | (justificativa)
@@ -88,7 +95,7 @@ voce_usaria_no_seu_setor_1: (sim/nao) | (justificativa)
 ideia_que_voce_leva_1: (uma coisa que voce vai usar no seu produto)
 
 ## Apresentacao 2
-quem_apresentou_2: (nome ou identificacao)
+quem_apresentou_2: (codigo da ordem publicada, como A06)
 problema_ficou_claro_2: (sim/nao) | (justificativa)
 demonstracao_funcionou_2: (sim/nao) | (justificativa)
 disse_o_que_nao_funciona_2: (sim/nao) | (justificativa)
@@ -96,7 +103,7 @@ voce_usaria_no_seu_setor_2: (sim/nao) | (justificativa)
 ideia_que_voce_leva_2: (uma coisa que voce vai usar no seu produto)
 
 ## Apresentacao 3
-quem_apresentou_3: (nome ou identificacao)
+quem_apresentou_3: (codigo da ordem publicada, como A07)
 problema_ficou_claro_3: (sim/nao) | (justificativa)
 demonstracao_funcionou_3: (sim/nao) | (justificativa)
 disse_o_que_nao_funciona_3: (sim/nao) | (justificativa)
@@ -126,12 +133,27 @@ ENTREGAS = [
     (13, "Matriz, mapa do documento e devolutiva (C1)",
      ["entregas/matriz-decisao.csv", "saidas/resultado-decisao.md",
       "entregas/mapa-documento.md", "entregas/devolutiva.md"]),
-    (14, "Ficha do produto, backlog e teste com usuario",
-     ["entregas/ficha-produto.md", "entregas/backlog.csv",
+    (14, "Produto, ficha, backlog e teste com usuario",
+     ["entregas/produto.html", "entregas/ficha-produto.md", "entregas/backlog.csv",
       "saidas/backlog-priorizado.md", "entregas/registro-teste.md"]),
-    (15, "Apresentacao e avaliacao por pares",
-     ["entregas/roteiro-apresentacao.md", "entregas/avaliacao-pares.md"]),
+    # prompts/modulo aceita qualquer arquivo do caderno de prompts cujo nome
+    # comece por modulo (modulo2-..., modulo3-..., modulo9-..., modulo14-...).
+    (15, "Apresentacao, avaliacao por pares e caderno de prompts",
+     ["entregas/roteiro-apresentacao.md", "entregas/avaliacao-pares.md",
+      "prompts/modulo"]),
 ]
+
+# Como o item aparece na lista do que falta, quando o prefixo sozinho nao explica.
+NOME_NA_LISTA = {
+    "prompts/modulo": "prompts/modulo... (caderno de prompts: nenhum arquivo encontrado)",
+}
+
+# Codigo da ordem de apresentacao: uma letra opcional e de 1 a 3 digitos (A05, 5).
+def codigo_valido(valor):
+    t = (valor or "").strip().upper()
+    if t[:1].isalpha():
+        t = t[1:]
+    return t.isdigit() and 1 <= len(t) <= 3
 
 def existe(padrao):
     """Aceita caminho exato ou prefixo de nome dentro da pasta."""
@@ -206,13 +228,13 @@ def cmd_c2():
     print()
 
     if faltando:
-        print("Faltam %d arquivos:" % len(faltando))
+        print("Falta 1 arquivo:" if len(faltando) == 1 else "Faltam %d arquivos:" % len(faltando))
         atual = None
         for modulo, pedido in faltando:
             if modulo != atual:
                 print("  modulo %d:" % modulo)
                 atual = modulo
-            print("    - %s" % pedido)
+            print("    - %s" % NOME_NA_LISTA.get(pedido, pedido))
         print()
         print("Peca ao agente a conferencia de cada modulo para o detalhe do conteudo:")
         print("  atividade_modulo13.py com o comando c1        (modulos 11, 12 e 13)")
@@ -261,6 +283,9 @@ def cmd_pares():
         if vazio(quem):
             problemas.append("apresentacao %d: nao identificada." % i)
             continue
+        if not codigo_valido(quem):
+            problemas.append("apresentacao %d: use o codigo da ordem publicada (como A05), "
+                             "e nao o nome do colega." % i)
         avaliadas += 1
         for base, nome in (("problema_ficou_claro", "o problema ficou claro"),
                            ("demonstracao_funcionou", "a demonstracao funcionou"),
@@ -292,7 +317,7 @@ def cmd_pares():
     print("apresentacoes avaliadas:", avaliadas, "de 3")
     print()
     if problemas:
-        print("Faltam %d itens:\n" % len(problemas))
+        print("Falta 1 item:\n" if len(problemas) == 1 else "Faltam %d itens:\n" % len(problemas))
         for i, p in enumerate(problemas, 1):
             print(" %d. %s" % (i, p))
         print()
@@ -368,6 +393,9 @@ def cmd_portfolio():
     print()
     print("Guarde o repositorio fora do computador do laboratorio. A maquina pode ser")
     print("restaurada; o que esta no GitHub, nao.")
+    print()
+    print("Antes de tornar o repositorio publico, retire dos arquivos o nome de colegas,")
+    print("de usuarios do teste e de qualquer outra pessoa.")
 
 
 def main():

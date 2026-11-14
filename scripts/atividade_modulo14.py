@@ -6,8 +6,15 @@ UFMA - Curso de Administracao
 O QUE ESTE SCRIPT FAZ
 
 Ele cria a ficha do produto, o backlog e o registro do teste com usuario,
-ordena as historias por valor sobre esforco, diz o que cabe na versao 1 e
-confere se a entrega do encontro esta completa.
+ordena as historias por valor sobre esforco, diz o que cabe na versao 1,
+grava um produto de partida e confere se a entrega do encontro esta completa.
+
+O PRODUTO DESTE MODULO
+
+Uma pagina HTML unica, entregas/produto.html, que abre com duplo clique, sem
+servidor e sem biblioteca externa. Quem escreve a pagina e o agente, uma
+historia de usuario por vez. O comando partida grava uma pagina minima para
+quem travar.
 
 Nao usa biblioteca externa, nao acessa a rede e nao usa modelo de linguagem.
 
@@ -24,13 +31,19 @@ COMO USAR (peca ao agente do opencode que execute cada comando)
       valor sobre esforco e diz o que cabe na versao 1.
       Grava saidas/backlog-priorizado.md.
 
+  python atividade_modulo14.py partida
+      Grava em entregas/produto.html uma pagina minima (pedido de material),
+      com formulario, validacao de entrada e mensagem de erro. Nao sobrescreve
+      produto.html que ja exista.
+
   python atividade_modulo14.py teste
       Cria entregas/registro-teste.md para o teste com usuario do ciclo 14.4.
 
   python atividade_modulo14.py conferir
-      Confere as tres entregas do encontro.
+      Confere as entregas do encontro: ficha, backlog priorizado, produto.html
+      e registro do teste.
 
-ORDEM: produto -> backlog -> priorizar -> construir -> teste -> conferir.
+ORDEM: produto -> backlog -> priorizar -> construir (ou partida) -> teste -> conferir.
 
 A REGRA DO CRITERIO DE ACEITE
 
@@ -56,6 +69,7 @@ FICHA = os.path.join(PASTA_ENTREGAS, "ficha-produto.md")
 BACKLOG = os.path.join(PASTA_ENTREGAS, "backlog.csv")
 TESTE = os.path.join(PASTA_ENTREGAS, "registro-teste.md")
 PRIORIZADO = os.path.join(PASTA_SAIDAS, "backlog-priorizado.md")
+PRODUTO = os.path.join(PASTA_ENTREGAS, "produto.html")
 
 MIN_HISTORIAS = 5
 MAX_HISTORIAS = 10
@@ -69,12 +83,18 @@ CRITERIOS_VAGOS = ["funcionar bem", "funcionar", "ficar bom", "ficar bonito", "e
                    "ser facil", "ser intuitivo", "ficar pronto", "estar ok", "rodar",
                    "ficar legal", "atender o usuario", "ser util"]
 
+# Inicio da parte "quero ..." que descreve a solucao (um elemento de tela) em
+# vez da acao que a pessoa quer realizar. Comparado depois de normalizar.
+SOLUCOES = ["um botao", "uma tela", "um menu", "uma aba", "uma janela", "um icone",
+            "uma pagina", "um site", "um aplicativo", "um app", "um sistema",
+            "um painel", "um dashboard", "um campo", "um formulario", "um link"]
+
 CABECALHO_BACKLOG = ["id", "historia", "criterio_de_aceite", "valor", "esforco", "na_versao_1"]
 
 EXEMPLO_BACKLOG = [
     ["EXEMPLO - apague esta linha",
      "Como assistente da divisao de pessoal, quero gerar a escala do mes a partir da planilha de plantoes, para nao redigitar 40 linhas por mes",
-     "O arquivo escala.csv e gerado com uma linha por servidor e as colunas nome, data e turno, na ordem definida",
+     "A pagina mostra uma linha por servidor com as colunas nome, data e turno, e recusa data fora do mes com mensagem",
      "5", "3", "sim"],
 ]
 
@@ -101,7 +121,7 @@ o_que_fica_de_fora: (o que foi cortado para caber. Nada se perde: vai para o bac
 TEXTO_TESTE = """# Registro do teste com usuario
 
 ## A tarefa
-quem_testou: (cargo ou "colega da turma")
+quem_testou: (o cargo de quem testou, ou "colega da turma, no papel de [cargo]")
 tarefa_dada: (a tarefa concreta, escrita, que a pessoa recebeu)
 tempo_ate_concluir_minutos: (ou NAO CONCLUIU)
 
@@ -121,6 +141,104 @@ o_que_entra_na_versao_2: (o que vem primeiro, e por que)
 
 ## Retrospectiva
 o_que_atrapalhou_a_construcao: (o que voce faria diferente na proxima)
+"""
+
+
+TEXTO_PARTIDA = r"""<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Pedido de material - produto de partida</title>
+<style>
+body{font-family:"Segoe UI",Arial,sans-serif;max-width:760px;margin:24px auto;padding:0 16px;color:#222}
+h1{color:#8D0333;font-size:26px}
+.instrucao{background:#f6f2f3;border-left:6px solid #8D0333;padding:10px 14px;font-size:15px;line-height:1.45}
+.aviso{font-size:13px;color:#666}
+label{display:block;margin-top:14px;font-weight:600}
+input{font-size:16px;padding:5px 8px;width:260px}
+.erro{color:#b00020;font-size:14px;margin-left:8px}
+button{margin-top:16px;font-size:16px;padding:7px 18px;background:#8D0333;color:#fff;border:0;cursor:pointer}
+#saldo{margin-top:18px;font-size:17px;font-weight:600}
+table{border-collapse:collapse;margin-top:12px;width:100%}
+th,td{border-bottom:1px solid #ddd;padding:6px 8px;text-align:left}
+th{background:#8D0333;color:#fff}
+</style>
+</head>
+<body>
+<h1>Pedido de material</h1>
+<div class="instrucao">
+<b>Para que serve:</b> registrar pedidos de papel e acompanhar o saldo do almoxarifado.<br>
+<b>O que entra:</b> o material e a quantidade pedida, em n&uacute;mero inteiro.<br>
+<b>O que sai:</b> a lista dos pedidos registrados e o saldo atualizado.<br>
+<b>Quando aparecer erro:</b> leia a mensagem em vermelho ao lado do campo, corrija e clique de novo em Registrar.
+</div>
+<p class="aviso">Produto de partida gravado por atividade_modulo14.py. Troque t&iacute;tulo, campos e regras pelos do seu backlog, uma hist&oacute;ria por vez. Os pedidos ficam s&oacute; nesta aba e somem quando ela &eacute; fechada.</p>
+<form id="pedido" novalidate>
+  <label for="material">Material</label>
+  <input id="material" autocomplete="off"><span class="erro" id="erro-material"></span>
+  <label for="quantidade">Quantidade (resmas)</label>
+  <input id="quantidade" autocomplete="off"><span class="erro" id="erro-quantidade"></span>
+  <br><button type="submit">Registrar</button>
+</form>
+<p id="saldo"></p>
+<table><thead><tr><th>Material</th><th>Quantidade</th><th>Saldo depois do pedido</th></tr></thead>
+<tbody id="lista"></tbody></table>
+<script>
+var SALDO_INICIAL = 40;
+var UNIDADE = "resmas";
+var saldo = SALDO_INICIAL;
+
+function mostrarSaldo() {
+  document.getElementById("saldo").textContent = "Saldo dispon\u00edvel: " + saldo + " " + UNIDADE + ".";
+}
+
+function erro(campo, mensagem) {
+  document.getElementById("erro-" + campo).textContent = mensagem;
+}
+
+function registrar(evento) {
+  evento.preventDefault();
+  erro("material", "");
+  erro("quantidade", "");
+  var material = document.getElementById("material").value.trim();
+  var texto = document.getElementById("quantidade").value.trim();
+  var ok = true;
+  var quantidade = 0;
+
+  // validacao sintatica: campo preenchido, tipo e formato
+  if (material === "") { erro("material", "Informe o material."); ok = false; }
+  if (texto === "") {
+    erro("quantidade", "Informe a quantidade."); ok = false;
+  } else if (!/^[0-9]+$/.test(texto)) {
+    erro("quantidade", "A quantidade precisa ser um n\u00famero inteiro."); ok = false;
+  } else {
+    quantidade = parseInt(texto, 10);
+    // validacao semantica: o valor faz sentido para a operacao
+    if (quantidade <= 0) {
+      erro("quantidade", "A quantidade precisa ser maior que zero."); ok = false;
+    } else if (quantidade > saldo) {
+      erro("quantidade", "Saldo dispon\u00edvel de " + saldo + " " + UNIDADE + "."); ok = false;
+    }
+  }
+  if (!ok) { return; }
+
+  saldo = saldo - quantidade;
+  var linha = document.createElement("tr");
+  [material, String(quantidade), String(saldo)].forEach(function (valor) {
+    var celula = document.createElement("td");
+    celula.textContent = valor;
+    linha.appendChild(celula);
+  });
+  document.getElementById("lista").appendChild(linha);
+  document.getElementById("pedido").reset();
+  mostrarSaldo();
+}
+
+document.getElementById("pedido").addEventListener("submit", registrar);
+mostrarSaldo();
+</script>
+</body>
+</html>
 """
 
 
@@ -202,6 +320,23 @@ def cmd_backlog():
     print("Escreva de %d a %d historias." % (MIN_HISTORIAS, MAX_HISTORIAS))
 
 
+def cmd_partida():
+    os.makedirs(PASTA_ENTREGAS, exist_ok=True)
+    if os.path.exists(PRODUTO):
+        print("O produto ja existe em", PRODUTO)
+        print("Nada foi gravado, para nao apagar o seu trabalho. Se quiser recomecar,")
+        print("renomeie o arquivo atual e rode o comando de novo.")
+        return
+    with open(PRODUTO, "w", encoding="utf-8", newline="\n") as f:
+        f.write(TEXTO_PARTIDA)
+    print("Produto de partida gravado em", PRODUTO)
+    print()
+    print("Abra com duplo clique na pasta entregas. A pagina registra pedidos de papel")
+    print("com saldo de 40 resmas e recusa campo vazio, quantidade que nao e numero")
+    print("inteiro, zero e pedido acima do saldo, com mensagem ao lado do campo.")
+    print("Construa sobre ela a primeira historia do seu backlog, uma por vez.")
+
+
 def cmd_teste():
     os.makedirs(PASTA_ENTREGAS, exist_ok=True)
     if os.path.exists(TESTE):
@@ -237,6 +372,13 @@ def ler_backlog(problemas):
             if "para " not in historia:
                 problemas.append("%s: a historia nao tem a parte 'para [resultado]'. "
                                  "E a parte que justifica construir." % ident)
+            if "quero " in historia:
+                acao = historia.split("quero ", 1)[1].strip()
+                solucao = [x for x in SOLUCOES if acao == x or acao.startswith(x + " ")]
+                if solucao:
+                    problemas.append("%s: depois de 'quero' vem a solucao ('%s'), e nao a acao. "
+                                     "Escreva o que a pessoa quer fazer, com verbo, como "
+                                     "'quero exportar o mapa em PDF'." % (ident, solucao[0]))
 
         criterio = (l.get("criterio_de_aceite") or "").strip()
         cn = normalizar(criterio)
@@ -309,8 +451,12 @@ def cmd_priorizar():
         fora = [m for m in marcadas if m not in cabem]
         if fora:
             print("Voce marcou como versao 1: %s" % ", ".join(marcadas))
-            print("Destas, %s ficam fora do que cabe pela ordem de valor sobre esforco."
-                  % ", ".join(fora))
+            if len(fora) == 1:
+                lista_fora, verbo = fora[0], "fica"
+            else:
+                lista_fora, verbo = ", ".join(fora[:-1]) + " e " + fora[-1], "ficam"
+            print("Destas, %s %s fora do que cabe pela ordem de valor sobre esforco."
+                  % (lista_fora, verbo))
             print("Isso pode estar certo, se houver dependencia entre historias. Se for o caso,")
             print("escreva a dependencia no backlog. Se nao for, refaca o corte.")
         else:
@@ -364,7 +510,7 @@ def conferir_ficha(problemas):
     usuario = normalizar(campos.get("usuario_cargo"))
     if usuario and usuario in USUARIOS_VAGOS:
         problemas.append("ficha-produto.md: '%s' e um grupo, nao um cargo. Escolha uma pessoa "
-                         "concreta pelo cargo, porque e ela que vai testar o produto."
+                         "concreta pelo cargo, porque o produto e escrito para ela."
                          % campos.get("usuario_cargo"))
 
     tempo = num(campos.get("tempo_por_execucao_minutos"))
@@ -376,6 +522,17 @@ def conferir_ficha(problemas):
     if not vazio(passos) and passos.count(";") < 2:
         problemas.append("ficha-produto.md: o caminho atual tem menos de tres passos. "
                          "Descreva o que a pessoa faz hoje com grao fino, separando por ponto e virgula.")
+
+
+def conferir_produto(problemas):
+    if not os.path.exists(PRODUTO):
+        problemas.append("produto.html nao existe. Construa a versao 1 ou rode o comando partida.")
+        return
+    with open(PRODUTO, "r", encoding="utf-8", errors="replace") as f:
+        conteudo = f.read().replace("\r\n", "\n")
+    if conteudo.strip() == TEXTO_PARTIDA.strip():
+        problemas.append("produto.html ainda e o produto de partida, sem alteracao. Construa "
+                         "sobre ele pelo menos uma historia do seu backlog.")
 
 
 def conferir_teste(problemas):
@@ -423,10 +580,14 @@ def cmd_conferir():
         problemas.append("backlog-priorizado.md nao existe. Rode: python atividade_modulo14.py priorizar")
     else:
         ler_backlog(problemas)
+    conferir_produto(problemas)
     conferir_teste(problemas)
 
     if problemas:
-        print("A entrega ainda nao esta completa. Faltam", len(problemas), "itens:\n")
+        if len(problemas) == 1:
+            print("A entrega ainda nao esta completa. Falta 1 item:\n")
+        else:
+            print("A entrega ainda nao esta completa. Faltam", len(problemas), "itens:\n")
         for i, p in enumerate(problemas, 1):
             print(" %d. %s" % (i, p))
         print()
@@ -438,6 +599,7 @@ def cmd_conferir():
     print("  ficha-produto.md          usuario pelo cargo, caminho atual medido, escopo cortado")
     print("  backlog.csv               historias no formato, com criterio de aceite verificavel")
     print("  backlog-priorizado.md     ordem por valor sobre esforco e o que cabe na versao 1")
+    print("  produto.html              a pagina do produto, alterada sobre a de partida")
     print("  registro-teste.md         achados classificados e proxima versao definida")
     print()
     print("Faca o commit pelo GitHub Desktop. No modulo 15 voce apresenta o produto,")
@@ -455,13 +617,15 @@ def main():
         cmd_backlog()
     elif comando == "priorizar":
         cmd_priorizar()
+    elif comando == "partida":
+        cmd_partida()
     elif comando == "teste":
         cmd_teste()
     elif comando == "conferir":
         cmd_conferir()
     else:
         print("Comando desconhecido:", comando)
-        print("Use: produto, backlog, priorizar, teste, conferir")
+        print("Use: produto, backlog, priorizar, partida, teste, conferir")
 
 
 if __name__ == "__main__":

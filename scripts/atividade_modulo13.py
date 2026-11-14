@@ -5,13 +5,18 @@ UFMA - Curso de Administracao
 
 O QUE ESTE SCRIPT FAZ
 
-Ele monta a matriz de decisao, calcula a nota ponderada de cada alternativa,
-testa se a vencedora muda quando o peso do criterio principal muda, cria o
-modelo da devolutiva e confere a entrega C1 inteira.
+Ele grava o caso de reserva (edital, tres propostas e minuta de contrato,
+todos ficticios), monta a matriz de decisao, calcula a nota ponderada de cada
+alternativa, testa se a vencedora muda quando o peso do criterio principal
+muda, cria o modelo da devolutiva e confere a entrega C1 inteira.
 
 Nao usa biblioteca externa, nao acessa a rede e nao usa modelo de linguagem.
 
 COMO USAR (peca ao agente do opencode que execute cada comando)
+
+  python atividade_modulo13.py reserva
+      Grava dados/caso-reserva-modulo13.md com o edital ficticio, as tres
+      propostas ficticias e a minuta de contrato ficticia do caso de reserva.
 
   python atividade_modulo13.py matriz
       Cria entregas/matriz-decisao.csv com as colunas exigidas e um exemplo.
@@ -21,7 +26,7 @@ COMO USAR (peca ao agente do opencode que execute cada comando)
       Grava saidas/resultado-decisao.md.
 
   python atividade_modulo13.py devolutiva
-      Cria entregas/devolutiva.md com as quatro secoes exigidas.
+      Cria entregas/devolutiva.md com as cinco secoes exigidas.
 
   python atividade_modulo13.py conferir
       Confere as entregas deste encontro.
@@ -29,13 +34,34 @@ COMO USAR (peca ao agente do opencode que execute cada comando)
   python atividade_modulo13.py c1
       Confere a entrega C1 inteira, dos modulos 11, 12 e 13.
 
-ORDEM: matriz -> preencher criterios e pesos -> dar notas -> avaliar ->
-devolutiva -> preencher -> conferir -> c1.
+ORDEM: reserva -> matriz -> preencher criterios e pesos -> dar notas ->
+avaliar -> devolutiva -> preencher -> conferir -> c1.
 
 A ORDEM DOS PESOS
 
 Preencha peso e justificativa ANTES de dar nota a qualquer alternativa. Peso
-escolhido depois de ver o resultado nao e criterio, e justificativa.
+escolhido depois de ver as notas tende a favorecer a alternativa que ja se
+prefere, e a matriz deixa de mostrar o criterio realmente usado.
+
+ONDE FICA A ESCALA DE PONTUACAO
+
+A escala de pontuacao e a regra, escrita antes das notas, que converte o dado
+do documento em nota de 0 a 10. Ela fica na coluna justificativa_do_peso,
+depois da justificativa. Exemplo: "maior parte do custo. Escala: menor preco
+= 10, ate 10% acima = 8". O script confere que a coluna esta preenchida, mas
+nao confere a escala.
+
+EDICAO DO CSV
+
+Peca ao agente que edite entregas/matriz-decisao.csv ou use o Bloco de Notas.
+Ao salvar, o Excel pode trocar o separador ponto e virgula por virgula e a
+codificacao UTF-8 por outra. O script avisa quando isso acontece.
+
+EMPATE TECNICO
+
+O limite de 5% e regra deste script para a matriz da disciplina. Ele nao tem
+relacao com o empate de microempresa e empresa de pequeno porte em licitacao
+(Lei Complementar 123/2006, art. 44).
 """
 
 import csv
@@ -51,22 +77,28 @@ if os.path.basename(_AQUI) == "scripts":
 
 PASTA_SAIDAS = "saidas"
 PASTA_ENTREGAS = "entregas"
+PASTA_DADOS = "dados"
+RESERVA = os.path.join(PASTA_DADOS, "caso-reserva-modulo13.md")
 MATRIZ = os.path.join(PASTA_ENTREGAS, "matriz-decisao.csv")
 DEVOLUTIVA = os.path.join(PASTA_ENTREGAS, "devolutiva.md")
 MAPA = os.path.join(PASTA_ENTREGAS, "mapa-documento.md")
 RESULTADO = os.path.join(PASTA_SAIDAS, "resultado-decisao.md")
 
-MIN_CRITERIOS = 4
-MAX_CRITERIOS = 7
+MIN_CRITERIOS = 3
+MAX_CRITERIOS = 4
+MIN_ALTERNATIVAS = 2
+MAX_ALTERNATIVAS = 3
 EMPATE_TECNICO = 5.0
 DESLOCAMENTO = 20.0
 
 CABECALHO = ["criterio", "peso", "justificativa_do_peso", "alternativa", "nota", "razao_da_nota", "fonte_no_documento"]
 
 EXEMPLO = [
-    ["EXEMPLO preco total - apague estas linhas", "40", "e o maior componente do custo do contrato",
+    ["EXEMPLO preco total - apague estas linhas", "40",
+     "e o maior componente do custo do contrato. Escala: menor preco = 8, ate 15% acima = 6",
      "Proposta A", "8", "menor valor entre as tres", "item 5.1 da proposta"],
-    ["EXEMPLO preco total - apague estas linhas", "40", "e o maior componente do custo do contrato",
+    ["EXEMPLO preco total - apague estas linhas", "40",
+     "e o maior componente do custo do contrato. Escala: menor preco = 8, ate 15% acima = 6",
      "Proposta B", "6", "12% acima da menor", "item 5.1 da proposta"],
 ]
 
@@ -94,6 +126,80 @@ norma_conferida_em: (onde voce conferiu o texto do artigo, com data. Se nao ha n
 ## 5. Responsabilidade
 cargo_de_quem_assina: (o cargo, nao o nome)
 uso_de_ferramenta: (em que a ferramenta de IA foi usada nesta devolutiva)
+"""
+
+
+TEXTO_RESERVA = """# Caso de reserva do modulo 13 (ficticio)
+
+Todos os nomes, valores e documentos abaixo sao ficticios, criados para a
+disciplina DECC0294. Nenhum se refere a orgao ou empresa real.
+
+## 1. Edital ficticio n. 07/2026, Prefeitura de Vila Serena
+
+objeto: consultoria para mapear e redesenhar o processo de compras da
+Secretaria de Administracao, com manual do novo processo e capacitacao dos
+servidores.
+criterio_de_julgamento: tecnica e preco (Lei 14.133/2021, art. 36). Neste caso
+de reserva, os fatores de julgamento e os pesos sao definidos por voce, no
+papel da comissao, antes de abrir as propostas. Em edital real, eles ja vem
+publicados no edital.
+valor_estimado: R$ 240.000,00
+prazo_maximo_de_execucao: 180 dias, contados da ordem de servico
+habilitacao_tecnica: ao menos 1 atestado de capacidade tecnica de servico
+semelhante (mapeamento de processo em orgao publico)
+equipe_minima: coordenador com pos-graduacao em Administracao ou Engenharia
+de Producao
+capacitacao_exigida: 16 horas para 40 servidores
+anexos: termo de referencia e minuta de contrato (secao 3 deste arquivo)
+
+## 2. As tres propostas ficticias
+
+Abra esta secao so depois de escrever criterios, pesos e escala de pontuacao.
+
+| item | Proposta X | Proposta Y | Proposta Z |
+|---|---|---|---|
+| preco global | R$ 198.000,00 | R$ 236.000,00 | R$ 214.000,00 |
+| prazo de execucao | 170 dias | 120 dias | 150 dias |
+| atestados de servico semelhante | 1 | 4 | 2 |
+| formacao do coordenador | especializacao | doutorado | mestrado |
+| visitas presenciais por mes | 2 | 4 | 4 |
+| horas de capacitacao | 16 | 16 | 16 |
+
+As tres atendem a habilitacao e a equipe minima.
+
+## 3. Minuta de contrato ficticia (anexo do edital)
+
+Clausula 1 - Objeto
+1.1 "Consultoria para mapeamento e redesenho do processo de compras da
+Secretaria de Administracao, com entrega de manual e capacitacao de 16 horas
+para 40 servidores."
+
+Clausula 2 - Prazo e etapas
+2.1 "O prazo de execucao e de 180 dias, contados da ordem de servico."
+2.2 "Etapa 1, diagnostico, ate 60 dias. Etapa 2, redesenho, ate 120 dias.
+Etapa 3, manual e capacitacao, ate 180 dias."
+
+Clausula 3 - Preco e pagamento
+3.1 "O pagamento de cada etapa sera efetuado em ate 30 dias apos o atesto da
+nota fiscal pelo fiscal do contrato."
+
+Clausula 4 - Obrigacoes da contratada
+4.1 "Manter o coordenador indicado na proposta durante toda a execucao."
+4.2 "Entregar o relatorio de cada etapa no prazo da clausula 2.2."
+
+Clausula 5 - Penalidades
+5.1 "O atraso injustificado sujeita a contratada a multa de mora de 0,5% por
+dia sobre o valor da etapa em atraso, limitada a 10% desse valor."
+
+Clausula 6 - Extincao
+6.1 "O contrato podera ser extinto nas hipoteses previstas na Lei 14.133/2021."
+
+Clausula 7 - Fiscalizacao
+7.1 "A fiscalizacao sera exercida por servidor designado por portaria."
+7.2 "O recebimento provisorio de cada etapa sera feito pelo fiscal, por termo
+detalhado."
+
+Fim da minuta.
 """
 
 
@@ -132,6 +238,21 @@ def fmt(v):
 
 # ---------------------------------------------------------------- comandos
 
+def cmd_reserva():
+    os.makedirs(PASTA_DADOS, exist_ok=True)
+    if os.path.exists(RESERVA):
+        print("O caso de reserva ja existe em", RESERVA)
+        return
+    with open(RESERVA, "w", encoding="utf-8") as f:
+        f.write(TEXTO_RESERVA)
+    print("Caso de reserva gravado em", RESERVA)
+    print()
+    print("Secao 1: edital ficticio. Leia e escreva criterios, pesos e escala de")
+    print("pontuacao antes de abrir a secao 2, com as tres propostas.")
+    print("Secao 3: minuta de contrato ficticia, para o mapa do ciclo 13.2 de quem")
+    print("nao tem documento proprio que possa enviar ao modelo.")
+
+
 def cmd_matriz():
     os.makedirs(PASTA_ENTREGAS, exist_ok=True)
     if os.path.exists(MATRIZ):
@@ -146,24 +267,45 @@ def cmd_matriz():
     print()
     print("Uma linha por par criterio e alternativa. O peso se repete em todas as")
     print("linhas do mesmo criterio, e a justificativa tambem.")
+    print("Na coluna justificativa_do_peso, escreva a justificativa e depois a")
+    print("escala de pontuacao. Exemplo: \"maior parte do custo. Escala: menor")
+    print("preco = 10, ate 10% acima = 8\".")
     print()
     print("Regras que o script verifica:")
-    print("  - de %d a %d criterios" % (MIN_CRITERIOS, MAX_CRITERIOS))
+    print("  - de %d a %d criterios e de %d a %d alternativas"
+          % (MIN_CRITERIOS, MAX_CRITERIOS, MIN_ALTERNATIVAS, MAX_ALTERNATIVAS))
     print("  - pesos somando 100 (contando cada criterio uma vez)")
     print("  - justificativa do peso escrita em todo criterio")
     print("  - nota de 0 a 10, com razao e fonte no documento")
     print("  - toda alternativa avaliada em todo criterio")
+    print()
+    print("Para editar, peca ao agente ou use o Bloco de Notas. O Excel pode trocar")
+    print("o ponto e virgula por virgula e mudar a codificacao ao salvar.")
 
 
 def ler_matriz():
     if not os.path.exists(MATRIZ):
         print("A matriz nao existe. Rode: python atividade_modulo13.py matriz")
         sys.exit(1)
-    with open(MATRIZ, "r", encoding="utf-8-sig", newline="") as f:
-        linhas = [dict(l) for l in csv.DictReader(f, delimiter=";")]
+    try:
+        with open(MATRIZ, "r", encoding="utf-8-sig", newline="") as f:
+            texto = f.read()
+    except UnicodeDecodeError:
+        print("A matriz nao esta em UTF-8. Isso acontece quando o arquivo e salvo")
+        print("pelo Excel. Peca ao agente: \"converta entregas/matriz-decisao.csv para")
+        print("UTF-8, com ponto e virgula como separador, sem mudar o conteudo\".")
+        sys.exit(1)
+    primeira = texto.splitlines()[0] if texto.strip() else ""
+    if "criterio" in normalizar(primeira) and ";" not in primeira:
+        print("O cabecalho da matriz nao usa ponto e virgula como separador. Isso")
+        print("acontece quando o arquivo e salvo pelo Excel. Peca ao agente: \"troque o")
+        print("separador de entregas/matriz-decisao.csv para ponto e virgula, sem mudar")
+        print("o conteudo\".")
+        sys.exit(1)
+    linhas = [dict(l) for l in csv.DictReader(texto.splitlines(), delimiter=";")]
     linhas = [l for l in linhas if not normalizar(l.get("criterio")).startswith("exemplo")]
     if not linhas:
-        print("A matriz esta vazia. Apague o exemplo, sim, mas escreva as suas linhas.")
+        print("A matriz so tem as linhas EXEMPLO, que o script ignora. Escreva as linhas do seu caso.")
         sys.exit(1)
     return linhas
 
@@ -221,14 +363,16 @@ def cmd_avaliar():
     criterios, alternativas = montar(linhas, problemas)
 
     if len(criterios) < MIN_CRITERIOS:
-        problemas.append("ha %d criterios. O minimo e %d: menos que isso esconde a decisao."
-                         % (len(criterios), MIN_CRITERIOS))
+        problemas.append("ha %d criterios. O minimo e %d." % (len(criterios), MIN_CRITERIOS))
     if len(criterios) > MAX_CRITERIOS:
-        problemas.append("ha %d criterios. O maximo e %d: mais que isso dilui os pesos e "
-                         "as alternativas empatam." % (len(criterios), MAX_CRITERIOS))
-    if len(alternativas) < 2:
-        problemas.append("ha %d alternativa. Uma decisao precisa de pelo menos duas."
-                         % len(alternativas))
+        problemas.append("ha %d criterios. O maximo nesta atividade e %d. Escolha os que "
+                         "separam as alternativas." % (len(criterios), MAX_CRITERIOS))
+    if len(alternativas) < MIN_ALTERNATIVAS:
+        problemas.append("ha %d alternativa. Uma decisao precisa de pelo menos %d."
+                         % (len(alternativas), MIN_ALTERNATIVAS))
+    if len(alternativas) > MAX_ALTERNATIVAS:
+        problemas.append("ha %d alternativas. O maximo nesta atividade e %d."
+                         % (len(alternativas), MAX_ALTERNATIVAS))
 
     for crit, dados in criterios.items():
         faltando = [a for a in alternativas if a not in dados["notas"]]
@@ -289,9 +433,11 @@ def cmd_avaliar():
         print("  %d. %-30s %s" % (pos, a[:30], fmt(v)))
     print()
     if empate:
-        print("EMPATE TECNICO. A diferenca entre a primeira e a segunda e de %s%%," % fmt(diferenca))
-        print("abaixo do limite de %s%%. Os criterios escolhidos nao separam as opcoes." % fmt(EMPATE_TECNICO))
-        print("A decisao precisa de um criterio novo, declarado, e nao da casa decimal.")
+        print("EMPATE TECNICO (regra deste script). A diferenca entre a primeira e a")
+        print("segunda e de %s%%, abaixo do limite de %s%%. Os criterios escolhidos"
+              % (fmt(diferenca), fmt(EMPATE_TECNICO)))
+        print("nao separam as opcoes. Escolha um criterio de desempate, declare-o na")
+        print("devolutiva e registre por que ele foi escolhido.")
     else:
         print("A diferenca entre a primeira e a segunda e de %s%%." % fmt(diferenca))
     print()
@@ -304,8 +450,8 @@ def cmd_avaliar():
         print("A vencedora MUDA dentro da faixa testada. A decisao depende de um julgamento")
         print("de peso, e a devolutiva precisa dizer qual julgamento e quem o fez.")
     else:
-        print("A vencedora NAO muda na faixa testada. A decisao e robusta a esse deslocamento,")
-        print("e isso entra na devolutiva como argumento.")
+        print("A vencedora NAO muda na faixa testada. A recomendacao se mantem com esses")
+        print("pesos, e isso entra na devolutiva como argumento.")
 
     os.makedirs(PASTA_SAIDAS, exist_ok=True)
     with open(RESULTADO, "w", encoding="utf-8") as f:
@@ -415,8 +561,9 @@ def conferir_modulo(problemas):
     if norma and "nao se aplica" not in norma and not vazio(conferida):
         if len(conferida.strip()) < 15:
             problemas.append("devolutiva.md: o campo norma_conferida_em precisa dizer onde e "
-                             "quando voce conferiu o texto do artigo. Citacao nao conferida em "
-                             "parecer e o erro que esta disciplina existe para evitar.")
+                             "quando voce conferiu o texto do artigo, com 15 caracteres ou mais. "
+                             "Sem esse registro, quem le a devolutiva nao consegue refazer a "
+                             "conferencia.")
 
     with open(DEVOLUTIVA, "r", encoding="utf-8") as f:
         texto = f.read()
@@ -437,8 +584,8 @@ def conferir_modulo(problemas):
             diz_muda = "muda" in declarado and "nao muda" not in declarado and "não muda" not in declarado
             if apurado == "sim" and not diz_muda:
                 problemas.append("devolutiva.md: o script apurou que a vencedora MUDA no teste de "
-                                 "sensibilidade, e a devolutiva nao diz isso. Esse e o ponto que "
-                                 "a chefia vai perguntar.")
+                                 "sensibilidade, e a devolutiva nao diz isso. Informe que a "
+                                 "recomendacao depende do peso adotado.")
 
 
 def cmd_conferir():
@@ -448,7 +595,10 @@ def cmd_conferir():
     print("=" * 62)
     conferir_modulo(problemas)
     if problemas:
-        print("A entrega ainda nao esta completa. Faltam", len(problemas), "itens:\n")
+        if len(problemas) == 1:
+            print("A entrega ainda nao esta completa. Falta 1 item:\n")
+        else:
+            print("A entrega ainda nao esta completa. Faltam", len(problemas), "itens:\n")
         for i, p in enumerate(problemas, 1):
             print(" %d. %s" % (i, p))
         print()
@@ -496,7 +646,7 @@ def cmd_c1():
     problemas = [p for p in problemas if "nao existe" not in p]
 
     if faltando:
-        print("Faltam %d arquivos:" % len(faltando))
+        print("Falta 1 arquivo:" if len(faltando) == 1 else "Faltam %d arquivos:" % len(faltando))
         for caminho, nome in faltando:
             print("  - %s (%s)" % (caminho, nome))
         print()
@@ -520,7 +670,9 @@ def main():
         print(__doc__)
         return
     comando = sys.argv[1].lower()
-    if comando == "matriz":
+    if comando == "reserva":
+        cmd_reserva()
+    elif comando == "matriz":
         cmd_matriz()
     elif comando == "avaliar":
         cmd_avaliar()
@@ -532,7 +684,7 @@ def main():
         cmd_c1()
     else:
         print("Comando desconhecido:", comando)
-        print("Use: matriz, avaliar, devolutiva, conferir, c1")
+        print("Use: reserva, matriz, avaliar, devolutiva, conferir, c1")
 
 
 if __name__ == "__main__":

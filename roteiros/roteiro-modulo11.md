@@ -3,7 +3,7 @@
 Aprendizado de máquina e analytics para a decisão. Encontro 12, cerca de 4 horas.
 DECC0294, UFMA, Curso de Administração, 2026.2.
 
-Este encontro abre o bloco da nota 3 e não tem entrega avaliada. Ele existe para que a turma saiba o que um modelo preditivo faz, o que ele não faz e quando a resposta certa é não usar modelo nenhum.
+Este encontro abre o bloco da nota 3. A ficha e o resultado do modelo (ciclo 11.4) entram na C1 e são conferidos pelo comando `c1` do módulo 13. O encontro existe para que a turma saiba o que um modelo preditivo faz, o que ele não faz e quando a resposta certa é não usar modelo nenhum.
 
 ## Antes da aula
 
@@ -29,8 +29,8 @@ Este encontro usa pouco ou nenhum modelo de linguagem. O script faz a conta sozi
 | Intervalo | 15 min | |
 | Ciclo 11.3 | 45 min | 14 a 19 |
 | Intervalo | 10 min | |
-| Ciclo 11.4 | 60 min | 20 a 25 |
-| Fechamento | 15 min | 26 a 29 |
+| Ciclo 11.4 | 60 min | 20 a 26 |
+| Fechamento | 15 min | 27 a 30 |
 
 ## Ciclo 11.1 — Descritiva, preditiva e prescritiva
 
@@ -72,19 +72,21 @@ O direito à revisão do artigo 20 é sobre decisão automatizada que afeta inte
 
 ## Ciclo 11.4 — Um modelo simples sobre a sua base
 
-Teoria, 12 min. Slides 21 e 22. O palpite simples como régua, com o cálculo do erro médio absoluto em cinco casos ilustrativos (4,2 contra 13,2, redução de 68,2%) e o caso da categoria mais comum (slide 21). A separação treino e teste em diagrama com a regra do script (slide 22, novo): linhas com célula vazia descartadas, embaralhamento com semente 42, 70% para treino, palpite igual à média do treino, e as recusas do comando `prever`.
+Teoria, 17 min. Slides 21 a 23. O palpite simples como modelo de referência, com o cálculo do erro médio absoluto em cinco casos ilustrativos (4,2 contra 13,2, redução de 68,2%) e o caso da categoria mais comum (slide 21). A regressão linear (slide 22, novo em nov. 2026): gráfico de dispersão com a reta, intercepto e coeficiente, mínimos quadrados e a conta de uma previsão com os números da demonstração (9.734,51 + 43,9863 × 200 = 18.531,77). A separação treino e teste em diagrama com a regra do script (slide 23): linhas com célula vazia descartadas, embaralhamento com semente 42, 70% para treino, palpite igual à média do treino, as recusas do comando `prever` e os limites do teste (12 casos, embaralhamento inadequado para série mensal).
 
-Demonstração, 10 min. Slide 23. Duas execuções de `prever` sobre a base ilustrativa de 40 unidades: `atendimentos` ganha do palpite (70,6%) e `area_m2` perde. Repita na projeção com a base de reserva, cujos números serão outros, incluindo o caso em que o modelo perde para o palpite simples.
+Demonstração, 10 min. Slide 24. Duas execuções de `prever` sobre a base ilustrativa de 40 unidades: `atendimentos` ganha do palpite (70,6%) e `area_m2` perde. Repita na projeção com a base de reserva, cujos números serão outros, incluindo o caso em que o modelo perde para o palpite simples.
 
-Prática, 30 min. Slide 24. Cada aluno roda `iniciar`, preenche `modelo/ficha-modelo.md`, roda `prever` com uma e depois com duas preditoras, escreve a seção Leitura do resultado e roda `conferir`. O `resultado.md` guarda só a última execução, por isso a versão entregue é rodada por último e a comparação vai para a Leitura.
+Prática, 25 min. Slide 25. Cada aluno roda `iniciar`, preenche `modelo/ficha-modelo.md` com duas preditoras declaradas antes do treino, roda `prever` com a primeira e depois com as duas, escreve a seção Leitura do resultado e roda `conferir`. O `resultado.md` guarda só a última execução, por isso a versão entregue, com as duas preditoras da ficha, é rodada por último e os erros das duas execuções vão para a Leitura. O slide traz o resultado esperado e o que fazer quando o resultado for outro, como as demais práticas do módulo.
 
 Entrega, 8 min. `modelo/ficha-modelo.md` e `modelo/resultado.md`.
 
 O script recusa a conferência se o custo de errar para mais e o de errar para menos estiverem com a mesma resposta, e se o aluno declarar que usaria o modelo depois de ele ter perdido do palpite simples sem escrever a ressalva. As duas recusas são o conteúdo do ciclo.
 
-O campo `o_modelo_ganhou_do_palpite_simples` precisa de `sim` ou `nao` sem acento. O script compara com o `resultado.md`, que grava `nao`, e recusa `não` como divergência. O deck avisa disso no slide 25 e nas dúvidas frequentes (slide 28).
+O campo `o_modelo_ganhou_do_palpite_simples` aceita `sim`, `não` e `nao` desde a correção do script de 14 nov. 2026. A dúvida 6 do slide 29 trata da recusa por divergência com o `resultado.md`.
 
-Modelo que perde para a média é resultado válido e deve ser dito assim em voz alta, várias vezes. Aluno que troca de coluna até "dar certo" está aprendendo o hábito errado.
+O script passou a avisar quando o teste tem menos de 20 casos e a ler "12.480" como doze mil quatrocentos e oitenta em CSV separado por ponto e vírgula. Antes, esse valor era lido como 12,48.
+
+Modelo que perde para a média é resultado válido e deve ser dito assim em voz alta, várias vezes. Aluno que troca de coluna até "dar certo" está aprendendo o hábito errado. Por isso as duas preditoras são declaradas na ficha antes do treino, e o script, ao perder, pede o registro do resultado em vez da troca de coluna.
 
 A leitura do coeficiente descreve a base e não prova causa. Repita isso ao ver o primeiro aluno escrever "cada vendedor a mais gera tantos reais".
 

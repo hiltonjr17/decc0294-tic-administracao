@@ -32,13 +32,16 @@ ORDEM: iniciar -> preencher a ficha -> prever -> ler o resultado -> conferir.
 SE O MODELO NAO GANHAR DO PALPITE SIMPLES
 
 Isso nao e erro do script nem seu. Significa que as colunas escolhidas nao
-explicam o alvo. Anote isso na ficha e troque as preditoras. Um modelo que
-perde para a media e uma resposta valida da atividade.
+explicam o alvo. Registre o resultado na ficha e na secao Leitura. Um modelo
+que perde para a media e uma resposta valida da atividade. Testar colunas ate
+uma ganhar, e relatar so essa, compromete o teste: as preditoras saem da
+ficha, escrita antes do treino.
 """
 
 import csv
 import os
 import random
+import re
 import sys
 
 # Quando o script esta na pasta scripts/ do repositorio, as pastas de trabalho
@@ -53,6 +56,11 @@ FICHA = os.path.join(PASTA, "ficha-modelo.md")
 RESULTADO = os.path.join(PASTA, "resultado.md")
 SEMENTE = 42
 PROPORCAO_TREINO = 0.7
+TESTE_PEQUENO = 20
+# Separador do CSV lido. Em CSV separado por ponto e virgula, o ponto pode ser
+# de milhar (Excel em portugues) ou decimal (CSV do modulo 7). Ver
+# coluna_com_ponto_de_milhar.
+SEPARADOR = ","
 
 TEXTO_FICHA = """# Ficha do modelo
 
@@ -66,7 +74,7 @@ coluna_alvo: (nome exato da coluna que voce quer prever)
 unidade_do_alvo: (reais, dias, unidades, pessoas...)
 
 ## Preditoras candidatas
-preditoras: (nomes das colunas que voce acha que explicam o alvo, separados por virgula)
+preditoras: (duas colunas que voce acha que explicam o alvo, separadas por virgula, na ordem em que vai testa-las)
 
 ## Custo do erro
 erro_para_mais: (o que acontece se o modelo prever acima do real)
@@ -88,17 +96,47 @@ def detectar_separador(caminho):
 
 
 def ler_csv(caminho):
+    global SEPARADOR
     sep = detectar_separador(caminho)
+    SEPARADOR = sep
     with open(caminho, "r", encoding="utf-8-sig", errors="replace", newline="") as f:
         leitor = csv.DictReader(f, delimiter=sep)
         linhas = [dict(l) for l in leitor]
     if not linhas:
         print("O arquivo nao tem linhas de dados.")
         sys.exit(1)
+    COLUNAS_MILHAR.clear()
+    for nome in linhas[0].keys():
+        if coluna_com_ponto_de_milhar(linhas, nome):
+            COLUNAS_MILHAR.add(nome)
     return linhas, sep
 
 
-def para_numero(valor):
+# Colunas em que o ponto e separador de milhar ("12.480" = 12480). A decisao e
+# por coluna: o CSV gravado pelo modulo 7 usa ponto e virgula e ponto decimal
+# ("45.678912"), e o Excel em portugues usa ponto e virgula e ponto de milhar.
+COLUNAS_MILHAR = set()
+_MILHAR = re.compile(r"-?[1-9]\d{0,2}(\.\d{3})+")
+
+
+def _limpo(valor):
+    return str(valor or "").replace("R$", "").replace("%", "").replace(" ", "").strip()
+
+
+def coluna_com_ponto_de_milhar(linhas, nome):
+    """Ponto de milhar so em CSV com ponto e virgula, e so se a coluna usar
+    virgula decimal em algum valor ou se todo valor com ponto tiver o formato
+    de milhar (1 a 3 algarismos e grupos de 3)."""
+    if SEPARADOR != ";":
+        return False
+    valores = [_limpo(l.get(nome)) for l in linhas]
+    if any("," in v for v in valores):
+        return True
+    com_ponto = [v for v in valores if "." in v]
+    return bool(com_ponto) and all(_MILHAR.fullmatch(v) for v in com_ponto)
+
+
+def para_numero(valor, milhar=False):
     if valor is None:
         return None
     t = str(valor).strip()
@@ -109,6 +147,8 @@ def para_numero(valor):
         t = t.replace(".", "").replace(",", ".")
     elif "," in t:
         t = t.replace(",", ".")
+    elif milhar and _MILHAR.fullmatch(t.replace(" ", "")):
+        t = t.replace(".", "")
     t = t.replace(" ", "")
     try:
         return float(t)
@@ -122,7 +162,7 @@ def colunas_numericas(linhas):
     nomes = list(linhas[0].keys())
     saida = []
     for nome in nomes:
-        vals = [para_numero(l.get(nome)) for l in linhas]
+        vals = [para_numero(l.get(nome), nome in COLUNAS_MILHAR) for l in linhas]
         preenchidos = [v for v in vals if v is not None]
         if len(preenchidos) >= max(3, int(0.6 * len(linhas))):
             saida.append(nome)
@@ -236,8 +276,8 @@ def cmd_prever(args):
     base = []
     descartadas = 0
     for l in linhas:
-        y = para_numero(l.get(alvo))
-        xs = [para_numero(l.get(c)) for c in preditoras]
+        y = para_numero(l.get(alvo), alvo in COLUNAS_MILHAR)
+        xs = [para_numero(l.get(c), c in COLUNAS_MILHAR) for c in preditoras]
         if y is None or any(v is None for v in xs):
             descartadas += 1
             continue
@@ -297,11 +337,15 @@ def cmd_prever(args):
     print("  palpite simples   ", fmt(ema_palpite), "(prever sempre a media do treino:", fmt(media_treino) + ")")
     print()
     if ganhou:
-        print("O modelo ficou %.1f%% mais preciso que o palpite simples." % reducao)
+        print("O modelo ficou %s%% mais preciso que o palpite simples." % ("%.1f" % reducao).replace(".", ","))
     else:
         print("O modelo NAO ganhou do palpite simples.")
-        print("As colunas escolhidas nao explicam o alvo. Troque as preditoras ou aceite")
-        print("que essa pergunta nao se responde com esses dados.")
+        print("As colunas escolhidas nao explicam o alvo nesta base. O resultado e valido:")
+        print("registre-o na secao Leitura, sem trocar de coluna ate o modelo ganhar.")
+    if len(teste) < TESTE_PEQUENO:
+        print()
+        print("Atencao: o teste tem %d casos. Com poucos casos, um caso atipico muda o erro" % len(teste))
+        print("medio. Diferenca pequena entre modelo e palpite nao sustenta decisao.")
     print()
     print("Uma leitura de coeficiente: mantendo as outras colunas paradas, cada unidade")
     print("a mais na preditora muda o alvo no valor do coeficiente. Isso descreve a base,")
@@ -328,7 +372,7 @@ def cmd_prever(args):
         f.write("| media do treino | %s |\n" % fmt(media_treino))
         f.write("\nganhou_do_palpite_simples: %s\n" % ("sim" if ganhou else "nao"))
         if ganhou:
-            f.write("reducao_de_erro_percentual: %.1f\n" % reducao)
+            f.write("reducao_de_erro_percentual: %s\n" % ("%.1f" % reducao).replace(".", ","))
         f.write("\n## Leitura\n\n")
         f.write("(escreva aqui, em duas frases, o que esse resultado permite decidir "
                 "e o que ele nao permite)\n")
@@ -434,7 +478,10 @@ def cmd_conferir():
                          "que usaria mesmo assim, sem ressalva. Justifique ou mude a resposta.")
 
     if problemas:
-        print("A entrega ainda nao esta completa. Faltam", len(problemas), "itens:\n")
+        if len(problemas) == 1:
+            print("A entrega ainda nao esta completa. Falta 1 item:\n")
+        else:
+            print("A entrega ainda nao esta completa. Faltam", len(problemas), "itens:\n")
         for i, p in enumerate(problemas, 1):
             print(" %d. %s" % (i, p))
         print()

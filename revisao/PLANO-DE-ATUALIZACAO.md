@@ -152,12 +152,12 @@ Situação informada pelo professor em 14 nov. 2026: o próximo encontro está e
 | Ordem | Trabalho | Itens |
 |---|---|---|
 | 1 | Scripts que fecham nota (feito em 14 nov. 2026, ver `REGISTRO.md`) | Corrigir a lista `ENTREGAS` do `atividade_modulo15.py` (comando `c2`) e o slide 4 do módulo 15. Normalizar acentos na leitura dos formulários dos scripts 11 a 15. Corrigir no `atividade_modulo13.py` a exigência de "nao consta" e no `atividade_modulo12.py` a recusa de "nao - revisado" |
-| 2 | Módulo 11 | Slide de regressão linear. Termos modelo de referência (baseline) e sobreajuste (overfitting). Contradição entre os slides 23 e 24. Ressalva sobre teste pequeno e série temporal. Decisão sobre entrega avaliada. Roteiro alinhado |
-| 3 | Módulo 12 | Vetores de ataque no ciclo 12.4, com injeção de instrução em agentes. Slides 10 e 19 corrigidos. Pseudonimização e anonimização retomadas. Slide 18 atualizado com fontes primárias. Reconferência dos modelos gratuitos do OpenCode Zen (slide 16) |
-| 4 | Módulo 13 | Glossário de licitação e contrato. Caso de reserva para a matriz. Limite de quatro critérios e três alternativas. "Escala de pontuação" no lugar de "régua". Rubrica da C1 |
-| 5 | Módulo 14 | Forma fixa do produto e produto de partida. Demonstração completa no ciclo 14.3. Definição de Scrum e ágil. Validação de entrada. Versão 2 dentro da aula |
-| 6 | Módulo 15 | Rubrica da C2 com pontos. Escala de avaliadores. Caderno de prompts no portfólio. Formato das apresentações pelo tamanho da turma. Caixa datada do slide 19 |
-| 7 | Errata dos módulos 1 a 10 | Uma página para a turma, só com o que afeta entrega futura: nomes de arquivo que o `c2` aceita e leitura de "12.480" pelo script do módulo 6 para quem reutilizar a base no módulo 11 |
+| 2 | Módulo 11 (feito em 14 nov. 2026, ver `REGISTRO.md`) | Slide de regressão linear. Termos modelo de referência (baseline) e sobreajuste (overfitting). Contradição entre os slides 23 e 24. Ressalva sobre teste pequeno e série temporal. Decisão sobre entrega avaliada. Roteiro alinhado |
+| 3 | Módulo 12 (feito em 14 nov. 2026, ver `REGISTRO.md`) | Vetores de ataque no ciclo 12.4, com injeção de instrução em agentes. Slides 10 e 19 corrigidos. Pseudonimização e anonimização retomadas. Slide 18 atualizado com fontes primárias. Reconferência dos modelos gratuitos do OpenCode Zen (slide 16) |
+| 4 | Módulo 13 (feito em 14 nov. 2026, ver `REGISTRO.md`) | Glossário de licitação e contrato. Caso de reserva para a matriz. Limite de quatro critérios e três alternativas. "Escala de pontuação" no lugar de "régua". Rubrica da C1 |
+| 5 | Módulo 14 (feito em 14 nov. 2026, ver `REGISTRO.md`) | Forma fixa do produto e produto de partida. Demonstração completa no ciclo 14.3. Definição de Scrum e ágil. Validação de entrada. Versão 2 dentro da aula |
+| 6 | Módulo 15 (feito em 14 nov. 2026, ver `REGISTRO.md`) | Rubrica da C2 com pontos. Escala de avaliadores. Caderno de prompts no portfólio. Formato das apresentações pelo tamanho da turma. Caixa datada do slide 19 |
+| 7 | Errata dos módulos 1 a 10 (feito em 14 nov. 2026, ver `REGISTRO.md`) | Uma página para a turma, só com o que afeta entrega futura: nomes de arquivo que o `c2` aceita e leitura de "12.480" pelo script do módulo 6 para quem reutilizar a base no módulo 11 |
 
 Ficam para a próxima oferta: as fases 2 e 3 inteiras (módulos 1 a 10), o glossário único, a verificação automática de termos, a bibliografia e o programa.
 

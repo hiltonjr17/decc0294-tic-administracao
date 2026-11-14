@@ -290,7 +290,7 @@ body.mexeu #ajuda{opacity:1}
     <span class="eyebrow">VISÃO GERAL DO MÓDULO</span>
     <h2>O que você vai construir hoje</h2>
     <p class="sub">A primeira versão do produto que você apresenta no módulo 15</p>
-    <div class="corpo"><div class="overview">
+    <div class="corpo"><div class="overview" style="height:228px">
     <article class="ciclo">
       <span class="topo" style="background:#D4B277"></span>
       <span class="rot">CICLO 14.1</span>
@@ -328,25 +328,56 @@ body.mexeu #ajuda{opacity:1}
       <div class="pe">
         <span class="rule" style="background:#D4B277"></span>
         <span class="rot2">ENTREGA</span>
-        <p>Registro do teste e backlog da versão 2</p>
+        <p>Registro do teste e versão 2 feita em aula</p>
       </div>
-    </article></div></div>
+    </article></div>
+    <div class="caixa teal" style="margin-top:14px"><span class="rot">TERMOS DESTA PÁGINA</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 26px">
+      <p>Gestão ágil (agile): projeto conduzido em ciclos curtos, cada um com parte do produto funcionando. Vem do Manifesto Ágil, de 2001.</p>
+      <p>Backlog: lista ordenada do que falta construir no produto, com o mais importante no topo.</p>
+      <p>História de usuário (user story): necessidade escrita no formato Como [cargo], quero [ação], para [resultado].</p>
+      <p>Critério de aceite (acceptance criteria): condição observável que outra pessoa confere para dizer que a história está pronta.</p>
+      <p>Commit: registro de uma versão da pasta no histórico do Git, feito no GitHub Desktop (módulo 2).</p>
+      <p>Versão 1: a primeira parte do produto que outra pessoa consegue usar.</p>
+    </div></div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Estrutura do módulo</span>
-      <span class="pag">2 / 27</span>
+      <span class="pag">2 / 35</span>
     </footer>
   </section>
-<section class="slide divisor" data-i="2">
+<section class="slide conteudo" data-i="2">
+    <span class="barra"></span>
+    <span class="eyebrow">VISÃO GERAL DO MÓDULO</span>
+    <h2>A forma do produto: uma página HTML única</h2>
+    <p class="sub">A mesma forma para toda a turma, gravada em entregas/produto.html e escrita pelo agente a partir das suas histórias</p>
+    <div class="corpo"><div class="def"><span class="rot">Página HTML (HyperText Markup Language)</span>
+      <p>HTML é a linguagem das páginas da web, que o navegador lê e mostra. O produto deste módulo é um único arquivo, entregas/produto.html, com o formulário, as regras de recusa e as mensagens de erro. O código que reage aos cliques é JavaScript, a linguagem que o navegador executa. O agente escreve esse código, e você confere o resultado na página.</p>
+      <p>Agente: modelo de linguagem que lê e grava arquivos da sua pasta e executa comandos a seu pedido, no opencode (módulo 2). Script: arquivo de instruções em Python que o agente executa, como atividade_modulo14.py.</p></div>
+    <div class="fluxo" style="--n:5;gap:30px;margin-top:10px">
+      <div class="etapa" style="--cor:#D4B277"><span class="n">1</span><h4>História</h4><p>A do topo do backlog, com o critério de aceite.</p></div>
+      <div class="etapa" style="--cor:#FEC84D"><span class="n">2</span><h4>Pedido</h4><p>Cita a história, o critério e o arquivo.</p></div>
+      <div class="etapa" style="--cor:#0AB0AB"><span class="n">3</span><h4>Arquivo</h4><p>O agente grava entregas/produto.html.</p></div>
+      <div class="etapa" style="--cor:#8D0333"><span class="n">4</span><h4>Duplo clique</h4><p>Abre no navegador, sem instalar nada.</p></div>
+      <div class="etapa" style="--cor:#D4B277"><span class="n">5</span><h4>Conferência</h4><p>Você testa o critério na página e faz o commit.</p></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:10px"><div class="caixa dourado"><span class="rot">SEM SERVIDOR</span><p>Servidor é o programa que entrega páginas pela rede. Aqui não há: o navegador abre o arquivo direto da pasta, e o que se digita na página não sai do computador.</p></div><div class="caixa vinho"><span class="rot">O QUE A PÁGINA NÃO FAZ</span><p>Não guarda os dados depois que a aba é fechada e não grava em outro sistema. O resultado aparece na tela para copiar, imprimir ou salvar em PDF.</p></div><div class="caixa teal"><span class="rot">PRODUTO DE PARTIDA</span><p>Quem travar pede "execute atividade_modulo14.py com o comando partida". O script grava uma página mínima com formulário, sem apagar a que já exista.</p></div></div></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Visão geral</span>
+      <span class="pag">3 / 35</span>
+    </footer>
+  </section>
+<section class="slide divisor" data-i="3">
       <span class="filete"></span>
       <div class="esq"><span class="rot">CICLO</span><span class="num">14.1</span></div>
       <div class="dir">
         <h2>De processo a produto</h2>
         <p class="etapas">Teoria · Demonstração · Prática · Entrega</p>
       </div>
-      <span class="pag">3 / 27</span>
+      <span class="pag">4 / 35</span>
     </section>
-<section class="slide conteudo" data-i="3">
+<section class="slide conteudo" data-i="4">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.1 · TEORIA</span>
     <h2>Processo automatizado e produto digital</h2>
@@ -356,7 +387,7 @@ body.mexeu #ajuda{opacity:1}
     <table class="tab apertada" style="margin-top:14px">
       <tr><th style="width:24%">CRITÉRIO</th><th style="width:38%">PROCESSO AUTOMATIZADO (MÓDULO 9)</th><th style="width:38%">PRODUTO (MÓDULO 14)</th></tr>
       <tr><td><strong>Quem executa</strong></td><td>Quem montou o fluxo</td><td>Uma pessoa identificada pelo cargo</td></tr>
-      <tr><td><strong>Instrução de uso</strong></td><td>Na memória de quem montou</td><td>Escrita no próprio produto, em README ou cabeçalho</td></tr>
+      <tr><td><strong>Instrução de uso</strong></td><td>Na memória de quem montou</td><td>Escrita no topo da própria página</td></tr>
       <tr><td><strong>Entrada com erro</strong></td><td>O autor percebe e corrige à mão</td><td>O produto recusa e diz o que corrigir</td></tr>
       <tr><td><strong>Autor muda de setor</strong></td><td><span class="chip ruim">O FLUXO PARA</span></td><td><span class="chip ok">OUTRA PESSOA CONTINUA</span></td></tr>
       <tr><td><strong>Medida do resultado</strong></td><td>Ganho de tempo do próprio autor (módulo 9)</td><td>Sinal observável na rotina do usuário</td></tr>
@@ -365,10 +396,10 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.1 · Teoria</span>
-      <span class="pag">4 / 27</span>
+      <span class="pag">5 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="4">
+<section class="slide conteudo" data-i="5">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.1 · TEORIA</span>
     <h2>As quatro perguntas da ficha do produto</h2>
@@ -396,10 +427,10 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.1 · Teoria</span>
-      <span class="pag">5 / 27</span>
+      <span class="pag">6 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="5">
+<section class="slide conteudo" data-i="6">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.1 · DEMONSTRAÇÃO</span>
     <h2>A ficha na projeção e as recusas do script</h2>
@@ -412,7 +443,7 @@ body.mexeu #ajuda{opacity:1}
   <div class="duascol" style="--esq:1.45fr;--dir:1fr;height:auto">
     <div class="col" style="gap:6px">
       <pre class="terminal">CONFERENCIA DO MODULO 14
-A entrega ainda nao esta completa. Faltam 11 itens:
+A entrega ainda nao esta completa. Faltam 12 itens:
 
  1. ficha-produto.md: falta quem mais ocuparia esse lugar
     (campo quem_mais_ocuparia_esse_lugar).
@@ -422,11 +453,12 @@ A entrega ainda nao esta completa. Faltam 11 itens:
  <span class="hl">   numero de minutos.</span>
  <span class="hl">9. ficha-produto.md: o caminho atual tem menos de tres passos.</span>
  10. backlog-priorizado.md nao existe.
- 11. registro-teste.md nao existe.</pre>
+ 11. produto.html nao existe. Construa a versao 1 ou rode o comando partida.
+ 12. registro-teste.md nao existe.</pre>
       <p class="fonte-nota" style="position:static">Saída do comando conferir, abreviada e com linhas quebradas, sobre uma ficha preenchida com erros para o exemplo.</p>
     </div>
     <div class="col" style="gap:9px">
-      <div class="caixa vinho"><span class="rot">GRUPO NO LUGAR DE CARGO</span><p>usuario_cargo é comparado com uma lista de grupos do script, como os gestores, a equipe, o setor e servidores. Um grupo não pode ser chamado para o teste do ciclo 14.4.</p></div>
+      <div class="caixa vinho"><span class="rot">GRUPO NO LUGAR DE CARGO</span><p>usuario_cargo é comparado com uma lista de grupos do script, como os gestores, a equipe, o setor e servidores. Um grupo não tem como testar o produto, e o teste do ciclo 14.4 precisa de alguém no papel do cargo.</p></div>
       <div class="caixa dourado"><span class="rot">TEMPO EM MINUTOS</span><p>tempo_por_execucao_minutos precisa ser número. "quase uma hora" foi recusado, e 45 seria aceito.</p></div>
       <div class="caixa teal"><span class="rot">TRÊS PASSOS OU MAIS</span><p>passos_hoje precisa de pelo menos três passos separados por ponto e vírgula.</p></div>
     </div>
@@ -434,17 +466,17 @@ A entrega ainda nao esta completa. Faltam 11 itens:
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.1 · Demonstração</span>
-      <span class="pag">6 / 27</span>
+      <span class="pag">7 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="6">
+<section class="slide conteudo" data-i="7">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.1 · PRÁTICA</span>
     <h2>Sua vez: a ficha do produto</h2>
     <p class="sub">Individual</p>
-    <div class="corpo"><ol class="steps cols-1 " style="--linhas:4">
+    <div class="corpo"><ol class="steps cols-1 compacto" style="--linhas:4;height:auto">
     <li><span class="num">1</span>
-      <div><strong>Crie a ficha</strong><p>"execute atividade_modulo14.py com o comando produto" grava entregas/ficha-produto.md. Escreva cada resposta depois dos dois pontos, no lugar do texto entre parênteses.</p></div>
+      <div><strong>Crie a ficha</strong><p>Peça ao agente "execute atividade_modulo14.py com o comando produto". O script grava entregas/ficha-produto.md. Escreva cada resposta depois dos dois pontos, no lugar do texto entre parênteses.</p></div>
     </li>
     <li><span class="num">2</span>
       <div><strong>Escreva o usuário pelo cargo</strong><p>Se for você mesmo, escreva o seu cargo e, em quem_mais_ocuparia_esse_lugar, quem faria a tarefa na sua ausência.</p></div>
@@ -453,15 +485,20 @@ A entrega ainda nao esta completa. Faltam 11 itens:
       <div><strong>Meça o caminho atual</strong><p>Três passos ou mais, separados por ponto e vírgula, o tempo em minutos e a frequência. A medida do módulo 9 serve. Sem ela, estime em minutos e anote em passos_hoje que o tempo é estimado.</p></div>
     </li>
     <li><span class="num">4</span>
-      <div><strong>Defina o sinal e corte o escopo</strong><p>O sinal é observável e tem número quando possível. A versão 1 resolve um caso do começo ao fim, e o que ficou de fora vai listado em o_que_fica_de_fora.</p></div>
-    </li></ol></div>
+      <div><strong>Defina o sinal, corte o escopo e confira</strong><p>O sinal é observável e tem número quando possível. A versão 1 resolve um caso do começo ao fim, e o resto vai em o_que_fica_de_fora. Peça "execute atividade_modulo14.py com o comando conferir".</p></div>
+    </li>
+    </ol>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:12px">
+      <div class="caixa teal"><span class="rot">RESULTADO ESPERADO</span><p>O conferir lista apenas backlog-priorizado.md, produto.html e registro-teste.md, que são feitos nos ciclos 14.2 a 14.4. Nenhum item começa por ficha-produto.md.</p></div>
+      <div class="caixa vinho"><span class="rot">SE O RESULTADO FOR OUTRO</span><p>Item de ficha-produto.md na lista: a mensagem nomeia o campo a corrigir. Grupo no lugar de cargo: troque por um cargo, como assistente da Divisão de Compras. Sem processo próprio: adote o exemplo da Divisão de Compras e escreva "caso de reserva" ao lado do cargo.</p></div>
+    </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.1 · Prática</span>
-      <span class="pag">7 / 27</span>
+      <span class="pag">8 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="7">
+<section class="slide conteudo" data-i="8">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.1 · ENTREGA</span>
     <h2>Ficha do produto e do usuário</h2>
@@ -485,23 +522,44 @@ A entrega ainda nao esta completa. Faltam 11 itens:
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.1 · Entrega</span>
-      <span class="pag">8 / 27</span>
+      <span class="pag">9 / 35</span>
     </footer>
   </section>
-<section class="slide divisor" data-i="8">
+<section class="slide divisor" data-i="9">
       <span class="filete"></span>
       <div class="esq"><span class="rot">CICLO</span><span class="num">14.2</span></div>
       <div class="dir">
         <h2>Backlog e critério de aceite</h2>
         <p class="etapas">Teoria · Prática · Entrega</p>
       </div>
-      <span class="pag">9 / 27</span>
+      <span class="pag">10 / 35</span>
     </section>
-<section class="slide conteudo" data-i="9">
+<section class="slide conteudo" data-i="10">
+    <span class="barra"></span>
+    <span class="eyebrow">CICLO 14.2 · TEORIA</span>
+    <h2>Gestão ágil e Scrum</h2>
+    <p class="sub">O plano é revisto a cada ciclo curto, e cada ciclo termina com uma parte do produto em uso</p>
+    <div class="corpo"><div class="duascol" style="--esq:1.25fr;--dir:1fr;height:auto">
+    <div class="col" style="gap:12px">
+      <div class="def"><span class="rot">Gestão ágil (agile)</span><p>Em 2001, um grupo de desenvolvedores de software publicou o Manifesto Ágil. O texto dá mais peso a pessoas e interações, software em funcionamento, colaboração com o cliente e resposta a mudanças do que a processos e ferramentas, documentação extensa, negociação de contrato e plano fixo. Os itens do segundo grupo continuam com valor, em grau menor.</p></div>
+      <div class="def"><span class="rot">Scrum</span><p>O Guia do Scrum o define como arcabouço (framework) leve que ajuda pessoas, equipes e organizações a gerar valor por soluções adaptativas. O trabalho é feito em sprints, ciclos de duração fixa de até um mês, e cada sprint termina com uma parte do produto pronta para uso.</p></div>
+    </div>
+    <div class="col" style="gap:12px">
+      <div class="caixa vinho"><span class="rot">O PROBLEMA QUE O MÉTODO ATACA</span><p>O sistema Sentinel, do FBI, foi planejado em quatro fases, orçado em US$ 425 milhões e previsto para dezembro de 2009. Em agosto de 2010, US$ 405 milhões do orçamento revisto de US$ 451 milhões estavam gastos, com duas das quatro fases concluídas. Sutherland (2014, cap. 1) usa o caso para defender o Scrum.</p></div>
+      <div class="caixa teal"><span class="rot">VERSÃO DO GUIA</span><p>A edição de novembro de 2020 do Guia do Scrum continua a publicada em scrumguides.org.</p></div>
+    </div></div>
+    <p class="fonte-nota">Manifesto para Desenvolvimento Ágil de Software, 2001 (agilemanifesto.org). SCHWABER, K. e SUTHERLAND, J. The Scrum Guide, nov. 2020 (scrumguides.org). DOJ OIG, Report 11-01, out. 2010, e relatórios anteriores do mesmo órgão sobre o Sentinel (oig.justice.gov). SUTHERLAND, J. Scrum. Leya, 2014. Consulta em 14/11/2026.</p></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Ciclo 14.2 · Teoria</span>
+      <span class="pag">11 / 35</span>
+    </footer>
+  </section>
+<section class="slide conteudo" data-i="11">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.2 · TEORIA</span>
     <h2>O ciclo curto do Scrum</h2>
-    <p class="sub">Três responsabilidades, cinco eventos e três artefatos, cada artefato com um compromisso</p>
+    <p class="sub">Três responsabilidades, cinco eventos e três artefatos, conforme o Guia do Scrum de 2020</p>
     <div class="corpo"><svg class="fig" viewBox="0 0 1168 252" xmlns="http://www.w3.org/2000/svg">
   <defs><marker id="ms" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8D0333"/></marker>
   <marker id="md" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#C9962E"/></marker></defs>
@@ -520,13 +578,13 @@ A entrega ainda nao esta completa. Faltam 11 itens:
 
     <rect x="424" y="10" width="250" height="104" fill="#F7F4EE" stroke="#0AB0AB" stroke-width="2.5"/>
     <rect x="424" y="10" width="250" height="8" fill="#0AB0AB"/>
-    <text x="512" y="44" text-anchor="middle" font-size="16.5" font-weight="700" fill="#1A1A1A">Sprint</text>
-    <text x="512" y="66" text-anchor="middle" fill="#333">duração fixa,</text>
-    <text x="512" y="86" text-anchor="middle" fill="#333">até um mês</text>
-    <circle cx="628" cy="62" r="26" fill="none" stroke="#0AB0AB" stroke-width="2.5" stroke-dasharray="120 20"/>
-    <text x="628" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#0a7f7b">Daily</text>
-    <text x="628" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#0a7f7b">Scrum</text>
-    <text x="628" y="106" text-anchor="middle" font-size="12" fill="#6B6B6B">15 min por dia</text>
+    <text x="526" y="44" text-anchor="middle" font-size="16.5" font-weight="700" fill="#1A1A1A">Sprint</text>
+    <text x="526" y="66" text-anchor="middle" fill="#333">duração fixa,</text>
+    <text x="526" y="86" text-anchor="middle" fill="#333">até um mês</text>
+    <circle cx="630" cy="56" r="30" fill="none" stroke="#0AB0AB" stroke-width="2.5" stroke-dasharray="120 20"/>
+    <text x="630" y="53" text-anchor="middle" font-size="14" font-weight="700" fill="#0a7f7b">Daily</text>
+    <text x="630" y="69" text-anchor="middle" font-size="14" font-weight="700" fill="#0a7f7b">Scrum</text>
+    <text x="666" y="106" text-anchor="end" font-size="14" fill="#6B6B6B">15 min por dia</text>
 
     <rect x="710" y="10" width="176" height="104" fill="#fff" stroke="#8D0333" stroke-width="2.5"/>
     <rect x="710" y="10" width="176" height="8" fill="#8D0333"/>
@@ -536,10 +594,10 @@ A entrega ainda nao esta completa. Faltam 11 itens:
 
     <rect x="922" y="10" width="246" height="47" fill="#fff" stroke="#D4B277" stroke-width="2.5"/>
     <text x="1045" y="31" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1A1A1A">Revisão da sprint</text>
-    <text x="1045" y="49" text-anchor="middle" font-size="13" fill="#6B6B6B">incremento mostrado ao usuário</text>
+    <text x="1045" y="50" text-anchor="middle" font-size="14" fill="#6B6B6B">incremento mostrado ao usuário</text>
     <rect x="922" y="67" width="246" height="47" fill="#fff" stroke="#D4B277" stroke-width="2.5"/>
     <text x="1045" y="88" text-anchor="middle" font-size="15.5" font-weight="700" fill="#1A1A1A">Retrospectiva</text>
-    <text x="1045" y="106" text-anchor="middle" font-size="13" fill="#6B6B6B">o modo de trabalhar revisto</text>
+    <text x="1045" y="107" text-anchor="middle" font-size="14" fill="#6B6B6B">o modo de trabalhar revisto</text>
   </g>
   <g stroke="#8D0333" stroke-width="2.5" fill="none">
     <path d="M178,62 L208,62" marker-end="url(#ms)"/><path d="M390,62 L420,62" marker-end="url(#ms)"/>
@@ -558,44 +616,87 @@ A entrega ainda nao esta completa. Faltam 11 itens:
     <text x="806" y="212" font-weight="700" fill="#8D0333">Scrum Master</text>
     <text x="806" y="234" fill="#333">cuida do método e remove impedimentos</text>
   </g>
-</svg><div style="display:grid;grid-template-columns:1.25fr 1fr;gap:16px;margin-top:12px"><div class="caixa vinho"><span class="rot">O PROBLEMA QUE SUTHERLAND DESCREVE</span><p>Sutherland (2014, cap. 1) relata o sistema Sentinel do FBI. Em 2010, US$ 405 milhões do orçamento de US$ 451 milhões estavam gastos com metade do sistema pronta. O plano detalhado supunha requisitos estáveis.</p></div><div class="caixa teal"><span class="rot">VERSÃO DO GUIA</span><p>O Guia do Scrum de novembro de 2020 continua a versão oficial. O Expansion Pack de 2025 (Jocham, Coleman e Sutherland) é um complemento e não altera o guia.</p></div></div>
-    <p class="fonte-nota">SCHWABER, Ken e SUTHERLAND, Jeff. The Scrum Guide, nov. 2020 (scrumguides.org) e scrumexpansion.org, consulta em 2 nov. 2026. SUTHERLAND, J. Scrum: a arte de fazer o dobro do trabalho na metade do tempo. Leya, 2014.</p></div>
+</svg>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:10px"><div class="caixa teal"><span class="rot">SPRINT E INCREMENTO</span><p>Sprint é o ciclo de trabalho de duração fixa, de até um mês. Incremento (increment) é a parte do produto pronta para uso ao fim da sprint, somada às anteriores.</p></div><div class="caixa vinho"><span class="rot">DEFINIÇÃO DE PRONTO (DEFINITION OF DONE)</span><p>Descrição formal do estado do incremento quando atende às medidas de qualidade do produto. O que não a atende volta ao backlog.</p></div><div class="caixa dourado"><span class="rot">IMPEDIMENTO E DAILY SCRUM</span><p>Impedimento é o que trava o avanço da equipe, como acesso negado ou dúvida sem resposta. Daily Scrum é a reunião diária de 15 minutos dos desenvolvedores.</p></div></div>
+    <p class="fonte-nota">SCHWABER, Ken e SUTHERLAND, Jeff. The Scrum Guide, nov. 2020 (scrumguides.org), consulta em 14/11/2026.</p></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.2 · Teoria</span>
-      <span class="pag">10 / 27</span>
+      <span class="pag">12 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="10">
+<section class="slide conteudo" data-i="12">
+    <span class="barra"></span>
+    <span class="eyebrow">CICLO 14.2 · TEORIA</span>
+    <h2>O Scrum neste módulo</h2>
+    <p class="sub">Cada evento e artefato do Scrum corresponde a uma etapa do encontro e a um arquivo</p>
+    <div class="corpo"><table class="tab apertada mini">
+      <tr><th style="width:21%">NO SCRUM</th><th style="width:49%">O QUE VOCÊ FAZ NESTE MÓDULO</th><th style="width:30%">ONDE FICA</th></tr>
+      <tr><td><strong>Backlog do produto</strong></td><td>Histórias com critério de aceite, valor e esforço (ciclo 14.2), num CSV (comma-separated values): tabela em texto, uma linha por registro (módulo 4)</td><td class="mono" style="font-size:14px">entregas/backlog.csv</td></tr>
+      <tr><td><strong>Planejamento</strong></td><td>Escolha do que entra na versão 1, com o comando priorizar</td><td class="mono" style="font-size:14px">coluna na_versao_1</td></tr>
+      <tr><td><strong>Sprint</strong></td><td>Construção em aula, uma história por vez: versão 1 no ciclo 14.3 e versão 2 no ciclo 14.4</td><td class="mono" style="font-size:14px">entregas/produto.html</td></tr>
+      <tr><td><strong>Definição de pronto</strong></td><td>Critério de aceite atendido na página, teste com dado errado feito e commit</td><td>histórico do GitHub Desktop</td></tr>
+      <tr><td><strong>Revisão da sprint</strong></td><td>Teste com um colega no papel do usuário (ciclo 14.4)</td><td class="mono" style="font-size:14px">entregas/registro-teste.md</td></tr>
+      <tr><td><strong>Retrospectiva</strong></td><td>O que atrapalhou a construção e o que você faria diferente</td><td class="mono" style="font-size:14px">o_que_atrapalhou_a_construcao</td></tr>
+      <tr><td><strong>Daily Scrum</strong></td><td>Não há, porque cada sprint dura uma parte da aula</td><td></td></tr>
+    </table>
+    <div class="duascol" style="--esq:1fr;--dir:1.5fr;height:auto;margin-top:12px"><div class="caixa dourado"><span class="rot">OS TRÊS PAPÉIS</span><p>Você é dono do produto, desenvolvedor e Scrum Master ao mesmo tempo. O agente escreve o código, e a conferência do incremento é sua.</p></div><div class="caixa vinho"><span class="rot">AGENTES DE IA NO DESENVOLVIMENTO</span><p>No relatório DORA de 2025, com quase 5 mil profissionais, 90% usam IA no trabalho e 30% confiam pouco ou nada no código gerado. No ensaio do METR de 2025, 16 desenvolvedores experientes levaram 19% mais tempo com IA e estimaram ter ganho 20%. Em fev. 2026, o METR considerou a nova rodada pouco confiável e redesenha o estudo.</p></div></div>
+    <p class="fonte-nota">cloud.google.com/blog, 23 set. 2025 (DORA). metr.org/blog, 10 jul. 2025 e 24 fev. 2026. Consulta em 14/11/2026.</p></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Ciclo 14.2 · Teoria</span>
+      <span class="pag">13 / 35</span>
+    </footer>
+  </section>
+<section class="slide conteudo" data-i="13">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.2 · TEORIA</span>
     <h2>História de usuário e critério de aceite</h2>
     <p class="sub">A história descreve a necessidade de quem pede, e o critério diz como outra pessoa confere o resultado</p>
     <div class="corpo"><div class="def"><span class="rot">História de usuário (user story) e critério de aceite (acceptance criteria)</span>
-      <p>A história descreve uma necessidade no formato Como [cargo], quero [ação], para [resultado]. O critério de aceite é a condição observável que outra pessoa confere para dizer que a história está pronta (Cohn, 2004).</p></div>
+      <p>A história descreve uma necessidade no formato Como [cargo], quero [ação], para [resultado]. O formato surgiu numa equipe da empresa britânica Connextra, no início dos anos 2000, e foi difundido por Cohn (2004). O critério de aceite é a condição observável que outra pessoa confere para dizer que a história está pronta.</p></div>
     <table class="tab apertada" style="margin-top:12px">
       <tr><th style="width:33%">COMO ESTÁ ESCRITO</th><th style="width:25%">COMANDO PRIORIZAR</th><th style="width:42%">VERSÃO CORRIGIDA</th></tr>
       <tr><td>Como assistente de compras, quero gerar o mapa comparativo das três cotações</td>
           <td><span class="chip ruim">RECUSA</span><span class="s">falta a parte para [resultado]</span></td>
           <td>... das três cotações recebidas, para não redigitar 60 preços por processo</td></tr>
       <tr><td>Como assistente de compras, quero um botão de exportar para PDF</td>
-          <td><span class="chip med">ACEITA</span><span class="s">tem as três palavras, mas descreve a solução</span></td>
+          <td><span class="chip ruim">RECUSA</span><span class="s">depois de quero vem a solução (um botão), e não a ação</span></td>
           <td>... quero exportar o mapa em PDF, para anexar ao processo no sistema eletrônico</td></tr>
       <tr><td>Critério de aceite "Funcionar bem"</td>
           <td><span class="chip ruim">RECUSA</span><span class="s">está na lista de critérios vagos</span></td>
-          <td>Cada linha do mapa.csv traz o fornecedor de menor preço na coluna vencedor</td></tr>
+          <td>O mapa na página marca como vencedor o fornecedor de menor preço</td></tr>
       <tr><td>Critério de aceite "Mostra erro"</td>
           <td><span class="chip ruim">RECUSA</span><span class="s">menos de seis palavras</span></td>
-          <td>Uma cotação sem a coluna preco gera mensagem com o nome do arquivo e nenhum mapa</td></tr>
+          <td>Preço vazio gera mensagem com o nome do fornecedor, e o mapa não aparece</td></tr>
     </table>
-    <p class="fonte-nota">COHN, Mike. User stories applied: for agile software development. Boston: Addison-Wesley, 2004. Regras conforme o comando priorizar de atividade_modulo14.py.</p></div>
+    <p class="fonte-nota">COHN, Mike. User stories applied: for agile software development. Boston: Addison-Wesley, 2004. Origem do formato: COHN, M., mountaingoatsoftware.com, consulta em 14/11/2026. Regras do comando priorizar de atividade_modulo14.py.</p></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.2 · Teoria</span>
-      <span class="pag">11 / 27</span>
+      <span class="pag">14 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="11">
+<section class="slide conteudo" data-i="14">
+    <span class="barra"></span>
+    <span class="eyebrow">CICLO 14.2 · TEORIA</span>
+    <h2>Valor e esforço de 1 a 8: exemplos de referência</h2>
+    <p class="sub">Notas relativas, dadas comparando cada história com estes exemplos da Divisão de Compras</p>
+    <div class="corpo"><table class="tab apertada">
+      <tr><th style="width:8%">NOTA</th><th style="width:46%">VALOR: QUANTO A HISTÓRIA AJUDA O USUÁRIO</th><th style="width:46%">ESFORÇO: QUANTO TRABALHO PARA CONSTRUIR E CONFERIR</th></tr>
+      <tr><td><strong>1</strong></td><td>Muda algo que ninguém pediu.<span class="s" style="font-size:14.5px">Trocar a cor do título da página.</span></td><td>Um pedido ao agente e uma conferência.<span class="s" style="font-size:14.5px">Mudar o texto de um rótulo.</span></td></tr>
+      <tr><td><strong>3</strong></td><td>Poupa minutos num passo que ocorre às vezes.<span class="s" style="font-size:14.5px">Repetir o nome do último fornecedor digitado.</span></td><td>Um campo novo, com validação e mensagem de erro.<span class="s" style="font-size:14.5px">Data da cotação que recusa data futura.</span></td></tr>
+      <tr><td><strong>5</strong></td><td>Retira um passo de toda execução.<span class="s" style="font-size:14.5px">Mostrar a diferença entre o maior e o menor preço.</span></td><td>Uma regra nova, conferida à mão em dois casos.<span class="s" style="font-size:14.5px">Abrir o CSV da planilha de cotações por um botão de escolher arquivo.</span></td></tr>
+      <tr><td><strong>8</strong></td><td>Sem ela o caso não se resolve.<span class="s" style="font-size:14.5px">Registrar três cotações e mostrar o mapa com o vencedor.</span></td><td>Várias regras e telas, ou algo que a página faz mal sozinha.<span class="s" style="font-size:14.5px">Ler o PDF enviado pelo fornecedor. Divida a história.</span></td></tr>
+    </table>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:14px"><div class="caixa dourado"><span class="rot">COMO USAR</span><p>Compare a história com a linha mais parecida. As notas 2, 4, 6 e 7 ficam entre os exemplos. A nota mede uma história contra as outras e não equivale a horas.</p></div><div class="caixa vinho"><span class="rot">ESFORÇO 8</span><p>Indica história grande demais para a versão 1. Divida em duas ou mais, cada uma com o seu critério de aceite, e dê nota a cada parte.</p></div></div></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Ciclo 14.2 · Teoria</span>
+      <span class="pag">15 / 35</span>
+    </footer>
+  </section>
+<section class="slide conteudo" data-i="15">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.2 · TEORIA</span>
     <h2>Valor sobre esforço num backlog de exemplo</h2>
@@ -617,7 +718,7 @@ historias: 6
 Esforco acumulado: 7
 
 Voce marcou como versao 1: H1, H2, H3, H5
-<span class="hl">Destas, H5 ficam fora do que cabe pela ordem de valor</span>
+<span class="hl">Destas, H5 fica fora do que cabe pela ordem de valor</span>
 <span class="hl">sobre esforco.</span></pre>
       <p class="fonte-nota" style="position:static">Saída do comando priorizar, sem o rodapé, sobre um backlog ilustrativo de seis histórias da Divisão de Compras.</p>
     </div>
@@ -626,34 +727,39 @@ Voce marcou como versao 1: H1, H2, H3, H5
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.2 · Teoria</span>
-      <span class="pag">12 / 27</span>
+      <span class="pag">16 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="12">
+<section class="slide conteudo" data-i="16">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.2 · PRÁTICA</span>
     <h2>Sua vez: o backlog priorizado</h2>
     <p class="sub">Individual</p>
-    <div class="corpo"><ol class="steps cols-1 " style="--linhas:4">
+    <div class="corpo"><ol class="steps cols-1 compacto" style="--linhas:4;height:auto">
     <li><span class="num">1</span>
-      <div><strong>Crie o backlog</strong><p>"execute atividade_modulo14.py com o comando backlog" grava entregas/backlog.csv, separado por ponto e vírgula, com as colunas id, historia, criterio_de_aceite, valor, esforco e na_versao_1. Apague a linha que começa com EXEMPLO.</p></div>
+      <div><strong>Crie o backlog</strong><p>Peça "execute atividade_modulo14.py com o comando backlog". O script grava entregas/backlog.csv, separado por ponto e vírgula, com as colunas id, historia, criterio_de_aceite, valor, esforco e na_versao_1. Apague a linha que começa com EXEMPLO.</p></div>
     </li>
     <li><span class="num">2</span>
-      <div><strong>Escreva de cinco a dez histórias</strong><p>No formato Como [cargo], quero [ação], para [resultado]. O script recusa história sem uma das três partes.</p></div>
+      <div><strong>Escreva de cinco a dez histórias</strong><p>No formato Como [cargo], quero [ação], para [resultado], com verbo depois de quero. O script recusa história sem uma das três partes e história que pede botão, tela ou menu no lugar da ação.</p></div>
     </li>
     <li><span class="num">3</span>
-      <div><strong>Escreva o critério de aceite de cada uma</strong><p>Seis palavras ou mais, com uma condição que outra pessoa confere sem você por perto.</p></div>
+      <div><strong>Escreva o critério de aceite de cada uma</strong><p>Seis palavras ou mais, com uma condição que outra pessoa confere na página sem você por perto. Inclua a recusa esperada para o dado errado.</p></div>
     </li>
     <li><span class="num">4</span>
-      <div><strong>Atribua valor e esforço e rode a priorização</strong><p>Números de 1 a 8. Marque sim em na_versao_1 e peça "execute atividade_modulo14.py com o comando priorizar". Se discordar da ordem, escreva a dependência no backlog e mantenha os números.</p></div>
-    </li></ol></div>
+      <div><strong>Dê as notas e rode a priorização</strong><p>Valor e esforço de 1 a 8, pelos exemplos de referência. Marque sim em na_versao_1 e peça "execute atividade_modulo14.py com o comando priorizar". Se discordar da ordem, escreva a dependência no backlog e mantenha as notas.</p></div>
+    </li>
+    </ol>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:12px">
+      <div class="caixa teal"><span class="rot">RESULTADO ESPERADO</span><p>A tabela BACKLOG PRIORIZADO com as suas histórias, a linha Cabe na versao 1 e o arquivo saidas/backlog-priorizado.md gravado.</p></div>
+      <div class="caixa vinho"><span class="rot">SE O RESULTADO FOR OUTRO</span><p>O BACKLOG AINDA NAO PODE SER PRIORIZADO: cada item nomeia a história e a parte que falta. Corrija e peça o comando de novo. Marcação diferente da ordem calculada: escreva a dependência ou refaça o corte.</p></div>
+    </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.2 · Prática</span>
-      <span class="pag">13 / 27</span>
+      <span class="pag">17 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="13">
+<section class="slide conteudo" data-i="17">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.2 · ENTREGA</span>
     <h2>Backlog priorizado</h2>
@@ -677,94 +783,180 @@ Voce marcou como versao 1: H1, H2, H3, H5
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.2 · Entrega</span>
-      <span class="pag">14 / 27</span>
+      <span class="pag">18 / 35</span>
     </footer>
   </section>
-<section class="slide divisor" data-i="14">
+<section class="slide divisor" data-i="18">
       <span class="filete"></span>
       <div class="esq"><span class="rot">CICLO</span><span class="num">14.3</span></div>
       <div class="dir">
         <h2>A primeira versão, construída</h2>
-        <p class="etapas">Teoria · Prática · Entrega</p>
+        <p class="etapas">Teoria · Demonstração · Prática · Entrega</p>
       </div>
-      <span class="pag">15 / 27</span>
+      <span class="pag">19 / 35</span>
     </section>
-<section class="slide conteudo" data-i="15">
+<section class="slide conteudo" data-i="19">
+    <span class="barra"></span>
+    <span class="eyebrow">CICLO 14.3 · TEORIA</span>
+    <h2>Validação de entrada</h2>
+    <p class="sub">O produto confere o dado antes de usá-lo e, quando recusa, diz o que corrigir</p>
+    <div class="corpo"><div class="def"><span class="rot">Validação de entrada (input validation)</span><p>Conferência de que o dado atende aos requisitos do produto antes de ser usado. A validação sintática confere tipo e formato. A validação semântica confere se o valor faz sentido para a operação, como a data de fim posterior à de início (OWASP).</p></div>
+    <div class="duascol" style="--esq:2.1fr;--dir:1fr;height:auto;margin-top:12px">
+    <table class="tab apertada mini">
+      <tr><th style="width:26%">CASO</th><th style="width:19%">ENTRADA</th><th style="width:16%">VALIDAÇÃO</th><th style="width:39%">O QUE A PÁGINA FAZ</th></tr>
+      <tr><td>Completo</td><td>12, saldo de 40</td><td><span class="chip ok">PASSA</span></td><td>Registra o pedido, e o saldo passa a 28</td></tr>
+      <tr><td>Campo vazio</td><td>em branco</td><td><span class="chip med">SINTÁTICA</span></td><td>"Informe a quantidade."</td></tr>
+      <tr><td>Texto no lugar de número</td><td>doze</td><td><span class="chip med">SINTÁTICA</span></td><td>"A quantidade precisa ser um número inteiro."</td></tr>
+      <tr><td>Número com vírgula</td><td>12,5</td><td><span class="chip med">SINTÁTICA</span></td><td>"A quantidade precisa ser um número inteiro."</td></tr>
+      <tr><td>Zero</td><td>0</td><td><span class="chip ruim">SEMÂNTICA</span></td><td>"A quantidade precisa ser maior que zero."</td></tr>
+      <tr><td>Acima do saldo</td><td>50</td><td><span class="chip ruim">SEMÂNTICA</span></td><td>"Saldo disponível de 40 resmas."</td></tr>
+    </table>
+    <div class="col" style="gap:10px"><div class="caixa teal"><span class="rot">NO CRITÉRIO DE ACEITE</span><p>Cada recusa prevista entra no critério da história, com a mensagem esperada. O agente constrói a validação que o pedido descreve.</p></div><div class="caixa dourado"><span class="rot">O MESMO EXEMPLO NO SCRIPT</span><p>O comando partida grava esta página de pedido de papel, com saldo de 40 resmas.</p></div></div>
+    </div>
+    <p class="fonte-nota">OWASP. Input Validation Cheat Sheet (cheatsheetseries.owasp.org), consulta em 14/11/2026. Exemplo ilustrativo de pedido de material.</p></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Ciclo 14.3 · Teoria</span>
+      <span class="pag">20 / 35</span>
+    </footer>
+  </section>
+<section class="slide conteudo" data-i="20">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.3 · TEORIA</span>
     <h2>Como conduzir o agente numa construção</h2>
     <p class="sub">Uma história por vez, do critério de aceite ao commit, e a próxima só depois do commit</p>
     <div class="corpo"><div class="fluxo" style="--n:5;gap:30px">
       <div class="etapa" style="--cor:#D4B277"><span class="n">1</span><h4>História</h4>
-        <p>A instrução leva a história do topo e o critério de aceite.</p></div>
-      <div class="etapa" style="--cor:#FEC84D"><span class="n">2</span><h4>Código</h4>
-        <p>O agente escreve na pasta do projeto. Você lê o que mudou.</p></div>
+        <p>O pedido leva a história, o critério e o arquivo entregas/produto.html.</p></div>
+      <div class="etapa" style="--cor:#FEC84D"><span class="n">2</span><h4>Página</h4>
+        <p>O agente grava a página. A aba Changes do GitHub Desktop mostra o que mudou.</p></div>
       <div class="etapa" style="--cor:#0AB0AB"><span class="n">3</span><h4>Dado errado</h4>
-        <p>Campo vazio, número com vírgula, acento no nome do arquivo.</p></div>
+        <p>Campo vazio, texto no lugar de número, número com vírgula, valor fora da regra.</p></div>
       <div class="etapa" style="--cor:#8D0333"><span class="n">4</span><h4>Critério</h4>
-        <p>Você confere o critério no resultado, e não no resumo do agente.</p></div>
+        <p>Você confere o critério na página aberta, e não no resumo do agente.</p></div>
       <div class="etapa" style="--cor:#D4B277"><span class="n">5</span><h4>Commit</h4>
         <p>No GitHub Desktop, dizendo o que passou a funcionar.</p></div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px"><div class="caixa vinho"><span class="rot">DADO PESSOAL</span><p>O que o agente lê vai ao servidor do provedor do modelo. Construa com dado fictício ou com nome e CPF trocados por código, como no módulo 12.</p></div><div class="caixa dourado"><span class="rot">CÁLCULO</span><p>Total, média ou percentual que o produto mostra sai de código gravado no projeto e conferido à mão em dois casos, como nos módulos 5 e 6.</p></div><div class="caixa teal"><span class="rot">INSTRUÇÃO DE USO</span><p>Um README curto ou um cabeçalho no script diz para que serve, o que entra, o que sai e o que fazer quando der erro.</p></div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px"><div class="caixa vinho"><span class="rot">DADO PESSOAL</span><p>O que o agente lê vai ao servidor do provedor do modelo. Construa com dado fictício ou com nome e CPF trocados por código, como no módulo 12.</p></div><div class="caixa dourado"><span class="rot">CÁLCULO</span><p>Total, média ou percentual que a página mostra é calculado pelo código da página. Confira à mão em dois casos, como nos módulos 5 e 6.</p></div><div class="caixa teal"><span class="rot">INSTRUÇÃO DE USO</span><p>O topo da página diz para que serve, o que entra, o que sai e o que fazer quando aparecer mensagem de erro.</p></div></div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.3 · Teoria</span>
-      <span class="pag">16 / 27</span>
+      <span class="pag">21 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="16">
+<section class="slide conteudo" data-i="21">
     <span class="barra"></span>
-    <span class="eyebrow">CICLO 14.3 · TEORIA</span>
-    <h2>Agentes de IA no desenvolvimento, 2025 e 2026</h2>
-    <p class="sub">Pesquisas e práticas publicadas até novembro de 2026, com fonte e data</p>
-    <div class="corpo"><table class="tab apertada">
-      <tr><th style="width:24%">FONTE E DATA</th><th style="width:49%">O QUE ENCONTROU</th><th style="width:27%">USO NESTE MÓDULO</th></tr>
-      <tr><td><strong>DORA, Google Cloud</strong><span class="s">relatório de 23 set. 2025, quase 5 mil profissionais</span></td>
-          <td>90% usam IA no trabalho e mais de 80% percebem ganho de produtividade. 30% confiam pouco ou nada no código gerado. A adoção aparece ligada a mais entregas e a menos estabilidade.</td>
-          <td>Teste do dado errado e um commit por história.</td></tr>
-      <tr><td><strong>METR</strong><span class="s">ensaio controlado de jul. 2025 e atualização de 24 fev. 2026</span></td>
-          <td>Em 2025, 16 desenvolvedores experientes levaram 19% mais tempo com IA e estimaram ter ganho 20%. A repetição de 2026 foi inconclusiva e o estudo será redesenhado.</td>
-          <td>A ficha mede o tempo antes e depois.</td></tr>
-      <tr><td><strong>GitHub Spec Kit</strong><span class="s">código aberto em 2 set. 2025</span></td>
-          <td>Desenvolvimento orientado por especificação (spec-driven development). Especificação, plano e tarefas são escritos antes do código, e cada etapa é validada antes da seguinte.</td>
-          <td>História com critério de aceite antes da instrução.</td></tr>
-      <tr><td><strong>AI and Scrum, v2026.1</strong><span class="s">Jocham e Sutherland, 18 jan. 2026</span></td>
-          <td>A IA pode gerar trabalho e as pessoas continuam responsáveis pelo incremento. Critérios de aceite e testes são escritos antes da implementação assistida.</td>
-          <td>Quem confere o critério é você.</td></tr>
-    </table>
-    <p class="fonte-nota">cloud.google.com/blog (DORA 2025) · metr.org/blog/2026-02-24-uplift-update · visualstudiomagazine.com, 3 set. 2025 (Spec Kit) · scrumexpansion.org/ai-and-scrum. Consulta em 2 nov. 2026.</p></div>
+    <span class="eyebrow">CICLO 14.3 · DEMONSTRAÇÃO</span>
+    <h2>Uma história, do pedido à página aberta</h2>
+    <p class="sub">História H1 do backlog de exemplo da Divisão de Compras. Abaixo, à esquerda, a página aberta com o caso completo (tela ilustrativa)</p>
+    <div class="corpo"><div class="prompt compacto"><span class="rot">PEDIDO AO AGENTE</span>
+    <p>"Construa a história H1 de entregas/backlog.csv em entregas/produto.html: uma página HTML única, com o código dentro do próprio arquivo, sem biblioteca externa e sem servidor, que abra com duplo clique. Critério de aceite: com três preços preenchidos, a página mostra o mapa e marca como vencedor o menor preço. Preço vazio, texto ou valor menor ou igual a zero gera mensagem com o nome do fornecedor, e o mapa não aparece. Aceite vírgula decimal. Escreva no topo da página a instrução de uso. Não construa outras histórias."</p></div>
+  <div class="duascol" style="--esq:1.35fr;--dir:1fr;height:auto">
+    <div class="col" style="gap:4px"><svg class="fig" viewBox="0 0 655 280" xmlns="http://www.w3.org/2000/svg">
+  <rect x="1" y="1" width="653" height="278" fill="#fff" stroke="#999" stroke-width="1.5"/>
+  <rect x="1" y="1" width="653" height="32" fill="#eeeeee"/>
+  <rect x="14" y="7" width="330" height="20" rx="4" fill="#fff" stroke="#ccc"/>
+  <text x="24" y="22" font-size="14" fill="#6B6B6B">entregas/produto.html</text>
+  <text x="20" y="62" font-size="19" font-weight="700" fill="#1A1A1A">Mapa comparativo de cotações</text>
+  <text x="20" y="86" font-size="14" fill="#6B6B6B">Digite o preço de cada fornecedor, com vírgula decimal, e clique em Montar mapa.</text>
+  <g font-size="15" fill="#1A1A1A">
+    <text x="20" y="120">Item</text><rect x="150" y="104" width="220" height="24" fill="#fff" stroke="#999"/><text x="158" y="121">Papel A4, resma</text>
+    <text x="20" y="152">Fornecedor A</text><rect x="150" y="136" width="120" height="24" fill="#fff" stroke="#999"/><text x="158" y="153">12,50</text>
+    <text x="20" y="184">Fornecedor B</text><rect x="150" y="168" width="120" height="24" fill="#fff" stroke="#999"/><text x="158" y="185">11,90</text>
+    <text x="20" y="216">Fornecedor C</text><rect x="150" y="200" width="120" height="24" fill="#fff" stroke="#999"/><text x="158" y="217">13,00</text>
+  </g>
+  <rect x="400" y="136" width="130" height="30" rx="3" fill="#8D0333"/>
+  <text x="465" y="156" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">Montar mapa</text>
+  <rect x="20" y="238" width="620" height="30" fill="#E6F6F5" stroke="#0AB0AB"/>
+  <text x="32" y="258" font-size="15" font-weight="700" fill="#0a6f6b">Vencedor: Fornecedor B, R$ 11,90. Mapa: A 12,50 · B 11,90 · C 13,00</text>
+</svg></div>
+    <div class="col" style="gap:10px"><div class="caixa dourado"><span class="rot">NO OPENCODE</span><p>O agente avisa que criou entregas/produto.html e resume o que fez. O resumo não prova que o critério foi atendido.</p></div><div class="caixa teal"><span class="rot">COMO ABRIR A PÁGINA</span><p>No GitHub Desktop, menu Repository, Show in Explorer. Na pasta entregas, duplo clique em produto.html. A página abre no navegador padrão.</p></div></div>
+  </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
-      <span class="centro">Ciclo 14.3 · Teoria</span>
-      <span class="pag">17 / 27</span>
+      <span class="centro">Ciclo 14.3 · Demonstração</span>
+      <span class="pag">22 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="17">
+<section class="slide conteudo" data-i="22">
+    <span class="barra"></span>
+    <span class="eyebrow">CICLO 14.3 · DEMONSTRAÇÃO</span>
+    <h2>Conferir o critério na página e fazer o commit</h2>
+    <p class="sub">Os casos digitados na página aberta e o que ela mostrou em cada um</p>
+    <div class="corpo"><table class="tab apertada">
+      <tr><th style="width:17%">CASO</th><th style="width:22%">O QUE FOI DIGITADO</th><th style="width:45%">O QUE A PÁGINA MOSTROU</th><th style="width:16%">CRITÉRIO</th></tr>
+      <tr><td>Completo</td><td>12,50 · 11,90 · 13,00</td><td>Mapa com Fornecedor B como vencedor, R$ 11,90</td><td><span class="chip ok">ATENDE</span></td></tr>
+      <tr><td>Preço vazio</td><td>B em branco</td><td>"Fornecedor B: informe o preço." O mapa não aparece.</td><td><span class="chip ok">ATENDE</span></td></tr>
+      <tr><td>Texto</td><td>B = onze</td><td>"Fornecedor B: o preço precisa ser um número, como 11,90."</td><td><span class="chip ok">ATENDE</span></td></tr>
+      <tr><td>Valor zero</td><td>C = 0</td><td>Mapa com Fornecedor C como vencedor, R$ 0,00</td><td><span class="chip ruim">NÃO ATENDE</span></td></tr>
+    </table>
+    <div class="duascol" style="--esq:1.15fr;--dir:1fr;height:auto;margin-top:14px"><div class="caixa vinho"><span class="rot">O CASO QUE FALHOU</span><p>Novo pedido, só com o caso: "Na H1, preço zero ou negativo precisa gerar mensagem com o nome do fornecedor, e o mapa não aparece. Corrija só isso." Depois, F5 no navegador recarrega a página, e os quatro casos são repetidos.</p></div><div class="caixa teal"><span class="rot">COMMIT</span><p>Com os quatro casos atendidos, no GitHub Desktop: resumo "H1: mapa de três cotações com recusa de preço vazio, texto ou zero" e botão Commit to main.</p></div></div>
+    <p class="fonte-nota">Demonstração ilustrativa. A resposta do agente varia a cada pedido, e o caso que falhou mostra por que a conferência é feita na página.</p></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Ciclo 14.3 · Demonstração</span>
+      <span class="pag">23 / 35</span>
+    </footer>
+  </section>
+<section class="slide conteudo" data-i="23">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.3 · PRÁTICA</span>
-    <h2>Sua vez: construir a versão 1</h2>
-    <p class="sub">Individual</p>
-    <div class="corpo"><ol class="steps cols-1 " style="--linhas:4">
+    <h2>Sua vez: a primeira história na página</h2>
+    <p class="sub">Individual. O produto é entregas/produto.html, uma página HTML que abre com duplo clique</p>
+    <div class="corpo"><ol class="steps cols-1 compacto" style="--linhas:4;height:auto">
     <li><span class="num">1</span>
-      <div><strong>Comece pela história do topo</strong><p>Ou pela história de que as outras dependem. A instrução ao agente leva a história e o critério de aceite.</p></div>
+      <div><strong>Escolha a história</strong><p>A do topo do backlog, ou aquela de que as outras dependem. Se travar, peça "execute atividade_modulo14.py com o comando partida" e construa a história sobre a página gravada.</p></div>
     </li>
     <li><span class="num">2</span>
-      <div><strong>Teste com dado errado</strong><p>Campo vazio, número com vírgula e arquivo com acento no nome. Anote o que o produto fez em cada caso.</p></div>
+      <div><strong>Faça o pedido ao agente</strong><p>"Construa a história [id] de entregas/backlog.csv em entregas/produto.html: uma página HTML única, com o código dentro do próprio arquivo, sem biblioteca externa e sem servidor, que abra com duplo clique. Critério de aceite: [copie o critério]. Mostre cada mensagem de erro com o nome do campo. Não construa outras histórias."</p></div>
     </li>
     <li><span class="num">3</span>
-      <div><strong>Faça o commit e passe à próxima</strong><p>Um commit por história, quando o critério for atendido. Use no máximo dois pedidos longos ao agente por história, por causa da cota do modelo gratuito.</p></div>
+      <div><strong>Abra a página</strong><p>No GitHub Desktop, Repository, Show in Explorer. Na pasta entregas, duplo clique em produto.html.</p></div>
     </li>
     <li><span class="num">4</span>
-      <div><strong>Escreva a instrução de uso</strong><p>Cinco linhas no README ou no cabeçalho, com para que serve, o que entra, o que sai e o que fazer quando der erro.</p></div>
-    </li></ol></div>
+      <div><strong>Confira o caso completo</strong><p>Digite na página o caso que o critério descreve e anote o que ela mostrou.</p></div>
+    </li>
+    </ol>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:12px">
+      <div class="caixa teal"><span class="rot">RESULTADO ESPERADO</span><p>A página abre no navegador com os campos da história. O caso completo mostra o resultado que o critério descreve.</p></div>
+      <div class="caixa vinho"><span class="rot">SE O RESULTADO FOR OUTRO</span><p>Página em branco: peça "A página abre em branco com duplo clique. Corrija entregas/produto.html para funcionar sem servidor." Critério não atendido: peça a correção só do caso que falhou. Cota esgotada: clique no nome do modelo, abaixo da caixa de pedido, e escolha outro com Free no nome.</p></div>
+    </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.3 · Prática</span>
-      <span class="pag">18 / 27</span>
+      <span class="pag">24 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="18">
+<section class="slide conteudo" data-i="24">
+    <span class="barra"></span>
+    <span class="eyebrow">CICLO 14.3 · PRÁTICA</span>
+    <h2>Sua vez: dado errado, commit e próxima história</h2>
+    <p class="sub">Individual, na mesma página entregas/produto.html</p>
+    <div class="corpo"><ol class="steps cols-1 compacto" style="--linhas:4;height:auto">
+    <li><span class="num">1</span>
+      <div><strong>Teste com dado errado</strong><p>Na página aberta: campo vazio, texto no lugar de número, número com vírgula e valor fora da regra, como zero ou acima do limite. Anote o que a página mostrou em cada caso.</p></div>
+    </li>
+    <li><span class="num">2</span>
+      <div><strong>Corrija o caso que falhou</strong><p>Peça "Na história [id], [caso] precisa gerar a mensagem [mensagem]. Corrija só isso." Recarregue a página com F5 e repita todos os casos.</p></div>
+    </li>
+    <li><span class="num">3</span>
+      <div><strong>Faça o commit e passe à próxima</strong><p>No GitHub Desktop, resumo com o id e o que passou a funcionar, e Commit to main. A próxima história usa o mesmo pedido do slide anterior.</p></div>
+    </li>
+    <li><span class="num">4</span>
+      <div><strong>Confira a instrução de uso</strong><p>O topo da página diz para que serve, o que entra, o que sai e o que fazer quando aparecer erro. Se faltar, peça ao agente essas quatro linhas no topo da página.</p></div>
+    </li>
+    </ol>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:12px">
+      <div class="caixa teal"><span class="rot">RESULTADO ESPERADO</span><p>Cada dado errado recusado com mensagem que nomeia o campo. Um commit por história no histórico do GitHub Desktop, e pelo menos uma história com o critério atendido.</p></div>
+      <div class="caixa vinho"><span class="rot">SE O RESULTADO FOR OUTRO</span><p>Duas tentativas sem acerto: reduza a história, mantenha o critério e registre o resto no backlog. Pedido que estragou o que funcionava: na aba Changes, clique com o botão direito em produto.html e escolha Discard changes, que volta ao último commit.</p></div>
+    </div></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Ciclo 14.3 · Prática</span>
+      <span class="pag">25 / 35</span>
+    </footer>
+  </section>
+<section class="slide conteudo" data-i="25">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.3 · ENTREGA</span>
     <h2>Versão 1 funcionando e commitada</h2>
@@ -772,35 +964,35 @@ Voce marcou como versao 1: H1, H2, H3, H5
     <div class="corpo"><div class="entrega">
     <section class="lista">
       <header>O QUE ENTREGAR</header>
-      <ul><li>O produto rodando, com pelo menos uma história que atende ao critério de aceite.</li><li>O resultado do teste com dado errado, caso a caso.</li><li>A instrução de uso em cinco linhas.</li><li>Um commit por história, com mensagem que diz o que passou a funcionar.</li></ul>
+      <ul><li>A página entregas/produto.html, aberta com duplo clique, com pelo menos uma história que atende ao critério de aceite.</li><li>O resultado do teste com dado errado, caso a caso.</li><li>A instrução de uso no topo da página.</li><li>Um commit por história, com mensagem que diz o que passou a funcionar.</li></ul>
     </section>
     <div class="lado">
       <section class="box onde">
         <span class="rot">ONDE SALVAR</span>
-        <p>A pasta do projeto, com o histórico visível no GitHub Desktop</p>
+        <p><span class="mono" style="font-size:15px">entregas/produto.html</span>, com o histórico visível no GitHub Desktop</p>
       </section>
       <section class="box criterio">
         <span class="rot">COMO SERÁ CORRIGIDO</span>
-        <p>A história conta como completa quando o critério de aceite é atendido. Com um commit único no fim, não há como voltar à última versão que funcionava.</p>
+        <p>A história conta quando o critério é atendido na página. O comando conferir recusa a falta de produto.html e a página de partida sem alteração.</p>
       </section>
     </div>
   </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.3 · Entrega</span>
-      <span class="pag">19 / 27</span>
+      <span class="pag">26 / 35</span>
     </footer>
   </section>
-<section class="slide divisor" data-i="19">
+<section class="slide divisor" data-i="26">
       <span class="filete"></span>
       <div class="esq"><span class="rot">CICLO</span><span class="num">14.4</span></div>
       <div class="dir">
         <h2>Teste com usuário e iteração</h2>
         <p class="etapas">Teoria · Prática · Entrega</p>
       </div>
-      <span class="pag">20 / 27</span>
+      <span class="pag">27 / 35</span>
     </section>
-<section class="slide conteudo" data-i="20">
+<section class="slide conteudo" data-i="27">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.4 · TEORIA</span>
     <h2>O teste de uso com poucos usuários</h2>
@@ -836,39 +1028,73 @@ Voce marcou como versao 1: H1, H2, H3, H5
 </svg>
       <p class="fonte-nota" style="position:static">NIELSEN, J. Why you only need to test with 5 users. Alertbox, 19 mar. 2000. Percentuais pela fórmula 1 − (1 − 0,31)ⁿ. Nielsen arredonda para 85% com cinco usuários.</p>
     </div>
-    <div class="col" style="gap:9px"><div class="caixa teal"><span class="rot">COMO CONDUZIR</span><p>A pessoa recebe uma tarefa concreta por escrito e fala o que pensa enquanto usa (think-aloud). Você observa em silêncio. Cada explicação sua esconde um problema que o próximo usuário vai encontrar.</p></div><div class="caixa dourado"><span class="rot">O QUE REGISTRAR</span><p>O ponto em que a pessoa parou, o que tentou e o que esperava que acontecesse. Quando ela esperava outra coisa, o ajuste é no produto.</p></div><div class="caixa vinho"><span class="rot">BLOQUEIO E INCÔMODO</span><p>Bloqueio impede concluir a tarefa e entra antes na fila. Incômodo atrasa ou confunde. Cada achado vira história nova ou correção, com critério de aceite.</p></div></div>
+    <div class="col" style="gap:9px"><div class="caixa teal"><span class="rot">COMO CONDUZIR</span><p>A pessoa recebe uma tarefa concreta por escrito e fala o que pensa enquanto usa (think-aloud). Você observa em silêncio e anota onde ela parou, o que tentou e o que esperava.</p></div><div class="caixa dourado"><span class="rot">O COLEGA NO LUGAR DO USUÁRIO</span><p>O teste certo é com quem ocupa o cargo da ficha. Em aula, o colega faz esse papel. Ele acha problemas de uso da página, mas não conhece a rotina, os termos do setor nem os casos reais. Esses pontos ficam sem teste.</p></div><div class="caixa vinho"><span class="rot">BLOQUEIO E INCÔMODO</span><p>Bloqueio impede concluir a tarefa e entra antes na fila. Incômodo atrasa ou confunde. Cada achado vira história nova ou correção, com critério de aceite.</div></div>
   </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.4 · Teoria</span>
-      <span class="pag">21 / 27</span>
+      <span class="pag">28 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="21">
+<section class="slide conteudo" data-i="28">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.4 · PRÁTICA</span>
     <h2>Sua vez: testar e priorizar</h2>
     <p class="sub">Em duplas e depois individual</p>
-    <div class="corpo"><ol class="steps cols-1 " style="--linhas:4">
+    <div class="corpo"><ol class="steps cols-1 compacto" style="--linhas:4;height:auto">
     <li><span class="num">1</span>
-      <div><strong>Troque de produto com um colega</strong><p>Entregue a ele uma tarefa concreta e escrita, que use o seu produto do começo ao fim.</p></div>
+      <div><strong>Troque de produto com um colega</strong><p>Ele faz o papel do cargo da sua ficha. Entregue uma tarefa concreta e escrita que use a página do começo ao fim, como "Registre as três cotações do papel A4 e diga o vencedor".</p></div>
     </li>
     <li><span class="num">2</span>
       <div><strong>Observe em silêncio</strong><p>Anote onde ele travou, o que tentou, o que esperava e o tempo até concluir, ou NAO CONCLUIU.</p></div>
     </li>
     <li><span class="num">3</span>
-      <div><strong>Registre o teste</strong><p>"execute atividade_modulo14.py com o comando teste" grava entregas/registro-teste.md. Cada achado ocupa uma linha, com a descrição, uma barra vertical e a palavra bloqueio ou incomodo.</p></div>
+      <div><strong>Registre o teste</strong><p>Peça "execute atividade_modulo14.py com o comando teste", que grava entregas/registro-teste.md. Em quem_testou, escreva "colega da turma, no papel de [cargo]". Cada achado em uma linha: descrição, barra vertical e bloqueio ou incomodo.</p></div>
     </li>
     <li><span class="num">4</span>
-      <div><strong>Atualize o backlog</strong><p>Cada achado vira história com critério de aceite, e bloqueio vem antes de incômodo. Peça de novo o comando priorizar e, ao fim, "execute atividade_modulo14.py com o comando conferir".</p></div>
-    </li></ol></div>
+      <div><strong>Atualize o backlog</strong><p>Cada achado vira história com critério de aceite, e bloqueio vem antes de incômodo. Peça de novo o comando priorizar.</p></div>
+    </li>
+    </ol>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:12px">
+      <div class="caixa teal"><span class="rot">RESULTADO ESPERADO</span><p>entregas/registro-teste.md com pelo menos um achado classificado, e as histórias novas em backlog.csv. O priorizar mostra a nova ordem.</p></div>
+      <div class="caixa vinho"><span class="rot">SE O RESULTADO FOR OUTRO</span><p>Nenhum achado: refaça com tarefa mais difícil, sem explicar nada antes. História nova recusada pelo priorizar: a mensagem diz a parte que falta. Sem dupla: troque com outro grupo de dois.</p></div>
+    </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.4 · Prática</span>
-      <span class="pag">22 / 27</span>
+      <span class="pag">29 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="22">
+<section class="slide conteudo" data-i="29">
+    <span class="barra"></span>
+    <span class="eyebrow">CICLO 14.4 · PRÁTICA</span>
+    <h2>Sua vez: a versão 2, ainda em aula</h2>
+    <p class="sub">Individual. A segunda sprint do módulo, na mesma página entregas/produto.html</p>
+    <div class="corpo"><ol class="steps cols-1 compacto" style="--linhas:4;height:auto">
+    <li><span class="num">1</span>
+      <div><strong>Escolha o que entra na versão 2</strong><p>Os bloqueios do teste primeiro, depois a próxima história do backlog. Escreva a escolha em o_que_entra_na_versao_2, em entregas/registro-teste.md.</p></div>
+    </li>
+    <li><span class="num">2</span>
+      <div><strong>Construa uma correção por vez</strong><p>Para um bloqueio, peça "Em entregas/produto.html, [o que travou o colega]. Corrija só isso. Critério de aceite: [critério]." Para uma história nova, use o mesmo pedido da versão 1.</p></div>
+    </li>
+    <li><span class="num">3</span>
+      <div><strong>Teste de novo e faça o commit</strong><p>Repita os casos de dado errado, porque a mudança pode ter estragado uma recusa que funcionava. O resumo do commit começa por Versão 2.</p></div>
+    </li>
+    <li><span class="num">4</span>
+      <div><strong>Feche a retrospectiva e confira</strong><p>Preencha o_que_atrapalhou_a_construcao no mesmo arquivo e peça "execute atividade_modulo14.py com o comando conferir".</p></div>
+    </li>
+    </ol>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:12px">
+      <div class="caixa teal"><span class="rot">RESULTADO ESPERADO</span><p>Pelo menos um bloqueio resolvido e commitado. O conferir termina com Entrega completa.</p></div>
+      <div class="caixa vinho"><span class="rot">SE O RESULTADO FOR OUTRO</span><p>Bloqueio sem solução em aula: registre no backlog e diga no bloco 4 da apresentação. Item no conferir: a mensagem nomeia o arquivo e o campo. Cota esgotada: clique no nome do modelo, abaixo da caixa de pedido, e escolha outro com Free no nome. Sem nenhum, registre no backlog o que faltou.</p></div>
+    </div></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Ciclo 14.4 · Prática</span>
+      <span class="pag">30 / 35</span>
+    </footer>
+  </section>
+<section class="slide conteudo" data-i="30">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 14.4 · ENTREGA</span>
     <h2>Registro do teste e próxima versão</h2>
@@ -876,12 +1102,12 @@ Voce marcou como versao 1: H1, H2, H3, H5
     <div class="corpo"><div class="entrega">
     <section class="lista">
       <header>O QUE ENTREGAR</header>
-      <ul><li>Quem testou, a tarefa dada e o tempo até concluir, ou NAO CONCLUIU.</li><li>Os achados, cada um classificado como bloqueio ou incomodo depois da barra.</li><li>A expectativa frustrada, as histórias criadas e o que entra na versão&nbsp;2.</li><li>A retrospectiva, no campo o_que_atrapalhou_a_construcao.</li></ul>
+      <ul><li>Quem testou, a tarefa dada e o tempo até concluir, ou NAO CONCLUIU.</li><li>Os achados, cada um classificado como bloqueio ou incomodo depois da barra.</li><li>A expectativa frustrada, as histórias criadas e o que entra na versão&nbsp;2.</li><li>A versão 2 em produto.html, com os bloqueios resolvidos em commits.</li><li>A retrospectiva, no campo o_que_atrapalhou_a_construcao.</li></ul>
     </section>
     <div class="lado">
       <section class="box onde">
         <span class="rot">ONDE SALVAR</span>
-        <p><span class="mono" style="font-size:15px">entregas/registro-teste.md<br>entregas/backlog.csv</span></p>
+        <p><span class="mono" style="font-size:15px">entregas/registro-teste.md<br>entregas/backlog.csv<br>entregas/produto.html</span></p>
       </section>
       <section class="box criterio">
         <span class="rot">COMO SERÁ CORRIGIDO</span>
@@ -892,10 +1118,10 @@ Voce marcou como versao 1: H1, H2, H3, H5
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 14.4 · Entrega</span>
-      <span class="pag">23 / 27</span>
+      <span class="pag">31 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="23">
+<section class="slide conteudo" data-i="31">
     <span class="barra"></span>
     <span class="eyebrow">FECHAMENTO</span>
     <h2>O que você tem ao fim do encontro</h2>
@@ -906,25 +1132,26 @@ Voce marcou como versao 1: H1, H2, H3, H5
       <tr><td class="mono" style="font-size:14.5px;color:#8D0333">entregas/backlog.csv</td><td>Histórias com critério de aceite, valor e esforço</td><td>Bloco 2, o que você construiu e o que ficou de fora</td></tr>
       <tr><td class="mono" style="font-size:14.5px;color:#8D0333">saidas/backlog-priorizado.md</td><td>Ordem por valor sobre esforço e o que coube na versão 1</td><td>Bloco 2, a decisão de corte</td></tr>
       <tr><td class="mono" style="font-size:14.5px;color:#8D0333">entregas/registro-teste.md</td><td>Achados classificados, versão 2 e retrospectiva</td><td>Bloco 4, o que ainda não funciona</td></tr>
+      <tr><td class="mono" style="font-size:14.5px;color:#8D0333">entregas/produto.html</td><td>A página na versão 2, com um commit por história</td><td>Bloco 3, a demonstração ao vivo, com o caso de dado errado</td></tr>
     </table>
-    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:16px"><div class="caixa dourado"><span class="rot">A VERSÃO 1 RODANDO</span><p>Com os commits por história, é o que você mostra no bloco 3, a demonstração ao vivo, com o caso de dado errado.</p></div><div class="caixa teal"><span class="rot">CONFERÊNCIA NO MÓDULO 15</span><p>O comando c2 do script do módulo 15 procura estes quatro arquivos na lista do módulo 14.</p></div></div></div>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:16px"><div class="caixa dourado"><span class="rot">BLOCOS DA APRESENTAÇÃO</span><p>1, o problema e quem o tem. 2, o que você construiu. 3, a demonstração ao vivo. 4, o que ainda não funciona.</p></div><div class="caixa teal"><span class="rot">CONFERÊNCIA NO MÓDULO 15</span><p>O comando c2 do script do módulo 15 procura os cinco arquivos desta tabela, incluindo entregas/produto.html. O funcionamento da página é avaliado na demonstração ao vivo.</p></div></div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Fechamento</span>
-      <span class="pag">24 / 27</span>
+      <span class="pag">32 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="24">
+<section class="slide conteudo" data-i="32">
     <span class="barra"></span>
     <span class="eyebrow">PRÓXIMOS PASSOS</span>
     <h2>Módulo 15: o projeto integrador</h2>
     <p class="sub">Entrega C2, peso 60 na nota 3</p>
     <div class="corpo"><ol class="steps cols-1 compacto">
     <li><span class="num">1</span>
-      <div><strong>Feche a versão 2 antes do encontro</strong><p>Com os bloqueios do teste resolvidos. O que não couber fica declarado no backlog.</p></div>
+      <div><strong>Chegue com a versão 2 commitada</strong><p>Ela é feita em aula, no ciclo 14.4, sem uso da cota do modelo em casa. O que não ficou pronto fica declarado no backlog e no bloco 4.</p></div>
     </li>
     <li><span class="num">2</span>
-      <div><strong>Prepare a apresentação em quatro blocos</strong><p>Em quatro blocos, o problema, o que você construiu, a demonstração ao vivo e o que ainda não funciona.</p></div>
+      <div><strong>Prepare a apresentação em quatro blocos</strong><p>O problema e quem o tem, o que você construiu, a demonstração ao vivo e o que ainda não funciona. No módulo 15, o comando apresentacao cria o roteiro com esses blocos.</p></div>
     </li>
     <li><span class="num">3</span>
       <div><strong>Inclua o dado errado na demonstração</strong><p>Mostre o produto recusando uma entrada inválida e dizendo o que corrigir. A avaliação por pares pergunta se a demonstração funcionou e se você disse o que não funciona.</p></div>
@@ -938,17 +1165,17 @@ Voce marcou como versao 1: H1, H2, H3, H5
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Próximos passos</span>
-      <span class="pag">25 / 27</span>
+      <span class="pag">33 / 35</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="25">
+<section class="slide conteudo" data-i="33">
     <span class="barra"></span>
     <span class="eyebrow">DÚVIDAS FREQUENTES</span>
     <h2>Perguntas que aparecem neste módulo</h2>
     
     <div class="corpo"><ol class="steps cols-2 compacto" style="--linhas:3">
     <li><span class="num">1</span>
-      <div><strong>"Meu produto é uma planilha com script."</strong><p>Se outra pessoa usa sozinha e obtém o resultado, conta como produto. O formato não decide.</p></div>
+      <div><strong>"Meu processo usa planilha."</strong><p>A página recebe os dados digitados ou abre o CSV exportado da planilha por um botão de escolher arquivo, que funciona sem servidor. O produto continua em entregas/produto.html.</p></div>
     </li>
     <li><span class="num">2</span>
       <div><strong>"O usuário sou eu mesmo."</strong><p>Escreva o seu cargo e quem faria a tarefa na sua ausência. A instrução de uso é escrita para essa pessoa.</p></div>
@@ -957,30 +1184,30 @@ Voce marcou como versao 1: H1, H2, H3, H5
       <div><strong>"Não terminei nenhuma história."</strong><p>Reduza o escopo da história e mantenha o critério de aceite. Só a história que atende ao critério entra na demonstração.</p></div>
     </li>
     <li><span class="num">4</span>
-      <div><strong>"A cota do modelo acabou no meio."</strong><p>Continue sem o agente. O roteiro traz o resultado esperado de cada passo, e o teste com dado errado não depende do modelo.</p></div>
+      <div><strong>"A cota do modelo acabou no meio."</strong><p>Clique no nome do modelo, abaixo da caixa de pedido, e escolha outro com Free no nome. Sem nenhum, o teste com dado errado continua: abra a página com duplo clique, anote os casos e registre no backlog o que faltou.</p></div>
     </li>
     <li><span class="num">5</span>
       <div><strong>"O teste com meu colega não achou nada."</strong><p>Refaça com uma tarefa mais difícil e sem explicação prévia. O comando conferir recusa registro sem achado.</p></div>
     </li>
     <li><span class="num">6</span>
-      <div><strong>"O agente pode escrever as histórias?"</strong><p>Como rascunho. Cargo, medida do caminho atual e critério vêm do usuário. O que o agente acrescentar sobre o setor é confabulação.</p></div>
+      <div><strong>"O agente pode escrever as histórias?"</strong><p>Como rascunho. Cargo, medida do caminho atual e critério vêm do usuário. O que o agente acrescentar sobre o setor é confabulação, texto plausível sem base no que o modelo recebeu (módulo 2).</p></div>
     </li></ol></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Dúvidas frequentes</span>
-      <span class="pag">26 / 27</span>
+      <span class="pag">34 / 35</span>
     </footer>
   </section>
-<section class="slide fim" data-i="26">
+<section class="slide fim" data-i="34">
       <span class="filete"></span>
       <h1>Módulo 14 concluído</h1>
-      <p>A versão 1 funciona, foi testada por outra pessoa e tem o backlog da versão 2. No último encontro, o produto é apresentado e fecha a nota 3.</p>
+      <p>A página entregas/produto.html funciona, foi testada por outra pessoa e chegou à versão 2. No módulo 15, o produto é apresentado e fecha a nota 3.</p>
       <span class="slogan">SEMPRE+ QUALIDADE INOVAÇÃO INCLUSÃO</span>
     </section>
 </div>
 <div id="barra">
   <button id="ant" title="Anterior">&#8249;</button>
-  <input id="atual" value="1" title="Ir para o slide"> <span>/ 27</span>
+  <input id="atual" value="1" title="Ir para o slide"> <span>/ 35</span>
   <button id="prox" title="Próximo">&#8250;</button>
   <button id="tela" title="Tela cheia">&#9744;</button>
 </div>

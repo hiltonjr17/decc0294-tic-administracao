@@ -6,8 +6,16 @@ UFMA - Curso de Administracao
 O QUE ESTE SCRIPT FAZ
 
 Ele varre a pasta do projeto procurando dado pessoal, monta o inventario de
-dados do seu setor, cria o plano de resposta a incidente e confere se as tres
-entregas do encontro estao completas.
+dados do seu setor, cria o plano de resposta a incidente e confere se as
+quatro entregas do modulo estao completas:
+
+  1. saidas/varredura-dados-pessoais.md, com a secao Decisao escrita
+  2. entregas/inventario-dados.csv, com base legal, finalidade e prazo
+  3. a secao de uso seguro no AGENTS.md e a pasta restrita no .gitignore
+  4. entregas/plano-resposta-incidente.md, com vetor de ataque e cargos
+
+O exemplo entregas/modulo12-ciclo3-exemplo.md e o commit sao conferidos na
+correcao, e nao por este script.
 
 Roda inteiramente na sua maquina. Nao acessa a rede, nao usa modelo de
 linguagem e nao envia nada para lugar nenhum. Nao usa biblioteca externa.
@@ -73,6 +81,13 @@ BASES_LEGAIS = [
     "protecao ao credito",
 ]
 
+# Dado sensivel (art. 11 da Lei 13.709). Tres bases do art. 7 nao tem
+# equivalente no art. 11 e sao recusadas na linha com sensivel = sim.
+# Dois rotulos so valem para dado sensivel: a prevencao a fraude (art. 11, II, g)
+# e o exercicio regular de direito em contrato (art. 11, II, d).
+BASES_FORA_DO_ART11 = ["legitimo interesse", "protecao ao credito", "execucao de contrato"]
+BASES_SO_ART11 = ["prevencao a fraude", "exercicio de direito em contrato"]
+
 CABECALHO_INVENTARIO = [
     "tipo_de_dado", "sensivel", "origem", "onde_fica_guardado", "quem_acessa",
     "base_legal", "finalidade", "prazo_retencao", "poderia_ser_eliminado",
@@ -91,11 +106,12 @@ Uma pagina. Escrita antes, para ser lida durante.
 
 ## Cenario
 cenario: (o incidente mais provavel no seu setor)
+vetor: (phishing, engenharia social, ransomware, injecao de instrucao no agente, voz ou video sintetico, ou erro sem ataque)
 por_que_e_o_mais_provavel: (em uma frase, com base no que voce viu no inventario)
 
 ## Primeiras duas horas
 Escreva uma acao por linha, no formato: acao | cargo responsavel
-Nao vale "a equipe" nem "o setor de TI". Precisa ser um cargo.
+Nao vale "a equipe", "o setor de TI" nem outro nome de unidade. Precisa ser o cargo de uma pessoa.
 
 acao_1: (o que se faz primeiro) | (cargo)
 acao_2: | (cargo)
@@ -296,6 +312,10 @@ def cmd_inventario():
     for b in BASES_LEGAIS:
         print("  -", b)
     print()
+    print("Na linha com sensivel = sim valem as bases do artigo 11:")
+    print("  - recusadas: " + ", ".join(BASES_FORA_DO_ART11))
+    print("  - aceitas so nessa linha: " + ", ".join(BASES_SO_ART11))
+    print()
     print("Apague a linha de exemplo e escreva no minimo %d linhas suas." % MINIMO_LINHAS_INVENTARIO)
     print("Nao escreva nenhum dado pessoal real. O inventario registra tipo e caminho.")
 
@@ -309,8 +329,9 @@ def cmd_incidente():
         f.write(TEXTO_PLANO)
     print("Plano criado em", PLANO)
     print()
-    print("Cada acao precisa de um cargo responsavel. O script recusa 'a equipe',")
-    print("'o setor de TI' e qualquer responsavel que nao seja um cargo.")
+    print("Cada acao precisa de um cargo responsavel. O script recusa responsavel")
+    print("formado so por nome de unidade ou de grupo, como 'a equipe de TI',")
+    print("'o setor' ou 'todos'. Escreva o cargo de uma pessoa: 'coordenador de TI'.")
 
 
 # -------------------------------------------------------------- conferencia
@@ -349,8 +370,47 @@ def ler_campos(caminho):
     return campos
 
 
-RESPONSAVEIS_VAGOS = ["a equipe", "equipe", "setor de ti", "o setor de ti", "ti",
-                      "todos", "quem estiver", "o pessoal", "a area", "o time"]
+# Palavras que nomeiam unidade, grupo ou ninguem em particular. Um responsavel
+# formado so por elas (e por artigos e preposicoes) nao e o cargo de uma pessoa:
+# "a equipe de TI", "o setor de tecnologia", "todos os servidores".
+# Basta uma palavra fora da lista para passar: "chefe do setor de TI",
+# "coordenador de TI", "encarregado".
+PALAVRAS_VAGAS = {
+    # artigos, preposicoes e ligacoes
+    "a", "o", "as", "os", "de", "da", "do", "das", "dos", "e", "em", "na", "no",
+    "nas", "nos", "um", "uma", "pela", "pelo", "com", "que", "for", "estiver",
+    "estiverem", "quem", "qualquer", "algum", "alguem", "ninguem", "cada",
+    # unidades e grupos
+    "equipe", "equipes", "setor", "setores", "time", "times", "area", "areas",
+    "departamento", "departamentos", "grupo", "grupos", "nucleo", "divisao",
+    "secao", "coordenacao", "diretoria", "gerencia", "superintendencia",
+    "unidade", "unidades", "orgao", "empresa", "organizacao", "suporte",
+    "central", "servico", "help", "desk", "helpdesk",
+    # pessoas sem cargo
+    "todos", "todas", "pessoal", "servidores", "funcionarios", "colaboradores",
+    "pessoas", "responsavel", "responsaveis", "plantao", "turno", "servidor",
+    "funcionario", "colaborador",
+    # siglas comuns de unidade de TI e de pessoal ("o NTI", "a STI")
+    "nti", "sti", "dti", "cti", "setic", "progep",
+    # assuntos que aparecem no nome da unidade
+    "ti", "tic", "informatica", "tecnologia", "informacao", "sistemas",
+    "seguranca", "rh", "pessoas", "administrativo", "administrativa",
+}
+
+
+# Siglas que nomeiam o cargo de uma pessoa e por isso passam: "o DPO", "o CISO".
+SIGLAS_DE_CARGO = {"dpo", "ceo", "cio", "cto", "ciso", "cfo", "coo"}
+
+
+def responsavel_vago(texto):
+    """True quando o responsavel nao tem nenhuma palavra que indique cargo.
+
+    Uma sigla em maiusculas de ate cinco letras ("o NUTEC", "a SGTI") tambem
+    conta como nome de unidade, e nao como cargo."""
+    siglas = {normalizar(s) for s in re.findall(r"\b[A-Z]{2,5}\b", texto or "")}
+    siglas -= SIGLAS_DE_CARGO
+    palavras = re.findall(r"[a-z0-9]+", normalizar(texto).replace(".", ""))
+    return not palavras or all(p in PALAVRAS_VAGAS or p in siglas for p in palavras)
 
 
 def conferir_inventario(problemas):
@@ -373,12 +433,27 @@ def conferir_inventario(problemas):
                 problemas.append("inventario-dados.csv, %s: coluna %s vazia." % (rot, coluna))
 
         base = normalizar(l.get("base_legal") or "")
+        sensivel = normalizar(l.get("sensivel") or "") in ("sim", "s")
+        so_art11 = [b for b in BASES_SO_ART11 if b in base]
         if not base:
             problemas.append("inventario-dados.csv, %s: base legal vazia." % rot)
-        elif not any(b in base or base in b for b in bases_norm):
+        elif so_art11 and not sensivel:
+            problemas.append("inventario-dados.csv, %s: '%s' e base do artigo 11, so para "
+                             "dado sensivel. Para dado comum, use uma destas: %s."
+                             % (rot, l.get("base_legal"), ", ".join(BASES_LEGAIS)))
+        elif not so_art11 and not any(b in base or base in b for b in bases_norm):
             problemas.append("inventario-dados.csv, %s: base legal '%s' nao esta no artigo 7. "
                              "Use uma destas: %s."
                              % (rot, l.get("base_legal"), ", ".join(BASES_LEGAIS)))
+        elif sensivel:
+            fora = [b for b in BASES_FORA_DO_ART11 if b in base]
+            if fora:
+                extra = ""
+                if fora[0] == "execucao de contrato":
+                    extra = (" Para contrato, o artigo 11, II, d, traz o exercicio regular "
+                             "de direito: escreva 'exercicio de direito em contrato'.")
+                problemas.append("inventario-dados.csv, %s: dado sensivel com base '%s', que o "
+                                 "artigo 11 nao preve.%s" % (rot, fora[0], extra))
 
         fin = (l.get("finalidade") or "").strip()
         if fin and len(fin.split()) < 3:
@@ -442,6 +517,7 @@ def conferir_plano(problemas):
     campos = ler_campos(PLANO)
     obrigatorios = [
         ("cenario", "o cenario escolhido"),
+        ("vetor", "o vetor de ataque, ou 'erro sem ataque'"),
         ("por_que_e_o_mais_provavel", "a justificativa do cenario"),
         ("quem_e_comunicado_primeiro", "quem e comunicado primeiro"),
         ("ordem_de_comunicacao", "a ordem de comunicacao"),
@@ -464,14 +540,15 @@ def conferir_plano(problemas):
             problemas.append("plano-resposta-incidente.md, %s: falta o cargo responsavel "
                              "depois da barra." % chave)
             continue
-        acao, _, responsavel = valor.partition("|")
-        responsavel = normalizar(responsavel)
+        acao, _, responsavel_original = valor.partition("|")
+        responsavel = normalizar(responsavel_original)
         if vazio(responsavel):
             problemas.append("plano-resposta-incidente.md, %s: cargo responsavel vazio." % chave)
-        elif responsavel in RESPONSAVEIS_VAGOS:
+        elif responsavel_vago(responsavel_original):
             problemas.append("plano-resposta-incidente.md, %s: '%s' nao e um cargo. "
-                             "Acao sem pessoa definida nao acontece as duas da manha."
-                             % (chave, responsavel))
+                             "Nomeie o cargo de uma pessoa, como 'coordenador de TI' "
+                             "ou 'chefe da secao de pessoal'. Acao sem pessoa definida "
+                             "nao acontece as duas da manha." % (chave, responsavel.strip()))
         if len(acao.strip().split()) < 3:
             problemas.append("plano-resposta-incidente.md, %s: a acao esta curta demais "
                              "para ser executavel." % chave)
@@ -505,7 +582,10 @@ def cmd_conferir():
     conferir_plano(problemas)
 
     if problemas:
-        print("A entrega ainda nao esta completa. Faltam", len(problemas), "itens:\n")
+        if len(problemas) == 1:
+            print("A entrega ainda nao esta completa. Falta 1 item:\n")
+        else:
+            print("A entrega ainda nao esta completa. Faltam", len(problemas), "itens:\n")
         for i, p in enumerate(problemas, 1):
             print(" %d. %s" % (i, p))
         print()
@@ -517,7 +597,10 @@ def cmd_conferir():
     print("  varredura-dados-pessoais.md      pasta varrida e decisao escrita")
     print("  inventario-dados.csv             tipos, base legal, finalidade e prazo")
     print("  AGENTS.md                        secao de uso seguro e pasta restrita ignorada")
-    print("  plano-resposta-incidente.md      acoes com cargo responsavel e criterio de comunicacao")
+    print("  plano-resposta-incidente.md      vetor, acoes com cargo e criterio de comunicacao")
+    print()
+    print("O exemplo entregas/modulo12-ciclo3-exemplo.md e o commit sao conferidos na")
+    print("correcao, e nao por este script.")
     print()
     print("Faca o commit pelo GitHub Desktop e confira, na lista de arquivos, que a")
     print("pasta de dados restritos nao aparece.")

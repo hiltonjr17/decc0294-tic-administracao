@@ -30,6 +30,49 @@ Em 2 nov. 2026 os marcadores de tempo foram retirados de todos os decks (ver his
 
 ## Histórico
 
+### 14 nov. 2026, módulos 12 a 15 e errata da turma, por workflow
+
+Executado por um workflow de agentes: um agente por módulo aplicou o pacote do plano, um revisor independente conferiu cada módulo (os quatro reprovaram a primeira versão, com falhas de gravidade média e baixa), um agente corrigiu as falhas apontadas, e um agente final conferiu a coerência entre os módulos 11 a 15. Todos seguiram a regra de slide autossuficiente.
+
+Módulo 12, de 29 para 33 slides. Novos: 11 (bases do art. 11 ao lado do art. 7º, com execução de contrato sem equivalente e a alínea g), 18 (pseudonimização e anonimização, com o k-anonimato reduzido a uma caixa), 20 (o que o AGENTS.md e o .gitignore fazem e não fazem), 24 (engenharia social, phishing, falsa central, voz ou vídeo sintético) e 25 (ransomware e injeção de instrução em agentes, OWASP LLM01:2025). Linha do tempo do slide 19 só com fontes primárias (Res. CD/ANPD 30/2025, Decreto 12.880/2026, ficha do PL 2338/2023 na Câmara). Incidente alinhado ao script (primeiras duas horas) e à Res. CD/ANPD 15/2024. A base com dado pessoal e a tabela de correspondência ficam fora da pasta do projeto, e dados/restrito/ serve para demonstrar o .gitignore. Script: recusa de responsável vago por conteúdo e não por texto exato, regras de base para linha com dado sensível (prevenção à fraude e exercício de direito em contrato aceitos, legítimo interesse, proteção ao crédito e execução de contrato recusados) e campo obrigatório "vetor:" no plano de resposta.
+
+Módulo 13, de 28 para 36 slides. Novos: vocabulário da licitação (4 e 5) e do contrato (15), caso de reserva com edital e três propostas fictícias (10 e 11), que passa a ser o padrão da matriz, documento a enviar ao modelo e sigilo comercial (18), empate técnico do script e empate ficto da LC 123/2006, art. 44 e 45 (29), rubrica da C1 em 10 pontos (32). "Régua" virou "escala de pontuação". Frases de efeito saíram do script e dos slides que reproduzem a saída. Script: limite de 3 a 4 critérios e 2 a 3 alternativas, docstring com cinco seções. Portaria MGI 3.485/2026: o texto no DOU não foi localizado, e o slide usa a ata do MGI sem afirmar exigência de sinalizar o uso de IA.
+
+Módulo 14, de 27 para 35 slides. O produto passou a ser uma página HTML única em entregas/produto.html (slide 3). Novos: gestão ágil e Scrum definidos (11 e 13), âncoras de valor e esforço (15), validação de entrada (20), demonstração completa de uma história do pedido à página aberta (22 e 23), duas práticas de construção (24 e 25) e a versão 2 em aula (30). O slide sobre agentes no desenvolvimento virou caixa. Script: comando novo de produto de partida e entregas/produto.html no conferir. Nomes de menu do GitHub Desktop e o seletor de modelos do opencode foram escritos sem teste na versão do laboratório.
+
+Módulo 15, de 26 para 30 slides. Novos: vocabulário do módulo (2), rubrica da C2 em 10 pontos com 5,5 para caminho, conferência e caderno de prompts e 2,0 para o produto (6), ordem, formato por tamanho de turma e escala de avaliadores (12), rodar os scripts sem o agente (23). Formulário de avaliação com código da ordem de apresentação no lugar do nome. Script: entregas/produto.html e prompts/ no c2, formulário com código.
+
+Errata da turma em revisao/errata-turma-2026-2.md: oito itens, só com o que afeta entrega futura, conferidos no código dos scripts. O agente da errata encontrou um defeito na correção do script 11 feita mais cedo no mesmo dia: em CSV com ponto e vírgula, "45.678" (decimal) era lido como milhar, o que afeta as tabelas gravadas pelo módulo 7. Corrigido com decisão por coluna (ponto de milhar só quando algum valor da coluna tem vírgula decimal ou todos os valores com ponto têm formato de milhar). Testado com quatro formatos de CSV. Resta ambígua a coluna em que todos os valores com ponto têm exatamente três casas, descrita no item 8 da errata.
+
+Conferência final, refeita fora do workflow: auditoria sem sinais nos decks 11 a 15, conferir_slides.js sem estouro nos decks 12 a 15, py_compile nos scripts 11 a 15, teste da pasta de aluno fictícia com 11 de 11 verificações (o teste passou a incluir entregas/produto.html). Imagens abertas: módulo 12, slide 25, módulo 13, slide 32, módulo 14, slide 22, módulo 15, slide 6. A fonte DejaVu Sans não está instalada na máquina, e o segundo teste de largura usou fonte substituta.
+
+Decisões que ficaram com o professor:
+- Rubricas da C1 (módulo 13, slide 32) e da C2 (módulo 15, slide 6), apresentadas como proposta.
+- Limites do script 13 (3 a 4 critérios, 2 a 3 alternativas) e caso de reserva contado como problema específico na C1 e na C2.
+- Formato das apresentações: até 12 alunos individual, 13 ou mais em dupla. Falta informar o tamanho da turma e publicar a ordem com códigos (A01, A02...).
+- Campo "vetor:" obrigatório no plano do módulo 12 e as novas regras de base para dado sensível: valem se nenhum aluno gerou o plano com o script antigo.
+- Caso C&M Software (módulo 12, slide 26) apoiado só em fonte jornalística. Relato do projeto Sentinel (módulo 14, slide 11) não conferido no livro de Sutherland.
+- Tempos dos roteiros 12 a 15 redistribuídos para decks maiores (33, 36, 35 e 30 slides). Conferir em aula se cabem.
+- Testar no laboratório: menus do GitHub Desktop e seletor de modelos do opencode citados no módulo 14, comando de terminal do slide 23 do módulo 15.
+
+### 14 nov. 2026, módulo 11, pacote do plano de atualização
+
+Primeiro módulo revisado pela regra de slide autossuficiente. O deck passou de 29 para 30 slides.
+
+- Slide novo 22, "Regressão linear: a reta que o script ajusta": gráfico de dispersão com a reta, definição de regressão linear, intercepto, coeficiente e mínimos quadrados, e a conta de uma previsão com os números da demonstração (9.734,51 + 43,9863 × 200 = 18.531,77).
+- Termos definidos na primeira ocorrência: regressão, classificação, otimização e simulação (slide 4), palpite simples como modelo de referência (baseline), acurácia, treino e teste, titular (slide 5), alvo, preditora e sobreajuste (overfitting) no lugar de "memória do modelo" (slide 11), parâmetro, modelo de árvore e o critério das cinco opções do ImageNet (slide 15), RLHF e modelo de raciocínio (slide 16), semente (slide 23).
+- Slide 17: a lei de conversão passou a ser nomeada (MP 869/2018, Lei 13.853/2019) e a Nota Técnica 12/2025 da ANPD descrita como consolidação da tomada de subsídios, sem posição final.
+- Contradição resolvida entre a demonstração e a prática: as duas preditoras são declaradas na ficha antes do treino, a versão entregue é a das duas, e a Leitura registra o erro das duas execuções. O slide 24 não diz mais "troque de coluna", e o script também não.
+- Slide 23: limites do teste (12 casos, embaralhamento inadequado para série mensal).
+- As quatro práticas (slides 7, 12, 18 e 25) ganharam o pedido ao agente, quando há, o resultado esperado e o que fazer quando o resultado for outro.
+- "Régua" saiu do título dos slides 1 e 21.
+
+Script `atividade_modulo11.py`: a mensagem de modelo que perde deixou de mandar trocar as preditoras. A ficha pede duas preditoras na ordem de teste. Percentual com vírgula decimal ("70,6%"). Aviso quando o teste tem menos de 20 casos. Em CSV separado por ponto e vírgula, "12.480" passou a ser lido como 12.480 e não como 12,48. Teste com base de 40 linhas no formato brasileiro: coeficiente de 45,6 para um valor gerado de 43,99.
+
+Roteiro 11: o encontro deixa de ser descrito como sem entrega avaliada, porque a ficha e o resultado entram na C1. Tabela de tempo renumerada (ciclo 11.4 nos slides 20 a 26, fechamento 27 a 30) e ciclo 11.4 com 17 min de teoria e 25 de prática.
+
+Conferência: auditoria de linguagem sem sinais. Medição de estouro da área útil nos 30 slides, sem estouro. Captura dos slides 22 e 25.
+
 ### 14 nov. 2026, avaliação geral, regra de slide autossuficiente e tempos do módulo 15
 
 Avaliação dos 15 módulos e plano de atualização em `revisao/PLANO-DE-ATUALIZACAO.md`, aplicado ao restante de 2026.2 a partir do módulo 11.
