@@ -25,12 +25,18 @@ COMO USAR (peca ao agente, no opencode desktop)
        consultar a sua coluna.
 
     4) "execute atividade_modulo10.py com o comando concordancia"
-       Calcula a taxa de concordancia e lista os casos divergentes.
+       Calcula a concordancia percentual e o kappa de Cohen, com a
+       concordancia observada e a esperada ao acaso, e lista os casos
+       divergentes.
 
-    5) "execute atividade_modulo10.py com o comando conferir"
-       Valida a ficha de fontes e a codificacao, e gera o relatorio.
+    5) "execute atividade_modulo10.py com o comando conferir fontes"
+       Valida so a ficha de fontes (ciclo 10.2), sem gerar o relatorio.
 
-    6) "execute atividade_modulo10.py com o comando b2"
+    6) "execute atividade_modulo10.py com o comando conferir"
+       Valida a ficha de fontes, o livro de codigos e a codificacao, e gera
+       o relatorio entregas/modulo10-relatorio.md.
+
+    7) "execute atividade_modulo10.py com o comando b2"
        Percorre os modulos 9 e 10 e diz o que falta para a entrega B2.
 
     Sem nenhum comando, o script imprime estas instrucoes.
@@ -38,6 +44,8 @@ COMO USAR (peca ao agente, no opencode desktop)
 A REGRA QUE O SCRIPT APLICA
     Fonte sem endereco, sem ano e sem a definicao do indicador e recusada.
     Categorizacao sem dupla codificacao e opiniao sobre as respostas.
+    Categorias sao comparadas sem diferenca de maiusculas, espacos extras e
+    acentos: a mesma palavra escrita com ou sem acento conta como uma so.
 
 Nao precisa instalar nada. Roda com o Python que ja vem com o ambiente.
 =============================================================================
@@ -48,6 +56,7 @@ import os
 import random
 import re
 import sys
+import unicodedata
 from datetime import date, datetime
 
 # Quando o script esta na pasta scripts/ do repositorio, as pastas de trabalho
@@ -70,6 +79,7 @@ COLS_COD = ["n", "resposta", "categoria_aluno", "categoria_agente", "divergencia
 
 AMOSTRA = 20
 MINIMO_CONCORDANCIA = 70.0
+MINIMO_FONTES = 2
 
 TEXTO_LIVRO = """# Livro de codigos
 
@@ -86,7 +96,9 @@ das duas? Quantas respostas voce leu antes de definir?
 
 ## Categorias
 
-Entre quatro e sete. Mais que sete ninguem aplica com consistencia.
+Quatro ou cinco nesta pratica, e no maximo sete. Com mais de sete, a mesma
+pessoa ja tem dificuldade de aplicar as definicoes sempre do mesmo modo.
+Mantenha o formato do titulo: tres cerquilhas, numero, ponto e nome.
 
 ### 1. NOME DA CATEGORIA
 
@@ -138,7 +150,7 @@ Exaustiva: toda resposta cabe em alguma categoria? Se muitas caem em "outros",
 falta categoria.
 
 Mutuamente exclusiva: nenhuma resposta cabe em duas ao mesmo tempo? Se cabe,
-as definicoes estao frouxas.
+falta dizer na definicao onde fica o caso de fronteira.
 
 ## Ajustes feitos depois da dupla codificacao
 
@@ -182,12 +194,13 @@ def criar_fontes():
     with open(FONTES, "w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f, delimiter=SEP)
         w.writerow(COLS_FONTES)
-        for _ in range(3):
+        for _ in range(MINIMO_FONTES):
             w.writerow([""] * len(COLS_FONTES))
     print()
     print("Ficha criada em: " + FONTES)
     print()
     print("COMO PREENCHER, uma linha por organizacao comparada")
+    print("(a sua e uma comparavel, no minimo. Pode acrescentar linhas.)")
     print()
     print("  organizacao              A organizacao a que o numero se refere.")
     print("  orgao_publicador         Quem publica o dado. Nao e a mesma coisa.")
@@ -199,7 +212,11 @@ def criar_fontes():
     print("  valor_extraido           O numero que voce leu na fonte aberta.")
     print()
     print("Antes de preencher, escreva o indicador que voce vai comparar:")
-    print("numerador, denominador e periodo. Sem isso voce aceita o que encontrar.")
+    print("numerador, denominador e periodo. Sem isso qualquer numero encontrado")
+    print("parece servir.")
+    print()
+    print("Depois de preencher:")
+    print('  "execute atividade_modulo10.py com o comando conferir fontes"')
     return 0
 
 
@@ -276,9 +293,11 @@ def codificar(args):
     print()
     print("PROXIMOS PASSOS, NESTA ORDEM")
     print()
-    print("  1. Leia trinta respostas do arquivo original, sem categorizar.")
+    print("  1. Leia as %d respostas da amostra em %s, sem categorizar."
+          % (AMOSTRA, CODIFICACAO))
     print()
     print("  2. Escreva o livro de codigos em " + LIVRO)
+    print("     (quatro ou cinco categorias, sem nenhum campo PREENCHER)")
     print()
     print("  3. Preencha a coluna categoria_aluno, sem consultar mais nada.")
     print()
@@ -297,12 +316,10 @@ def concordancia(imprimir=True):
             print("Nao encontrei " + CODIFICACAO + ". Execute o comando 'codificar'.")
         return None
 
-    with open(CODIFICACAO, newline="", encoding="utf-8-sig") as f:
-        linhas = [l for l in csv.DictReader(f, delimiter=SEP)
-                  if (l.get("resposta") or "").strip()]
-
-    def norm(v):
-        return re.sub(r"\s+", " ", (v or "").strip().lower())
+    # ler_csv aceita o arquivo salvo pelo Excel, em outra codificacao ou com
+    # outro separador.
+    linhas = [l for l in (ler_csv(CODIFICACAO) or [])
+              if (l.get("resposta") or "").strip()]
 
     preenchidas = [l for l in linhas
                    if norm(l.get("categoria_aluno")) and norm(l.get("categoria_agente"))]
@@ -312,27 +329,58 @@ def concordancia(imprimir=True):
     taxa = 100.0 * len(iguais) / len(preenchidas) if preenchidas else 0.0
 
     categorias = {}
+    usos_agente = {}
     for l in preenchidas:
         c = norm(l.get("categoria_aluno"))
         categorias[c] = categorias.get(c, 0) + 1
+        a = norm(l.get("categoria_agente"))
+        usos_agente[a] = usos_agente.get(a, 0) + 1
+
+    # Kappa de Cohen (Cohen, 1960): kappa = (Po - Pe) / (1 - Pe).
+    # Po e a proporcao de respostas com a mesma categoria nas duas colunas.
+    # Pe e a concordancia esperada ao acaso: para cada categoria, a proporcao
+    # de uso pelo aluno vezes a proporcao de uso pelo agente, somadas.
+    n = len(preenchidas)
+    po = len(iguais) / float(n) if n else 0.0
+    pe = 0.0
+    if n:
+        for c in set(categorias) | set(usos_agente):
+            pe += (categorias.get(c, 0) / float(n)) * (usos_agente.get(c, 0) / float(n))
+    kappa = (po - pe) / (1.0 - pe) if n and pe < 1.0 else None
 
     if imprimir:
         titulo("MODULO 10 - CICLO 10.3 - CONCORDANCIA")
         print()
-        print("  Respostas na amostra:        %d" % len(linhas))
+        print("  Respostas na amostra:         %d" % len(linhas))
         print("  Codificadas nas duas colunas: %d" % len(preenchidas))
         print("  Concordancias:                %d" % len(iguais))
         print("  Divergencias:                 %d" % len(divergentes))
         print("  Taxa de concordancia:         %.1f%%" % taxa)
         print()
+        if n:
+            print("  Concordancia observada (Po):  %d / %d = %.3f" % (len(iguais), n, po))
+            print("  Esperada ao acaso (Pe):       %.3f" % pe)
+            if kappa is None:
+                print("  Kappa de Cohen:               nao calculavel (os dois usaram")
+                print("                                uma unica categoria)")
+            else:
+                print("  Kappa de Cohen:               (%.3f - %.3f) / (1 - %.3f) = %.2f"
+                      % (po, pe, pe, kappa))
+            print()
+            print("  Uso de cada categoria (voce / agente):")
+            for c in sorted(set(categorias) | set(usos_agente)):
+                print("    %-28s %2d / %2d" % (c, categorias.get(c, 0), usos_agente.get(c, 0)))
+            print()
         if len(preenchidas) < AMOSTRA:
             print("  Faltam %d resposta(s) para completar a dupla codificacao."
                   % (AMOSTRA - len(preenchidas)))
             print()
         if taxa < MINIMO_CONCORDANCIA and preenchidas:
-            print("  Abaixo de %.0f%%: o livro de codigos esta frouxo." % MINIMO_CONCORDANCIA)
-            print("  Isso e comum na primeira rodada e nao e erro seu. O que vale nota e")
-            print("  examinar cada divergencia e corrigir a DEFINICAO, e nao o caso.")
+            print("  Abaixo de %.0f%%: ha definicoes no livro de codigos que deixam a mesma"
+                  % MINIMO_CONCORDANCIA)
+            print("  resposta caber em mais de uma categoria. O resultado e comum na primeira")
+            print("  rodada. Examine cada divergencia e corrija a DEFINICAO da categoria.")
+            print("  A categoria ja atribuida a cada caso fica como estava.")
             print()
         if divergentes:
             print("CASOS DIVERGENTES:")
@@ -346,37 +394,45 @@ def concordancia(imprimir=True):
             print("estava ambigua e o que voce mudou nela.")
 
     return {"linhas": linhas, "preenchidas": preenchidas, "iguais": iguais,
-            "divergentes": divergentes, "taxa": taxa, "categorias": categorias}
+            "divergentes": divergentes, "taxa": taxa, "categorias": categorias,
+            "usos_agente": usos_agente, "po": po, "pe": pe, "kappa": kappa}
 
 
-def conferir():
-    titulo("MODULO 10 - CONFERENCIA DAS ENTREGAS")
+def norm(v):
+    """Minusculas, sem acentos e com espacos simples, para comparar categorias."""
+    t = unicodedata.normalize("NFKD", (v or "").strip().lower())
+    t = "".join(ch for ch in t if not unicodedata.combining(ch))
+    return re.sub(r"\s+", " ", t)
+
+
+def validar(so_fontes=False):
+    """Confere as entregas sem imprimir. Devolve erros, avisos, fontes e dados."""
     erros, avisos = [], []
     fontes = []
 
     if not os.path.exists(FONTES):
         erros.append("nao encontrei " + FONTES + ". Execute o comando 'fontes'.")
     else:
-        with open(FONTES, newline="", encoding="utf-8-sig") as f:
-            for i, l in enumerate(csv.DictReader(f, delimiter=SEP), start=2):
-                if not (l.get("organizacao") or "").strip():
-                    continue
-                campos = {c: (l.get(c) or "").strip() for c in COLS_FONTES}
-                for obrig in ("orgao_publicador", "publicacao", "endereco",
-                              "definicao_do_indicador", "valor_extraido"):
-                    if not campos[obrig]:
-                        erros.append("fontes, linha %d: %s esta vazio" % (i, obrig))
-                if not re.match(r"^\d{4}$", campos["ano"]):
-                    erros.append("fontes, linha %d: ano precisa ter quatro digitos" % i)
-                if len(campos["definicao_do_indicador"]) < 20:
-                    erros.append("fontes, linha %d: definicao_do_indicador curta demais. "
-                                 "E ela que revela se a comparacao e legitima." % i)
-                if campos["endereco"] and not re.search(r"(https?://|www\.)", campos["endereco"]):
-                    avisos.append("fontes, linha %d: o endereco nao parece um link" % i)
-                fontes.append(campos)
+        for i, l in enumerate(ler_csv(FONTES) or [], start=2):
+            if not (l.get("organizacao") or "").strip():
+                continue
+            campos = {c: (l.get(c) or "").strip() for c in COLS_FONTES}
+            for obrig in ("orgao_publicador", "publicacao", "endereco",
+                          "definicao_do_indicador", "valor_extraido"):
+                if not campos[obrig]:
+                    erros.append("fontes, linha %d: %s esta vazio" % (i, obrig))
+            if not re.match(r"^\d{4}$", campos["ano"]):
+                erros.append("fontes, linha %d: ano precisa ter quatro digitos" % i)
+            if len(campos["definicao_do_indicador"]) < 20:
+                erros.append("fontes, linha %d: definicao_do_indicador curta demais. "
+                             "E nela que aparece a diferenca de medida." % i)
+            if campos["endereco"] and not re.search(r"(https?://|www\.)", campos["endereco"]):
+                avisos.append("fontes, linha %d: o endereco nao parece um link" % i)
+            fontes.append(campos)
 
-        if len(fontes) < 3:
-            erros.append("a comparacao precisa de tres organizacoes, e ha %d." % len(fontes))
+        if len(fontes) < MINIMO_FONTES:
+            erros.append("a comparacao precisa de pelo menos %d organizacoes, e ha %d."
+                         % (MINIMO_FONTES, len(fontes)))
         anos = set(f["ano"] for f in fontes if f["ano"])
         if len(anos) > 1:
             avisos.append("os anos das fontes divergem (%s). A comparacao continua "
@@ -386,6 +442,9 @@ def conferir():
         if len(definicoes) > 1:
             avisos.append("as definicoes do indicador nao sao identicas entre as fontes. "
                           "Declare isso na comparacao.")
+
+    if so_fontes:
+        return erros, avisos, fontes, None
 
     dados = concordancia(imprimir=False)
     if dados is None:
@@ -414,6 +473,20 @@ def conferir():
         if n_cat < 4:
             avisos.append("o livro tem %d categoria(s). Menos de quatro costuma "
                           "significar categorias largas demais." % n_cat)
+        elif n_cat > 7:
+            avisos.append("o livro tem %d categorias. Com mais de sete, a aplicacao "
+                          "das definicoes tende a variar." % n_cat)
+
+    return erros, avisos, fontes, dados
+
+
+def conferir(args=None):
+    so_fontes = bool(args) and norm(args[0]) == "fontes"
+    if so_fontes:
+        titulo("MODULO 10 - CICLO 10.2 - CONFERENCIA DA FICHA DE FONTES")
+    else:
+        titulo("MODULO 10 - CONFERENCIA DAS ENTREGAS")
+    erros, avisos, fontes, dados = validar(so_fontes)
 
     print()
     if erros:
@@ -429,9 +502,21 @@ def conferir():
             print("  - " + a)
 
     print()
-    print("Fontes na ficha: %d de 3" % len(fontes))
+    print("Organizacoes na ficha: %d (minimo de %d)" % (len(fontes), MINIMO_FONTES))
     if dados:
         print("Concordancia: %.1f%%" % dados["taxa"])
+        if dados["kappa"] is not None:
+            print("Kappa de Cohen: %.2f" % dados["kappa"])
+
+    if so_fontes:
+        print()
+        if erros:
+            print("Corrija as linhas indicadas e execute 'conferir fontes' de novo.")
+            return 1
+        print("Ficha aprovada. Escreva a comparacao em "
+              + os.path.join("entregas", "modulo10-ciclo2-comparacao.md") + ".")
+        print("O relatorio do modulo e gerado pelo 'conferir', depois do ciclo 10.3.")
+        return 0
 
     if erros:
         print()
@@ -474,7 +559,12 @@ def gerar_relatorio(fontes, dados, avisos):
               "| Dupla codificacao completa | %d |" % len(dados["preenchidas"]),
               "| Concordancias | %d |" % len(dados["iguais"]),
               "| Divergencias | %d |" % len(dados["divergentes"]),
-              "| Taxa de concordancia | %.1f%% |" % dados["taxa"], "",
+              "| Taxa de concordancia | %.1f%% |" % dados["taxa"],
+              "| Concordancia observada (Po) | %.3f |" % dados["po"],
+              "| Concordancia esperada ao acaso (Pe) | %.3f |" % dados["pe"],
+              "| Kappa de Cohen | %s |" % ("%.2f" % dados["kappa"]
+                                          if dados["kappa"] is not None
+                                          else "nao calculavel"), "",
               "### Distribuicao das categorias", "",
               "| Categoria | Respostas | Percentual |", "|---|---|---|"]
         total = len(dados["preenchidas"]) or 1
@@ -510,7 +600,8 @@ ITENS_B2 = [
     ("Fluxo medido (modulo 9)", [os.path.join("entregas", "modulo9-relatorio.md")]),
     ("Sintese em camadas (modulo 10)",
      [os.path.join("entregas", "modulo10-ciclo1-sintese.md")]),
-    ("Comparacao com ficha de fontes (modulo 10)",
+    ("Ficha de fontes (modulo 10)", [FONTES]),
+    ("Comparacao escrita (modulo 10)",
      [os.path.join("entregas", "modulo10-ciclo2-comparacao.md")]),
     ("Livro de codigos (modulo 10)", [LIVRO]),
     ("Dupla codificacao (modulo 10)", [CODIFICACAO]),
@@ -550,6 +641,20 @@ def conferir_b2():
             ok, det = False, "Nao encontrei " + " nem ".join(caminhos)
         itens.append((ok, rotulo, det))
 
+    # A conferencia do modulo 10 precisa passar sem problemas, e o relatorio
+    # gerado por ela precisa existir.
+    erros, _avisos, _fontes, _dados = validar()
+    if erros:
+        itens.append((False, "Conferencia do modulo 10 aprovada",
+                      "O comando conferir aponta %d problema(s). Execute 'conferir' "
+                      "e corrija o que ele indicar." % len(erros)))
+    elif not os.path.exists(RELATORIO):
+        itens.append((False, "Conferencia do modulo 10 aprovada",
+                      "Sem problemas, mas %s nao existe. Execute 'conferir'." % RELATORIO))
+    else:
+        itens.append((True, "Conferencia do modulo 10 aprovada",
+                      "Sem problemas. Relatorio em %s." % RELATORIO))
+
     g = info_git()
     itens.append((bool(g["remoto"]), "Repositorio publicado",
                   ("Publicado em: " + g["remoto"]) if g["remoto"]
@@ -586,30 +691,33 @@ def conferir_b2():
         print("Resolva os pendentes e execute 'b2' de novo antes de publicar.")
         return 1
     print()
-    print("Entrega B2 completa. Grave com a mensagem 'entrega B2' e publique.")
+    print("Entrega B2 completa. No GitHub Desktop, faca o commit com a mensagem")
+    print("'entrega B2' e depois o push (Push origin).")
     return 0
 
 
 def main():
     args = sys.argv[1:]
-    cmd = (args[0].strip().lower() if args else "")
+    cmd = norm(args[0]) if args else ""
     if cmd == "fontes":
         return criar_fontes()
     if cmd == "codificar":
         return codificar(args[1:])
-    if cmd in ("concordancia", "concordância"):
+    if cmd == "concordancia":
         return 0 if concordancia() is not None else 1
     if cmd in ("conferir", "validar", "check"):
-        return conferir()
+        return conferir(args[1:])
     if cmd in ("b2", "entrega", "bloco"):
         return conferir_b2()
     print(__doc__)
-    print("Comandos disponiveis:")
-    print("  python atividade_modulo10.py fontes                     ficha da comparacao")
-    print("  python atividade_modulo10.py codificar dados/X.csv      prepara a codificacao")
-    print("  python atividade_modulo10.py concordancia               mede a concordancia")
-    print("  python atividade_modulo10.py conferir                   valida e gera")
-    print("  python atividade_modulo10.py b2                         confere a entrega B2")
+    print("Comandos disponiveis (peca ao agente: \"execute atividade_modulo10.py com o")
+    print("comando ...\"):")
+    print("  fontes                    cria a ficha da comparacao")
+    print("  conferir fontes           confere so a ficha de fontes")
+    print("  codificar dados/X.csv     sorteia a amostra e cria o livro de codigos")
+    print("  concordancia              mede a concordancia e o kappa")
+    print("  conferir                  confere tudo e gera o relatorio")
+    print("  b2                        confere a entrega B2")
     return 0
 
 

@@ -21,19 +21,23 @@ COMO USAR (peca ao agente, no opencode desktop)
     2) Adapte o modelo ao seu documento e preencha tres linhas de variaveis.
 
     3) "execute atividade_modulo9.py com o comando gerar"
-       Produz um documento por linha em saidas/, avisa variavel sem valor e
-       coluna sem uso.
+       Produz um documento por linha em saidas/, so com o texto que fica
+       entre a linha "## Documento" e a linha "---" do modelo. Avisa variavel
+       sem valor, coluna sem uso e colchete que nao segue a regra de nome
+       (maiusculas de A a Z, algarismos e sublinhado).
 
     4) "execute atividade_modulo9.py com o comando conferir"
-       Valida a medicao, calcula em quantas execucoes o investimento se paga
-       e gera entregas/modulo9-relatorio.md
+       Valida a medicao, calcula em quantas execucoes o investimento se paga,
+       ja descontado o tempo de manutencao, e gera entregas/modulo9-relatorio.md
 
     Sem nenhum comando, o script imprime estas instrucoes.
 
 A REGRA QUE O SCRIPT APLICA
-    Ganho declarado sem os tres tempos medidos nao conta. E variavel usada no
-    modelo sem coluna correspondente na tabela interrompe a geracao: e o
-    defeito que faz o documento sair com um campo em branco no lugar do valor.
+    Ganho declarado sem os tres tempos nao conta. O tempo manual e estimado
+    (lembrado da ultima execucao). O tempo automatizado e o de construcao sao
+    medidos. Variavel usada no modelo sem coluna correspondente na tabela
+    interrompe a geracao, porque o documento sairia com o marcador no lugar
+    do valor.
 
 Nao precisa instalar nada. Roda com o Python que ja vem com o ambiente.
 =============================================================================
@@ -43,6 +47,7 @@ import csv
 import os
 import re
 import sys
+import unicodedata
 from datetime import date
 
 # Quando o script esta na pasta scripts/ do repositorio, as pastas de trabalho
@@ -60,10 +65,11 @@ RELATORIO = os.path.join("entregas", "modulo9-relatorio.md")
 
 COLS_FLUXO = ["item", "valor", "observacao"]
 ITENS_FLUXO = [
-    ("tempo_manual_minutos", "", "quanto a tarefa levava por execucao, antes"),
-    ("tempo_automatizado_minutos", "", "quanto leva agora, incluindo conferencia"),
-    ("tempo_construcao_minutos", "", "quanto voce gastou hoje construindo o fluxo"),
+    ("tempo_manual_minutos", "", "estimado: quanto a tarefa levava por execucao, antes"),
+    ("tempo_automatizado_minutos", "", "medido: quanto leva agora, incluindo conferencia"),
+    ("tempo_construcao_minutos", "", "medido: quanto voce gastou construindo o fluxo"),
     ("execucoes_por_ano", "", "quantas vezes a tarefa e feita por ano"),
+    ("manutencao_minutos_por_ano", "", "estimado: minutos por ano para ajustar o fluxo"),
     ("passo_irreversivel", "", "onde o fluxo se torna irreversivel"),
     ("o_que_se_confere", "", "no maximo dois itens"),
     ("cargo_responsavel", "", "o cargo, nao a pessoa"),
@@ -98,13 +104,21 @@ Elaborado por [RESPONSAVEL] em [DATA_ELABORACAO].
 
 COMO ADAPTAR ESTE MODELO
 
-1. Substitua o texto acima pelo seu documento real.
+1. Substitua o texto entre "## Documento" e "---" pelo seu documento real.
+   So esse trecho entra nos documentos gerados. Responsavel, data de revisao
+   e regra para dado ausente ficam apenas aqui no modelo.
 2. Troque por marcadores entre colchetes tudo que muda a cada execucao.
-3. Use nomes descritivos: [MES_REFERENCIA] e nao [X1].
+3. Use nomes descritivos, em maiusculas, sem acento e sem espaco:
+   [MES_REFERENCIA] e nao [X1], [mes] ou [MÊS].
 4. Nenhum numero fixo dentro do texto: meta e valor de referencia sao variaveis.
 5. Cada marcador precisa de uma coluna com o mesmo nome em
    dados/modulo9-variaveis.csv
 """
+
+PADRAO_MARCADOR = re.compile(r"\[([A-Z0-9_]{2,})\]")
+# Qualquer trecho entre colchetes na mesma linha. Ficam de fora o link de
+# Markdown ([texto](endereco)) e a caixa de selecao ([ ] ou [x]).
+PADRAO_COLCHETE = re.compile(r"\[([^\[\]\n]{1,60})\](?!\()")
 
 
 def titulo(t):
@@ -114,9 +128,58 @@ def titulo(t):
     print("=" * 74)
 
 
+def sem_acento(txt):
+    txt = unicodedata.normalize("NFKD", txt or "")
+    return "".join(c for c in txt if not unicodedata.combining(c))
+
+
+def corpo_do_documento(texto):
+    """Devolve (corpo, achou_secao).
+
+    O corpo e o trecho entre a linha "## Documento" e a linha "---" que
+    antecede COMO ADAPTAR ESTE MODELO. Sem a linha "## Documento", usa todo o
+    texto acima de COMO ADAPTAR ESTE MODELO, como nas versoes anteriores.
+    """
+    acima = texto.split("COMO ADAPTAR ESTE MODELO")[0]
+    linhas = acima.splitlines()
+    inicio = None
+    for i, l in enumerate(linhas):
+        if l.strip().lower().rstrip(":") in ("## documento", "##documento"):
+            inicio = i + 1
+            break
+    achou = inicio is not None
+    if achou:
+        linhas = linhas[inicio:]
+    # retira linhas vazias e a linha --- do fim
+    while linhas and linhas[-1].strip() in ("", "---"):
+        linhas.pop()
+    while linhas and not linhas[0].strip():
+        linhas.pop(0)
+    return "\n".join(linhas) + "\n", achou
+
+
 def marcadores(texto):
-    corpo = texto.split("COMO ADAPTAR ESTE MODELO")[0]
-    return sorted(set(re.findall(r"\[([A-Z0-9_]{2,})\]", corpo)))
+    corpo, _ = corpo_do_documento(texto)
+    return sorted(set(PADRAO_MARCADOR.findall(corpo)))
+
+
+def nao_reconhecidos(corpo):
+    """Trechos entre colchetes que nao seguem a regra de nome do marcador."""
+    achados = []
+    for m in PADRAO_COLCHETE.findall(corpo):
+        if PADRAO_MARCADOR.fullmatch("[%s]" % m):
+            continue
+        if m.strip().lower() in ("", "x"):
+            continue
+        sugestao = re.sub(r"[^A-Z0-9_]", "", sem_acento(m).upper().strip()
+                          .replace(" ", "_").replace("-", "_"))
+        achados.append((m, sugestao))
+    vistos, unicos = set(), []
+    for m, s in achados:
+        if m not in vistos:
+            vistos.add(m)
+            unicos.append((m, s))
+    return unicos
 
 
 def iniciar():
@@ -158,11 +221,13 @@ def iniciar():
     print()
     print("PROXIMOS PASSOS")
     print()
-    print("  1. Abra " + MODELO + " e substitua pelo seu documento real,")
-    print("     trocando por marcadores entre colchetes tudo que muda.")
+    print("  1. Abra " + MODELO + ", preencha responsavel e data e, entre as")
+    print("     linhas '## Documento' e '---', ponha o seu documento real, trocando")
+    print("     por marcadores entre colchetes tudo que muda.")
     print()
     print("  2. Ajuste as colunas de " + VARIAVEIS + " para os marcadores que")
-    print("     voce usou, e preencha tres linhas com casos reais.")
+    print("     voce usou, apague as linhas vazias e preencha tres linhas com")
+    print("     casos reais.")
     print()
     print("  3. Peca: \"execute atividade_modulo9.py com o comando gerar\"")
     return 0
@@ -179,13 +244,39 @@ def gerar():
         print("Nao encontrei " + VARIAVEIS + ". Execute o comando 'iniciar'.")
         return 1
 
-    texto = open(MODELO, encoding="utf-8").read()
-    corpo = texto.split("COMO ADAPTAR ESTE MODELO")[0].rstrip()
+    texto = open(MODELO, encoding="utf-8-sig").read()
+    corpo, achou_secao = corpo_do_documento(texto)
     usados = marcadores(texto)
+    estranhos = nao_reconhecidos(corpo)
 
+    if not achou_secao:
+        print()
+        print("AVISO: o modelo nao tem a linha '## Documento'. Todo o texto acima de")
+        print("COMO ADAPTAR ESTE MODELO vai para os documentos, inclusive responsavel,")
+        print("data de revisao e regra para dado ausente. Escreva '## Documento' na")
+        print("linha que antecede o titulo do seu documento.")
+
+    def _txt(v):
+        # Campos a mais que o cabecalho chegam como lista, sob a chave None.
+        return " ".join(v) if isinstance(v, list) else (v or "")
+
+    linhas, a_mais = [], []
     with open(VARIAVEIS, newline="", encoding="utf-8-sig") as f:
-        linhas = [l for l in csv.DictReader(f, delimiter=SEP)
-                  if any((v or "").strip() for v in l.values())]
+        leitor = csv.DictReader(f, delimiter=SEP)
+        for l in leitor:
+            extras = l.pop(None, None)
+            if extras and any(_txt(x).strip() for x in extras):
+                a_mais.append((leitor.line_num, extras))
+            if any(_txt(v).strip() for v in l.values()):
+                linhas.append(l)
+
+    if a_mais:
+        print()
+        print("AVISO: linhas de " + VARIAVEIS + " com mais campos que o cabecalho.")
+        print("Os valores a mais foram ignorados:")
+        for n, extras in a_mais:
+            print("  - linha %d: %s" % (n, "; ".join(_txt(x) for x in extras)))
+        print("Confira se falta coluna no cabecalho ou se sobrou separador ';'.")
 
     if not linhas:
         print()
@@ -212,6 +303,18 @@ def gerar():
         print("Colunas da tabela que o modelo nao usa (pode ser erro de digitacao):")
         for c in sobrando:
             print("  - %s" % c)
+
+    if estranhos:
+        print()
+        print("AVISO: colchetes que o script nao reconhece como marcador. Eles vao sair")
+        print("no documento sem substituicao. O nome do marcador usa so maiusculas de")
+        print("A a Z, algarismos e sublinhado, com dois caracteres ou mais:")
+        for m, sug in estranhos:
+            if len(sug) >= 2:
+                print("  - [%s]   escreva [%s]" % (m, sug))
+            else:
+                print("  - [%s]" % m)
+        print("Se o colchete faz parte do texto e nao e marcador, ignore este aviso.")
 
     os.makedirs("saidas", exist_ok=True)
     gerados, avisos_totais = [], 0
@@ -246,6 +349,7 @@ def gerar():
     print()
     print("Marcadores usados no modelo: %d" % len(usados))
     print("Documentos com campo faltando: %d" % avisos_totais)
+    print("Colchetes nao reconhecidos: %d" % len(estranhos))
     print()
     print("PROXIMO PASSO")
     print("  Leia os tres documentos. Alguma frase ficou sem sentido? E onde o")
@@ -277,6 +381,24 @@ def conferir():
         except ValueError:
             erros.append("%s precisa ser um numero de minutos" % campo)
 
+    if numeros.get("execucoes_por_ano") == 0:
+        erros.append("execucoes_por_ano precisa ser maior que zero")
+
+    # Manutencao: linha acrescentada em nov. 2026. Arquivo criado antes nao a
+    # tem. Sem valor, o calculo considera zero e avisa.
+    manut_informada = True
+    bruto = dados.get("manutencao_minutos_por_ano", "").replace(",", ".")
+    if not bruto:
+        manut_informada = False
+        numeros["manutencao_minutos_por_ano"] = 0.0
+    else:
+        try:
+            numeros["manutencao_minutos_por_ano"] = float(bruto)
+            if numeros["manutencao_minutos_por_ano"] < 0:
+                erros.append("manutencao_minutos_por_ano nao pode ser negativo")
+        except ValueError:
+            erros.append("manutencao_minutos_por_ano precisa ser um numero de minutos")
+
     for campo in ("passo_irreversivel", "o_que_se_confere", "cargo_responsavel",
                   "se_a_conferencia_falhar"):
         if len(dados.get(campo, "")) < 10:
@@ -305,32 +427,38 @@ def conferir():
     automat = numeros["tempo_automatizado_minutos"]
     constr = numeros["tempo_construcao_minutos"]
     por_ano = numeros["execucoes_por_ano"]
-    economia = manual - automat
+    manut_ano = numeros["manutencao_minutos_por_ano"]
+    manut_exec = manut_ano / por_ano
+    economia = manual - automat - manut_exec
 
     print("Nenhum problema encontrado.")
+    if not manut_informada:
+        print("AVISO: manutencao_minutos_por_ano sem valor. O calculo considera zero.")
+        print("  Acrescente ao arquivo a linha manutencao_minutos_por_ano;N; com N em")
+        print("  minutos por ano, se ela nao existir.")
     print()
-    print("  Tempo manual por execucao:        %.0f min" % manual)
-    print("  Tempo automatizado por execucao:  %.0f min" % automat)
-    print("  Economia por execucao:            %.0f min" % economia)
-    print("  Investimento na construcao:       %.0f min" % constr)
+    print("  Tempo manual por execucao (estimado):  %.0f min" % manual)
+    print("  Tempo automatizado por execucao:       %.0f min" % automat)
+    print("  Manutencao por execucao:               %.0f min" % manut_exec)
+    print("  Economia liquida por execucao:         %.0f min" % economia)
+    print("  Investimento na construcao:            %.0f min" % constr)
 
     if economia <= 0:
         equilibrio = None
         print()
-        print("  A automacao nao economiza tempo por execucao.")
-        print("  Isso e um resultado, e um resultado util: descobrir que nao compensa")
-        print("  antes de investir e exatamente o objetivo do metodo. Se ainda assim")
-        print("  ela se justifica, o argumento tem de ser reducao de erro, e nao tempo.")
+        print("  A automacao nao economiza tempo por execucao, descontada a manutencao.")
+        print("  O metodo serve para descobrir isso antes de investir mais tempo. Se")
+        print("  a automacao ainda se justifica, o argumento passa a ser a reducao de")
+        print("  erro, com o erro que ela evita descrito no relatorio.")
     else:
         equilibrio = constr / economia
-        anos = (equilibrio / por_ano) if por_ano else None
+        anos = equilibrio / por_ano
         print("  Execucoes ate o investimento se pagar: %.1f" % equilibrio)
-        if anos is not None:
-            print("  Ou seja, cerca de %.1f ano(s) na frequencia informada." % anos)
+        print("  Ou seja, cerca de %.1f ano(s) na frequencia informada." % anos)
         print("  Economia anual estimada: %.0f min (%.1f h)"
               % (economia * por_ano, economia * por_ano / 60.0))
 
-    gerar_relatorio(dados, numeros, economia, equilibrio, gerados)
+    gerar_relatorio(dados, numeros, economia, equilibrio, gerados, manut_informada)
     print()
     print("Relatorio gerado em: " + RELATORIO)
     print()
@@ -340,16 +468,21 @@ def conferir():
     return 0
 
 
-def gerar_relatorio(dados, numeros, economia, equilibrio, gerados):
+def gerar_relatorio(dados, numeros, economia, equilibrio, gerados, manut_informada=True):
     L = ["# Fluxo automatizado", "",
          "Modulo 9. DECC0294, UFMA, Curso de Administracao.",
          "Gerado em %s pelo script atividade_modulo9.py." % date.today().strftime("%d/%m/%Y"),
          "", "Nome e matricula: ______________________________", "",
          "## Medicao", "", "| Item | Valor |", "|---|---|"]
-    L.append("| Tempo manual por execucao | %.0f min |" % numeros["tempo_manual_minutos"])
-    L.append("| Tempo automatizado por execucao | %.0f min |" % numeros["tempo_automatizado_minutos"])
-    L.append("| Economia por execucao | %.0f min |" % economia)
-    L.append("| Investimento na construcao | %.0f min |" % numeros["tempo_construcao_minutos"])
+    manut = numeros["manutencao_minutos_por_ano"]
+    L.append("| Tempo manual por execucao (estimado) | %.0f min |" % numeros["tempo_manual_minutos"])
+    L.append("| Tempo automatizado por execucao (medido) | %.0f min |" % numeros["tempo_automatizado_minutos"])
+    if manut_informada:
+        L.append("| Manutencao por ano (estimada) | %.0f min |" % manut)
+    else:
+        L.append("| Manutencao por ano | NAO INFORMADO, considerado 0 |")
+    L.append("| Economia liquida por execucao | %.0f min |" % economia)
+    L.append("| Investimento na construcao (medido) | %.0f min |" % numeros["tempo_construcao_minutos"])
     L.append("| Execucoes por ano | %.0f |" % numeros["execucoes_por_ano"])
     if equilibrio is not None:
         L.append("| Execucoes ate se pagar | %.1f |" % equilibrio)
@@ -375,12 +508,13 @@ def gerar_relatorio(dados, numeros, economia, equilibrio, gerados):
           "ESCREVA AQUI em uma frase: o que era, o que e agora, e em quanto tempo o",
           "investimento se paga.", "", "> ", "",
           "## Comparacao com a estimativa do modulo 1", "",
-          "ESCREVA AQUI: o ganho que voce estimou la bate com o medido agora? "
+          "ESCREVA AQUI: o ganho que voce estimou la bate com o calculado agora? "
           "O que explica a diferenca?", "", "> ", "",
           "---", "", "## Declaracao de uso de inteligencia artificial", "",
           "Ferramenta e modelo usados: ______________________________", "",
           "O modelo com variaveis esta em prompts/ e os documentos gerados em saidas/.",
-          "Os tempos foram medidos por mim.", ""]
+          "O tempo manual e a manutencao sao estimativas minhas. O tempo automatizado",
+          "e o de construcao foram medidos por mim.", ""]
     os.makedirs("entregas", exist_ok=True)
     with open(RELATORIO, "w", encoding="utf-8") as f:
         f.write("\n".join(L))

@@ -16,12 +16,15 @@ COMO USAR (peca ao agente, no opencode desktop)
 
     1) "execute o arquivo atividade_modulo4.py com o comando iniciar"
        Guarda uma copia do AGENTS.md em saidas/agents-v1.md, escreve as tres
-       tarefas de teste em saidas/modulo4-bateria-de-testes.md e cria o
-       registro em entregas/modulo4-registro.csv
+       tarefas de teste em saidas/modulo4-bateria-de-testes.md, cria o
+       registro em entregas/modulo4-registro.csv e grava uma planilha de
+       teste com dados ilustrativos em dados/modulo4-planilha-teste.csv,
+       usada na tarefa de analise por quem nao tiver planilha propria.
 
     2) Rode as tres tarefas (rodada 1). Anote no registro o que saiu fora do
-       que voce configurou. Corrija o AGENTS.md. Rode as tres de novo
-       (rodada 2) e anote.
+       que voce configurou. Corrija o AGENTS.md. Feche e abra o opencode de
+       novo, porque o AGENTS.md e lido quando o opencode inicia. Rode as
+       tres de novo (rodada 2) e anote.
 
     3) "execute o arquivo atividade_modulo4.py com o comando conferir"
        Valida o registro, compara o AGENTS.md com a copia da versao 1 e gera
@@ -51,6 +54,7 @@ Nao precisa instalar nada. Roda com o Python que ja vem com o ambiente.
 """
 
 import csv
+import gzip
 import json
 import os
 import re
@@ -72,7 +76,24 @@ COPIA = os.path.join("saidas", "agents-v1.md")
 BATERIA = os.path.join("saidas", "modulo4-bateria-de-testes.md")
 AGENTS = "AGENTS.md"
 GLOSSARIO = os.path.join("entregas", "glossario.html")
+PLANILHA = os.path.join("dados", "modulo4-planilha-teste.csv")
 SEP = ";"
+
+# Planilha de teste para a tarefa de analise. Os numeros sao ilustrativos:
+# servem para verificar se o agente mostra a conta e se inventa numero que
+# nao esta no arquivo.
+TEXTO_PLANILHA = """mes;pedidos_recebidos;pedidos_atendidos_no_prazo
+2026-01;120;96
+2026-02;110;92
+2026-03;135;101
+2026-04;128;99
+2026-05;140;105
+2026-06;132;104
+2026-07;125;100
+2026-08;138;110
+2026-09;130;108
+2026-10;142;117
+"""
 
 COLUNAS = ["rodada", "tarefa", "saiu_como_configurado_1a5", "o_que_saiu_fora", "ajuste_feito"]
 
@@ -88,7 +109,11 @@ Modulo 4, ciclo 4.2. Rode estas tres tarefas duas vezes: antes e depois de
 corrigir o AGENTS.md. Use exatamente o mesmo texto nas duas rodadas, para que
 a comparacao signifique alguma coisa.
 
-## Tarefa 1 — conceito
+Antes da rodada 2, feche e abra o opencode de novo e comece uma sessao nova.
+O AGENTS.md e lido quando o opencode inicia: sem reiniciar, a rodada 2 pode
+rodar com a versao 1 do arquivo.
+
+## Tarefa 1: conceito
 
     Explique o que e [um conceito central da sua area] para alguem que vai
     usar isso numa decisao de gestao. Grave em saidas/teste-conceito-r1.md
@@ -97,16 +122,21 @@ a comparacao signifique alguma coisa.
 O que observar: o nivel da explicacao, o vocabulario, se ha exemplo, se ha
 referencia, e se o formato saiu como voce configurou.
 
-## Tarefa 2 — analise com numero
+## Tarefa 2: analise com numero
 
-    Com base no arquivo [uma planilha ou tabela da pasta dados], calcule
-    [uma medida simples] e interprete o resultado em ate cinco linhas.
-    Grave em saidas/teste-analise-r1.md (na rodada 2, use -r2).
+    Com base no arquivo dados/modulo4-planilha-teste.csv, calcule o
+    percentual de pedidos atendidos no prazo em cada mes e interprete o
+    resultado em ate cinco linhas. Grave em saidas/teste-analise-r1.md
+    (na rodada 2, use -r2).
+
+Quem tiver planilha propria em dados/ pode troca-la no pedido, com uma
+medida simples dessa planilha. A planilha de teste traz dados ilustrativos.
 
 O que observar: se ele mostrou a conta, se declarou a limitacao do dado e se
-inventou algum numero que nao estava no arquivo.
+inventou algum numero que nao estava no arquivo. Confira dois meses a mao:
+em 2026-01, 96 / 120 = 80,0%, e em 2026-02, 92 / 110 = 83,6%.
 
-## Tarefa 3 — redacao
+## Tarefa 3: redacao
 
     Escreva um paragrafo de abertura para um relatorio sobre [tema do seu
     projeto], dirigido a [quem vai ler]. Grave em saidas/teste-redacao-r1.md
@@ -175,6 +205,12 @@ def iniciar():
                     w.writerow([r, t, "", "", ""])
         criados.append(CSV)
 
+    if not os.path.exists(PLANILHA):
+        os.makedirs("dados", exist_ok=True)
+        with open(PLANILHA, "w", newline="", encoding="utf-8-sig") as f:
+            f.write(TEXTO_PLANILHA)
+        criados.append(PLANILHA)
+
     print()
     if criados:
         print("CRIADO:")
@@ -184,14 +220,17 @@ def iniciar():
     print("PROXIMOS PASSOS, NESTA ORDEM")
     print()
     print("  1. Abra " + BATERIA + " e adapte as tres tarefas ao seu projeto.")
+    print("     A tarefa de analise usa " + PLANILHA + " (dados ilustrativos)")
+    print("     ou uma planilha sua da pasta dados.")
     print()
     print("  2. Rode as tres tarefas (rodada 1) e preencha as tres primeiras")
     print("     linhas de " + CSV)
     print()
     print("  3. Corrija o AGENTS.md com base no que saiu fora.")
     print()
-    print("  4. Rode as mesmas tres tarefas (rodada 2) e preencha as tres")
-    print("     ultimas linhas.")
+    print("  4. Feche e abra o opencode de novo: o AGENTS.md e lido quando o")
+    print("     opencode inicia. Rode as mesmas tres tarefas (rodada 2) numa")
+    print("     sessao nova e preencha as tres ultimas linhas.")
     print()
     print("  5. Peca ao agente:")
     print('     "execute atividade_modulo4.py com o comando conferir"')
@@ -343,7 +382,7 @@ def gerar(itens, registros, ok_n):
     L.append("|---|---|---|---|---|")
     for r in sorted(registros, key=lambda r: (r["rodada"], r["tarefa"])):
         L.append("| %d | %s | %d de 5 | %s | %s |"
-                 % (r["rodada"], r["tarefa"], r["nota"], r["fora"] or "—", r["ajuste"] or "—"))
+                 % (r["rodada"], r["tarefa"], r["nota"], r["fora"] or "(vazio)", r["ajuste"] or "(vazio)"))
     L.append("")
     L.append("## O que mudou entre a versao 1 e a versao 2")
     L.append("")
@@ -377,23 +416,31 @@ def gerar(itens, registros, ok_n):
 # ---------------------------------------------------------------------------
 # Todas as fontes abaixo respondem sem cadastro e sem chave de acesso.
 # O script sempre imprime a URL que chamou: e ela que voce precisa entender.
-# Uma ferramenta de MCP nada mais e do que um invólucro em torno de uma URL
-# como estas.
+# O campo "mcp" diz como o servidor MCP brasil-data-mcp (versao 0.4.0, usada
+# no ciclo 4.3) chega ao mesmo dado, para comparar as duas vias.
+
+MCP_MESMA_API = ("A ferramenta %s do MCP brasil-data consulta esta mesma API. "
+                 "Pelo MCP, a URL nao aparece na tela.")
 
 FONTES = {
     "cnpj": {
         "desc": "Dados cadastrais de uma empresa pela Receita Federal",
         "url": "https://brasilapi.com.br/api/cnpj/v1/{0}",
-        "arg": "o CNPJ, so numeros. Exemplo: apis cnpj 06990590000123",
-        "teste": "06990590000123",
+        "arg": ("o CNPJ, com ou sem pontuacao, numerico ou alfanumerico. "
+                "Exemplo: apis cnpj 06279103000119"),
+        "teste": "06279103000119",
         "fonte": "BrasilAPI",
+        "mcp": MCP_MESMA_API % "consultar_cnpj",
+        "destaque": ["razao_social", "descricao_situacao_cadastral", "municipio", "uf",
+                     "data_inicio_atividade", "cnae_fiscal_descricao"],
     },
     "cep": {
         "desc": "Endereco a partir do CEP",
         "url": "https://brasilapi.com.br/api/cep/v2/{0}",
-        "arg": "o CEP, so numeros. Exemplo: apis cep 65080805",
+        "arg": "o CEP, com ou sem hifen. Exemplo: apis cep 65080805",
         "teste": "65080805",
         "fonte": "BrasilAPI",
+        "mcp": MCP_MESMA_API % "consultar_cep",
     },
     "bancos": {
         "desc": "Lista de todos os bancos com codigo e ISPB",
@@ -401,6 +448,7 @@ FONTES = {
         "arg": None,
         "teste": None,
         "fonte": "BrasilAPI",
+        "mcp": MCP_MESMA_API % "listar_bancos",
     },
     "feriados": {
         "desc": "Feriados nacionais de um ano",
@@ -408,6 +456,7 @@ FONTES = {
         "arg": "o ano com quatro digitos. Exemplo: apis feriados 2026",
         "teste": "2026",
         "fonte": "BrasilAPI",
+        "mcp": MCP_MESMA_API % "consultar_feriados",
     },
     "taxas": {
         "desc": "Taxas oficiais vigentes (Selic, CDI, IPCA)",
@@ -415,6 +464,7 @@ FONTES = {
         "arg": None,
         "teste": None,
         "fonte": "BrasilAPI",
+        "mcp": MCP_MESMA_API % "listar_taxas",
     },
     "municipios": {
         "desc": "Todos os municipios de um estado, com codigo do IBGE",
@@ -422,6 +472,9 @@ FONTES = {
         "arg": "a sigla da UF. Exemplo: apis municipios MA",
         "teste": "MA",
         "fonte": "IBGE, servico de dados",
+        "mcp": ("Este comando chama o IBGE direto. A ferramenta consultar_municipios "
+                "do MCP brasil-data passa pela BrasilAPI. O dado e do IBGE nos dois "
+                "caminhos, e a URL e outra."),
     },
     "serie": {
         "desc": "Serie temporal do Banco Central (1 = cambio, 432 = Selic meta, 433 = IPCA)",
@@ -431,6 +484,7 @@ FONTES = {
                 "Exemplo: apis serie 432 01/01/2026 31/08/2026"),
         "teste": "432",
         "fonte": "Banco Central, SGS",
+        "mcp": "O MCP brasil-data nao tem ferramenta para as series do SGS.",
     },
     "contratacoes": {
         "desc": "Contratacoes publicas divulgadas no PNCP num periodo",
@@ -442,6 +496,7 @@ FONTES = {
                 "Exemplo: apis contratacoes MA 20260801 20260810"),
         "teste": None,
         "fonte": "PNCP, Portal Nacional de Contratacoes Publicas",
+        "mcp": "O MCP brasil-data nao tem ferramenta para o PNCP.",
     },
 }
 
@@ -458,8 +513,37 @@ def buscar(url, timeout=25):
         "Accept": "application/json",
     })
     with urllib.request.urlopen(req, timeout=timeout) as r:
-        bruto = r.read().decode("utf-8", errors="replace")
-    return json.loads(bruto)
+        conteudo = r.read()
+        compactado = (r.headers.get("Content-Encoding", "").lower() == "gzip"
+                      or conteudo[:2] == b"\x1f\x8b")
+    # O servico de dados do IBGE devolve a resposta compactada (gzip) mesmo
+    # quando o pedido nao a solicita.
+    if compactado:
+        conteudo = gzip.decompress(conteudo)
+    return json.loads(conteudo.decode("utf-8", errors="replace"))
+
+
+def normalizar_argumentos(chave, argumentos):
+    """Limpa a pontuacao do CNPJ e do CEP. Devolve (argumentos, erro)."""
+    if not argumentos:
+        return argumentos, None
+    valor = argumentos[0].strip()
+    if chave == "cnpj":
+        # Desde 31 jul. 2026 a Receita Federal emite tambem CNPJ alfanumerico
+        # (IN RFB 2.229/2024): 12 posicoes com letras ou digitos e 2 digitos
+        # verificadores numericos.
+        limpo = re.sub(r"[.\-/\s]", "", valor).upper()
+        if not re.fullmatch(r"[0-9A-Z]{12}[0-9]{2}", limpo):
+            return argumentos, ("CNPJ invalido: '%s'. Sao 14 posicoes, as 12 primeiras "
+                                "com letras ou digitos e as 2 ultimas com digitos. "
+                                "Exemplo: 06.279.103/0001-19" % valor)
+        return [limpo] + list(argumentos[1:]), None
+    if chave == "cep":
+        limpo = re.sub(r"[.\-\s]", "", valor)
+        if not re.fullmatch(r"[0-9]{8}", limpo):
+            return argumentos, "CEP invalido: '%s'. Sao 8 digitos. Exemplo: 65080-805" % valor
+        return [limpo] + list(argumentos[1:]), None
+    return argumentos, None
 
 
 def achatar(d, prefixo=""):
@@ -582,6 +666,9 @@ def testar_fontes():
         except urllib.error.HTTPError as e:
             resultados.append((chave, "respondeu com erro HTTP %s" % e.code, "-"))
             print("  [!!] %-14s respondeu com erro HTTP %s" % (chave, e.code))
+        except ValueError:
+            resultados.append((chave, "respondeu fora do formato JSON", "-"))
+            print("  [!!] %-14s respondeu fora do formato JSON" % chave)
         except Exception as e:
             resultados.append((chave, "inalcancavel: %s" % type(e).__name__, "-"))
             print("  [XX] %-14s inalcancavel (%s)" % (chave, type(e).__name__))
@@ -608,6 +695,11 @@ def testar_fontes():
 
 def consultar(chave, argumentos):
     f = FONTES[chave]
+    argumentos, erro = normalizar_argumentos(chave, argumentos)
+    if erro:
+        print()
+        print(erro)
+        return 1
     url = montar_url(chave, argumentos)
     if not url:
         print()
@@ -621,18 +713,23 @@ def consultar(chave, argumentos):
     print("URL chamada:")
     print("  " + url)
     print()
-    print("Esta URL e o que uma ferramenta de MCP executaria por baixo.")
     print("Guarde-a: ela e a resposta a pergunta 'de onde veio esse dado?'.")
+    print(f["mcp"])
     print()
 
     try:
         dados = buscar(url)
     except urllib.error.HTTPError as e:
         print("A fonte respondeu com erro HTTP %s." % e.code)
-        if e.code == 404:
+        if e.code in (400, 404):
             print("Costuma significar argumento invalido: confira o valor que voce passou.")
+        elif e.code == 406 and chave == "serie":
+            print("O Banco Central recusa intervalo acima de dez anos. Encurte o periodo.")
         elif e.code == 429:
             print("Excesso de pedidos. Espere um minuto e tente de novo.")
+        return 1
+    except ValueError:
+        print("A fonte respondeu, mas fora do formato JSON. Tente de novo mais tarde.")
         return 1
     except Exception as e:
         print("Nao consegui alcancar a fonte (%s)." % type(e).__name__)
@@ -649,9 +746,13 @@ def consultar(chave, argumentos):
             for k, v in list(achatar(dados[0]).items())[:10]:
                 print("  %-28s %s" % (k, str(v)[:60]))
     elif isinstance(dados, dict):
-        print("Campos recebidos:")
-        for k, v in list(achatar(dados).items())[:14]:
-            print("  %-28s %s" % (k, str(v)[:60]))
+        campos = achatar(dados)
+        # Os campos usados na comparacao com o MCP vem primeiro.
+        primeiro = [c for c in f.get("destaque", []) if c in campos]
+        ordem = primeiro + [c for c in campos if c not in primeiro]
+        print("Campos recebidos (%d), os %d primeiros:" % (len(campos), min(14, len(ordem))))
+        for k in ordem[:14]:
+            print("  %-28s %s" % (k, str(campos[k])[:60]))
 
     print()
     print("GRAVADO:")

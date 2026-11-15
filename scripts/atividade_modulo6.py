@@ -45,6 +45,7 @@ import csv
 import os
 import re
 import sys
+import unicodedata
 from datetime import date, datetime
 
 # Quando o script esta na pasta scripts/ do repositorio, as pastas de trabalho
@@ -65,10 +66,14 @@ CLASSIFICACOES = {
     "erro de registro", "unidade trocada", "realidade",
 }
 DECISOES = {"manter", "corrigir", "separar", "excluir", "nao preencher"}
+MAX_ATIPICOS = 3      # casos individuais por coluna no formulario de tratamento
 
+# recalculo_amostra substituiu linha_recalculada em nov. 2026. O conferir
+# aceita os dois nomes, para os logs ja entregues.
 COLS_LOG = ["numero", "o_que_mede", "valor", "total_fecha", "contagem_fecha",
-            "ordem_de_grandeza", "linha_recalculada", "conclusao"]
+            "ordem_de_grandeza", "recalculo_amostra", "conclusao"]
 SIM_NAO = {"sim", "nao", "nao se aplica"}
+NUMEROS_LOG = 3
 
 
 def titulo(t):
@@ -114,23 +119,54 @@ def abrir(caminho):
     return linhas, separador, codificacao
 
 
-def numero(v):
-    """Converte texto em numero, tolerando o formato brasileiro."""
-    if v is None:
-        return None
-    t = str(v).strip().replace("R$", "").replace("%", "").strip()
-    if not t:
-        return None
-    if re.match(r"^-?\d{1,3}(\.\d{3})+,\d+$", t):      # 1.234.567,89
+# Ponto de milhar: "12.480" pode ser doze mil quatrocentos e oitenta (Excel em
+# portugues) ou doze virgula quarenta e oito (ponto decimal). A decisao e por
+# coluna, com a mesma regra do script do modulo 11: so em CSV separado por
+# ponto e virgula, e so se a coluna tiver virgula decimal em algum valor ou se
+# todo valor com ponto tiver o formato de milhar (1 a 3 algarismos e grupos
+# de 3, como 1.500 ou 1.234.567).
+_MILHAR = re.compile(r"-?[1-9]\d{0,2}(\.\d{3})+")
+
+
+def _limpo(v):
+    return (str(v or "").replace("R$", "").replace("%", "")
+            .replace(" ", "").replace(" ", "").strip())
+
+
+def coluna_com_ponto_de_milhar(valores, separador):
+    if separador != ";":
+        return False
+    limpos = [_limpo(v) for v in valores]
+    if any("," in v and _numero_basico(v) is not None for v in limpos):
+        return True
+    com_ponto = [v for v in limpos if "." in v]
+    return bool(com_ponto) and all(_MILHAR.fullmatch(v) for v in com_ponto)
+
+
+def _numero_basico(t):
+    if re.fullmatch(r"-?\d{1,3}(\.\d{3})+,\d+", t):     # 1.234.567,89
         t = t.replace(".", "").replace(",", ".")
-    elif re.match(r"^-?\d+,\d+$", t):                   # 1234,89
+    elif re.fullmatch(r"-?\d+,\d+", t):                  # 1234,89
         t = t.replace(",", ".")
-    elif re.match(r"^-?\d{1,3}(,\d{3})+\.\d+$", t):     # 1,234,567.89
+    elif re.fullmatch(r"-?\d{1,3}(,\d{3})+\.\d+", t):    # 1,234,567.89
         t = t.replace(",", "")
     try:
         return float(t)
     except ValueError:
         return None
+
+
+def numero(v, milhar=False):
+    """Converte texto em numero, tolerando o formato brasileiro. Com
+    milhar=True, "12.480" vale 12480. Sem, vale 12,48."""
+    if v is None:
+        return None
+    t = _limpo(v)
+    if not t:
+        return None
+    if milhar and _MILHAR.fullmatch(t):
+        t = t.replace(".", "")
+    return _numero_basico(t)
 
 
 def eh_data(v):
@@ -147,12 +183,48 @@ def mediana(vals):
     return s[m // 2] if m % 2 else (s[m // 2 - 1] + s[m // 2]) / 2
 
 
+def quantil(s, p):
+    """Quantil de uma lista ordenada pelo metodo do QUARTIL.INC do Excel:
+    posicao 1 + p x (n - 1), com interpolacao linear entre os vizinhos."""
+    pos = p * (len(s) - 1)
+    i = int(pos)
+    if i + 1 >= len(s):
+        return s[-1]
+    return s[i] + (pos - i) * (s[i + 1] - s[i])
+
+
 def quartis(vals):
     s = sorted(vals)
-    m = len(s)
-    if m < 4:
+    if len(s) < 4:
         return None, None
-    return s[m // 4], s[(3 * m) // 4]
+    return quantil(s, 0.25), quantil(s, 0.75)
+
+
+def histograma(nums, piso, teto, faixas=8, largura=40):
+    """Histograma em texto dos valores dentro das cercas de Tukey."""
+    dentro = [x for x in nums if piso <= x <= teto]
+    if not dentro:
+        return []
+    lo, hi = min(dentro), max(dentro)
+    if hi == lo:
+        return []
+    passo = (hi - lo) / faixas
+    cont = [0] * faixas
+    for x in dentro:
+        k = min(int((x - lo) / passo), faixas - 1)
+        cont[k] += 1
+    maior = max(cont)
+    L = []
+    for k in range(faixas):
+        a, b = lo + k * passo, lo + (k + 1) * passo
+        barra = "#" * (int(round(largura * cont[k] / maior)) if cont[k] else 0)
+        L.append("%12s a %-12s %6d  %s" % (fmt(a), fmt(b), cont[k], barra))
+    return L
+
+
+def sem_acento(t):
+    t = unicodedata.normalize("NFKD", str(t or ""))
+    return "".join(ch for ch in t if not unicodedata.combining(ch)).strip().lower()
 
 
 def fmt(v):
@@ -163,7 +235,7 @@ def fmt(v):
     return "{:,.2f}".format(v).replace(",", "\x00").replace(".", ",").replace("\x00", ".")
 
 
-def analisar(linhas):
+def analisar(linhas, separador):
     """Devolve, por coluna, o tipo detectado e as estatisticas."""
     if not linhas:
         return []
@@ -177,7 +249,8 @@ def analisar(linhas):
         vazios = total - len(preenchidos)
         distintos = len(set(preenchidos))
 
-        nums = [numero(v) for v in preenchidos]
+        milhar = coluna_com_ponto_de_milhar(preenchidos, separador)
+        nums = [numero(v, milhar) for v in preenchidos]
         nums = [x for x in nums if x is not None]
         datas = sum(1 for v in preenchidos if eh_data(v))
 
@@ -194,6 +267,7 @@ def analisar(linhas):
             "coluna": c, "tipo": tipo, "total": total, "vazios": vazios,
             "pct_vazios": 100.0 * vazios / total if total else 0,
             "distintos": distintos, "exemplos": [], "nums": nums,
+            "milhar": milhar and tipo == "numero",
         }
 
         if tipo == "numero" and nums:
@@ -202,6 +276,7 @@ def analisar(linhas):
             info["media"] = sum(nums) / len(nums)
             info["mediana"] = mediana(nums)
             info["soma"] = sum(nums)
+            info["q1"], info["q3"] = quartis(nums)
         else:
             contagem = {}
             for v in preenchidos:
@@ -234,7 +309,7 @@ def perfil(caminho):
         print("O arquivo tem cabecalho mas nenhuma linha de dados.")
         return 1
 
-    p = analisar(linhas)
+    p = analisar(linhas, separador)
     dup = duplicadas(linhas)
 
     print()
@@ -250,6 +325,11 @@ def perfil(caminho):
     for c in p:
         print("%-28s %-11s %7.1f%% %9d"
               % (c["coluna"][:28], c["tipo"], c["pct_vazios"], c["distintos"]))
+    milhares = [c["coluna"] for c in p if c["milhar"]]
+    if milhares:
+        print()
+        print("Ponto de milhar: " + ", ".join(milhares))
+        print("  Nessas colunas, 12.480 foi lido como 12480. Confira dois valores no arquivo.")
 
     os.makedirs("saidas", exist_ok=True)
     base = os.path.splitext(os.path.basename(caminho))[0]
@@ -283,20 +363,53 @@ def perfil(caminho):
     L.append("")
     numericas = [c for c in p if c["tipo"] == "numero" and c["nums"]]
     if numericas:
-        L.append("| Coluna | Minimo | Mediana | Media | Maximo | Soma |")
-        L.append("|---|---|---|---|---|---|")
+        L.append("| Coluna | Minimo | Q1 | Mediana | Q3 | Media | Maximo | Soma |")
+        L.append("|---|---|---|---|---|---|---|---|")
         for c in numericas:
-            L.append("| %s | %s | %s | %s | %s | %s |"
-                     % (c["coluna"], fmt(c["min"]), fmt(c["mediana"]),
-                        fmt(c["media"]), fmt(c["max"]), fmt(c["soma"])))
+            L.append("| %s | %s | %s | %s | %s | %s | %s | %s |"
+                     % (c["coluna"], fmt(c["min"]), fmt(c["q1"]), fmt(c["mediana"]),
+                        fmt(c["q3"]), fmt(c["media"]), fmt(c["max"]), fmt(c["soma"])))
         L.append("")
-        L.append("Quando a media fica muito acima da mediana, ha poucos valores altos")
-        L.append("puxando o resumo. Apresente as duas medidas no seu relatorio.")
+        L.append("Q1 e Q3 sao o primeiro e o terceiro quartis, calculados pelo metodo")
+        L.append("do QUARTIL.INC do Excel. Quando a media fica muito acima da mediana,")
+        L.append("ha poucos valores altos puxando o resumo. Apresente as duas medidas.")
+        if milhares:
+            L.append("")
+            L.append("Colunas lidas com ponto de milhar (12.480 = 12480): %s."
+                     % ", ".join(milhares))
+        L.append("")
+        L.append("## Histogramas")
+        L.append("")
+        L.append("Cada linha e uma faixa de valores. O numero e a quantidade de")
+        L.append("registros na faixa, e a barra e proporcional a ela. Os valores fora")
+        L.append("das cercas de Tukey (Q1 - 1,5 x AIQ e Q3 + 1,5 x AIQ) ficam de fora")
+        L.append("do desenho e sao contados abaixo dele.")
+        L.append("")
+        for c in numericas:
+            if c["q1"] is None or c["q3"] == c["q1"]:
+                continue
+            aiq = c["q3"] - c["q1"]
+            piso, teto = c["q1"] - 1.5 * aiq, c["q3"] + 1.5 * aiq
+            linhas_h = histograma(c["nums"], piso, teto)
+            if not linhas_h:
+                continue
+            abaixo = sum(1 for x in c["nums"] if x < piso)
+            acima = sum(1 for x in c["nums"] if x > teto)
+            L.append("### %s" % c["coluna"])
+            L.append("")
+            L.append("```")
+            L.extend(linhas_h)
+            L.append("```")
+            L.append("")
+            L.append("Fora das cercas [%s .. %s]: %d abaixo e %d acima."
+                     % (fmt(piso), fmt(teto), abaixo, acima))
+            L.append("")
     else:
         L.append("Nenhuma coluna foi reconhecida como numerica.")
         L.append("")
-        L.append("Se voce esperava colunas de valor aqui, o motivo mais provavel e a")
-        L.append("virgula decimal lida como texto. Confira a exportacao da base.")
+        L.append("O script le virgula decimal (1.234,56), ponto de milhar (12.480) e o")
+        L.append("prefixo R$. Uma coluna de valor vira texto quando mais de 10% dos")
+        L.append("valores tem letras ou anotacoes, como 'a confirmar'. Confira a base.")
     L.append("")
     L.append("## Colunas de categoria e texto")
     L.append("")
@@ -341,11 +454,11 @@ def perfil(caminho):
 
 def atipicos(caminho):
     titulo("MODULO 6 - CICLO 6.3 - VALORES ATIPICOS E AUSENTES")
-    linhas, _, _ = abrir(caminho)
+    linhas, separador, _ = abrir(caminho)
     if linhas is None:
         return 1
 
-    p = analisar(linhas)
+    p = analisar(linhas, separador)
     casos = []
 
     for c in p:
@@ -368,19 +481,24 @@ def atipicos(caminho):
         piso, teto = q1 - 1.5 * amplitude, q3 + 1.5 * amplitude
         fora = []
         for i, l in enumerate(linhas, start=2):
-            v = numero((l.get(c["coluna"]) or "").strip())
+            v = numero((l.get(c["coluna"]) or "").strip(), c["milhar"])
             if v is not None and (v < piso or v > teto):
                 fora.append((v, i))
-        fora.sort(key=lambda x: x[0])
-        selecionados = fora[:5] + fora[-5:] if len(fora) > 10 else fora
-        vistos = set()
-        for v, i in selecionados:
-            if i in vistos:
-                continue
-            vistos.add(i)
+        # Os tres valores mais distantes das cercas viram casos individuais.
+        # Os demais entram numa unica linha, decidida em conjunto.
+        fora.sort(key=lambda x: -max(piso - x[0], x[0] - teto))
+        for v, i in sorted(fora[:MAX_ATIPICOS], key=lambda x: x[1]):
             casos.append({
                 "coluna": c["coluna"], "caso": "valor atipico",
                 "valor": fmt(v), "linha": str(i),
+            })
+        resto = fora[MAX_ATIPICOS:]
+        if resto:
+            vals = [v for v, _ in resto]
+            casos.append({
+                "coluna": c["coluna"], "caso": "demais atipicos",
+                "valor": "%d valores entre %s e %s" % (len(resto), fmt(min(vals)), fmt(max(vals))),
+                "linha": "-",
             })
         if fora:
             print("  %-28s %d valor(es) fora do intervalo usual [%s .. %s]"
@@ -421,6 +539,9 @@ def atipicos(caminho):
     print("  razao           Por que voce decidiu assim. Obrigatorio: o script recusa")
     print("                  decisao sem razao escrita.")
     print()
+    print("Cada coluna traz ate %d atipicos individuais, os mais distantes das cercas." % MAX_ATIPICOS)
+    print("A linha 'demais atipicos' reune os outros e recebe uma decisao so.")
+    print()
     print("Antes de decidir sobre um atipico, abra o arquivo e olhe a linha inteira.")
     print("O contexto quase sempre explica o valor.")
     return 0
@@ -438,7 +559,7 @@ def criar_log():
     with open(LOG, "w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f, delimiter=SEP)
         w.writerow(COLS_LOG)
-        for _ in range(5):
+        for _ in range(NUMEROS_LOG):
             w.writerow([""] * len(COLS_LOG))
     print()
     print("Formulario criado em: " + LOG)
@@ -452,7 +573,9 @@ def criar_log():
     print("                       sim, nao ou nao se aplica.")
     print("  contagem_fecha       O numero de registros usados e o esperado? sim/nao.")
     print("  ordem_de_grandeza    O valor faz sentido no mundo real? sim/nao.")
-    print("  linha_recalculada    Voce refez o calculo de uma linha na mao? sim/nao.")
+    print("  recalculo_amostra    Voce refez a medida a mao num subconjunto pequeno")
+    print("                       (um mes, uma unidade ou dez registros) e o resultado")
+    print("                       coincidiu com o do script no mesmo subconjunto? sim/nao.")
     print("  conclusao            O numero pode ir para o relatorio, ou o que falta.")
     print()
     print("Numero que nao fecha e fica sem explicacao nao vai para relatorio nenhum.")
@@ -473,8 +596,8 @@ def conferir():
             for i, l in enumerate(csv.DictReader(f, delimiter=SEP), start=2):
                 if not (l.get("coluna") or "").strip():
                     continue
-                classificacao = (l.get("classificacao") or "").strip().lower()
-                decisao = (l.get("decisao") or "").strip().lower()
+                classificacao = " ".join(sem_acento(l.get("classificacao")).split())
+                decisao = " ".join(sem_acento(l.get("decisao")).split())
                 razao = (l.get("razao") or "").strip()
                 if classificacao not in CLASSIFICACOES:
                     erros.append("tratamento, linha %d: classificacao invalida ('%s')"
@@ -504,9 +627,11 @@ def conferir():
                     erros.append("log, linha %d: o_que_mede precisa dizer numerador, "
                                  "denominador, periodo e recorte." % i)
                 checagens = {}
+                if "recalculo_amostra" not in l and "linha_recalculada" in l:
+                    l["recalculo_amostra"] = l.get("linha_recalculada")
                 for campo in ("total_fecha", "contagem_fecha", "ordem_de_grandeza",
-                              "linha_recalculada"):
-                    v = (l.get(campo) or "").strip().lower()
+                              "recalculo_amostra"):
+                    v = " ".join(sem_acento(l.get(campo)).split())
                     if v not in SIM_NAO:
                         erros.append("log, linha %d: %s deveria ser sim, nao ou "
                                      "nao se aplica" % (i, campo))
@@ -514,9 +639,10 @@ def conferir():
                 conclusao = (l.get("conclusao") or "").strip()
                 if len(conclusao) < 10:
                     erros.append("log, linha %d: escreva a conclusao sobre o numero" % i)
-                if checagens.get("linha_recalculada") == "nao":
-                    avisos.append("log, linha %d: nenhuma linha recalculada na mao. "
-                                  "E a conferencia mais barata que existe." % i)
+                if checagens.get("recalculo_amostra") == "nao":
+                    avisos.append("log, linha %d: a medida nao foi refeita a mao numa "
+                                  "amostra. Refaca para um mes ou dez registros e compare "
+                                  "com o script no mesmo recorte." % i)
                 if "nao" in (checagens.get("total_fecha"), checagens.get("contagem_fecha")) \
                         and len(conclusao) < 40:
                     erros.append("log, linha %d: alguma conferencia falhou. A conclusao "
@@ -525,8 +651,9 @@ def conferir():
                                      "valor": l.get("valor"), "checagens": checagens,
                                      "conclusao": conclusao})
 
-    if len(verificacoes) < 5:
-        erros.append("o log precisa de cinco numeros, e tem %d." % len(verificacoes))
+    if len(verificacoes) < NUMEROS_LOG:
+        erros.append("o log precisa de %d numeros, e tem %d."
+                     % (NUMEROS_LOG, len(verificacoes)))
 
     print()
     if erros:
@@ -543,7 +670,7 @@ def conferir():
 
     print()
     print("Casos de tratamento decididos: %d" % len(tratamentos))
-    print("Numeros verificados: %d de 5" % len(verificacoes))
+    print("Numeros verificados: %d (minimo %d)" % (len(verificacoes), NUMEROS_LOG))
 
     if erros:
         print()
@@ -589,7 +716,8 @@ def gerar_relatorio(tratamentos, verificacoes, avisos):
         L.append("- O total fecha: %s" % v["checagens"].get("total_fecha"))
         L.append("- A contagem fecha: %s" % v["checagens"].get("contagem_fecha"))
         L.append("- Ordem de grandeza plausivel: %s" % v["checagens"].get("ordem_de_grandeza"))
-        L.append("- Linha recalculada na mao: %s" % v["checagens"].get("linha_recalculada"))
+        L.append("- Medida refeita a mao numa amostra: %s"
+                 % v["checagens"].get("recalculo_amostra"))
         L.append("- Conclusao: %s" % v["conclusao"])
         L.append("")
     if avisos:

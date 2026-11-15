@@ -1,8 +1,8 @@
 # Errata da turma 2026.2
 
-DECC0294, Tecnologia da Informação e Comunicação Aplicada à Administração, UFMA. Versão de 14 nov. 2026.
+DECC0294, Tecnologia da Informação e Comunicação Aplicada à Administração, UFMA. Versão de 15 nov. 2026.
 
-Errata é a lista de erros encontrados no material depois de entregue, com a correção de cada um. Esta página traz só o que muda alguma entrega que ainda vai acontecer (C1, C2 e módulos 11 a 15) ou algum arquivo que você ainda vai reaproveitar. Erros dos módulos 1 a 10 que não afetam mais nada ficam para a próxima turma e não aparecem aqui.
+Errata é a lista de erros encontrados no material depois de entregue, com a correção de cada um. Esta página traz só o que muda alguma entrega que ainda vai acontecer (C1, C2 e módulos 11 a 15) ou algum arquivo que você ainda vai reaproveitar. Erros dos módulos 1 a 10 que não afetam mais nada ficam para a próxima turma e não aparecem aqui. Os scripts dos módulos 1 a 10 ganharam versão nova em 15 nov. 2026. O item 9 diz o que muda para quem ainda vai rodar algum deles. Quem tem a cópia antiga e não vai rodar o script de novo não precisa trocar.
 
 Três termos usados em toda a página:
 
@@ -12,7 +12,7 @@ Três termos usados em toda a página:
 
 ## Como trocar um script pela versão nova
 
-Os itens 1 a 5 pedem a versão de 14 nov. 2026 de um script. O procedimento é o mesmo para todos.
+Os itens 1 a 5 pedem a versão de 14 nov. 2026 de um script, e os itens 6 a 9 indicam quando vale baixar a versão de 15 nov. 2026 de um script dos módulos 1 a 10. O procedimento é o mesmo para todos.
 
 1. Baixe o script na turma virtual.
 2. Coloque o arquivo na pasta do projeto, no mesmo lugar da cópia antiga e com o mesmo nome, substituindo a antiga.
@@ -28,9 +28,10 @@ Os itens 1 a 5 pedem a versão de 14 nov. 2026 de um script. O procedimento é o
 | 3. Inventário de dados (`atividade_modulo12.py`) | Módulo 12, C1 | Baixar a versão nova antes do módulo 12 |
 | 4. Mapa do documento (`atividade_modulo13.py`) | Módulo 13, C1 | Baixar a versão nova antes do módulo 13 |
 | 5. Produto digital (`atividade_modulo14.py`) | Módulo 14 | Baixar a versão nova. Só o texto de uma mensagem mudou |
-| 6. Números com ponto de milhar nos scripts 6, 7 e 8 | Reuso da base no módulo 11 e na C2 | Não reaproveitar números afetados sem conferir |
-| 7. Contagem de registros sem par no módulo 7 | Reuso da junção no módulo 13, 14 ou na C2 | Refazer a contagem antes de citar o número |
+| 6. Números com ponto de milhar nos scripts 6, 7 e 8 | Reuso da base no módulo 11 e na C2 | Com a cópia antiga, não reaproveitar números afetados sem conferir. Para refazer, usar a versão de 15 nov. 2026 dos scripts 6 e 7 |
+| 7. Contagem de registros sem par no módulo 7 | Reuso da junção no módulo 13, 14 ou na C2 | Com a cópia antiga, refazer a contagem antes de citar o número. A versão de 15 nov. 2026 já conta certo |
 | 8. Coluna com todos os decimais de três casas no módulo 11 | Módulo 11, com CSV separado por ponto e vírgula | Conferir a média do treino |
+| 9. Versão de 15 nov. 2026 dos scripts dos módulos 1 a 10 | Qualquer script desses módulos que você ainda vá rodar | Baixar a versão nova só se for rodar o script de novo |
 
 ## 1. Conferência da C2: `atividade_modulo15.py`
 
@@ -122,7 +123,7 @@ O `c2` confere só se o arquivo existe, e não o conteúdo. A conferência do co
 
 **O que está errado.** Os scripts dos módulos 6 (perfil e atípicos), 7 (banco de dados) e 8 (painel) leem um número com ponto de milhar e sem casa decimal como número decimal. "12.480" e "R$ 12.480" viram 12,48. Um número com dois pontos de milhar, como "1.234.567", não é reconhecido como número. O mesmo número escrito com centavos ("12.480,00") ou sem ponto ("12480") é lido certo. A base original em `dados/` não é alterada. O erro fica nos números que o script calculou: mínimo, máximo, média, mediana e atípicos do perfil do módulo 6, os valores gravados no banco do módulo 7 e nas tabelas `saidas/consulta-N.csv`, e as barras do painel do módulo 8. O script do módulo 7 também grava como número um CNPJ escrito só com dígitos, e com isso perde os zeros à esquerda.
 
-**O que mudou.** Esses scripts não foram alterados neste semestre. Só o script do módulo 11 foi corrigido (item 2).
+**O que mudou.** Na versão de 15 nov. 2026, os scripts dos módulos 6 e 7 decidem por coluna se o ponto separa milhar, pela mesma regra do módulo 11 (item 8): "12.480", "R$ 1.500" e "1.234.567" passam a ser lidos como 12480, 1500 e 1234567. O perfil do módulo 6 e o comando `banco` do módulo 7 informam quais colunas foram lidas com ponto de milhar. O módulo 7 também grava como texto as colunas de identificador (CNPJ, CPF, código), sem perder os zeros à esquerda. O script do módulo 8 aplica a mesma regra à coluna de valores da série do `painel`. Ele também lê as tabelas `saidas/consulta-N.csv`, que o módulo 7 novo grava com o valor certo. A cópia antiga continua com o erro descrito acima.
 
 **O que você faz.**
 
@@ -130,6 +131,7 @@ O `c2` confere só se o arquivo existe, e não o conteúdo. A conferência do co
 2. Se tiver, não reaproveite os números do perfil do módulo 6, das consultas do módulo 7 nem do painel do módulo 8 para essa coluna. Para usar a base de novo, peça ao agente uma cópia em `dados/` com essa coluna escrita sem ponto de milhar (12480), mantenha o arquivo original e registre a troca no seu caderno de prompts.
 3. No módulo 11, use o arquivo original ou a cópia, e não um `saidas/consulta-N.csv` feito com essa coluna, porque nele o valor já foi gravado errado.
 4. Se você usa CNPJ como chave em tabela que veio do módulo 7, confira se os zeros à esquerda continuam lá antes de juntar com outra tabela.
+5. Se preferir refazer os números, troque os scripts dos módulos 6 e 7 pela versão de 15 nov. 2026 (textos para conferir a versão: `QUARTIL.INC` no módulo 6 e `NOT EXISTS` no módulo 7). Depois peça de novo o perfil do módulo 6, o `banco` e as consultas do módulo 7 e o painel do módulo 8. Confira dois números à mão contra a base original. Os números novos substituem os antigos. Os quartis também mudam, como diz o item 9.
 
 ## 7. Contagem de registros sem par no módulo 7
 
@@ -137,9 +139,9 @@ O `c2` confere só se o arquivo existe, e não o conteúdo. A conferência do co
 
 **O que está errado.** Quando a coluna usada como chave (o código que liga as duas tabelas) tem alguma célula vazia, o `juntar` informa zero registros sem par, ou um número menor que o real. Num teste com três registros e um sem par, o resultado foi 0 em vez de 1.
 
-**O que mudou.** O script não foi alterado neste semestre.
+**O que mudou.** Na versão de 15 nov. 2026, o `juntar` conta os registros sem par com NOT EXISTS e informa quantas linhas de cada tabela têm a chave vazia. A cópia antiga continua com o erro.
 
-**O que você faz.** Antes de citar esse número, peça ao agente: "conte, no banco do módulo 7, quantos registros de TABELA_A não têm correspondente em TABELA_B pela coluna CHAVE, usando NOT EXISTS, e quantas linhas de cada tabela têm a chave vazia". Use o número dessa contagem.
+**O que você faz.** Com a versão nova, rode o `juntar` de novo e use o número que ele imprime. Com a cópia antiga, antes de citar esse número, peça ao agente: "conte, no banco do módulo 7, quantos registros de TABELA_A não têm correspondente em TABELA_B pela coluna CHAVE, usando NOT EXISTS, e quantas linhas de cada tabela têm a chave vazia". Use o número dessa contagem.
 
 ## 8. Coluna com todos os decimais de três casas no módulo 11
 
@@ -150,3 +152,28 @@ O `c2` confere só se o arquivo existe, e não o conteúdo. A conferência do co
 **O que mudou.** A primeira versão da correção de 14 nov. 2026 decidia valor por valor e lia "45.678" como milhar mesmo numa coluna de decimais. A versão final decide por coluna e deixa só o caso ambíguo descrito acima.
 
 **O que você faz.** Depois do comando `prever`, confira se a "media do treino" que o script imprime tem a ordem de grandeza que você espera para a coluna alvo. Se estiver mil vezes maior, peça ao agente uma cópia do arquivo em `dados/` com essa coluna escrita com vírgula decimal (45,678) e treine com a cópia.
+
+## 9. Versão de 15 nov. 2026 dos scripts dos módulos 1 a 10
+
+**Onde aparece.** Em qualquer script dos módulos 1 a 10 que você ainda vá rodar, por exemplo para gerar um relatório que falta para a C2 (item 1) ou para refazer um número que vai citar no módulo 13, 14 ou 15.
+
+**O que mudou.** Os nomes dos arquivos de entrega não mudaram em nenhum dos dez scripts, e o `c2` do módulo 15 encontra os mesmos arquivos. Uma entrega já aceita pela cópia antiga continua válida. A tabela abaixo diz o que muda quando o script é rodado de novo.
+
+| Script | O que muda ao rodar de novo | Texto para conferir a versão |
+|---|---|---|
+| `atividade_modulo1.py` | Aceita CSV salvo pelo Excel (ponto e vírgula ou vírgula, com acentos) e imprime o cabeçalho certo quando falta coluna. A linha de exemplo do formulário só é ignorada se for idêntica à do exemplo | `Ordem de prioridade` |
+| `atividade_modulo2.py` | O `conferir` conta as versões também em pasta clonada, em que a cópia antiga contava zero | `packed-refs` |
+| `atividade_modulo3.py` | O diário pede três casos, em vez de cinco, e aceita rótulo e veredito com acento | `Rotulos usados` |
+| `atividade_modulo4.py` | O comando `apis municipios` deixa de falhar com JSONDecodeError. O CNPJ aceita pontuação e o CEP aceita hífen | `gzip` |
+| `atividade_modulo5.py` | Aceita NAO MEDIDO em data e completude de fonte não extraída e mostra o motivo quando o mapa não é gerado | `NAO MEDIDO` |
+| `atividade_modulo6.py` | Ponto de milhar lido por coluna (item 6). Quartis pelo método QUARTIL.INC do Excel, o que muda as cercas e pode mudar a lista de atípicos. O log pede três números e aceita o log antigo de cinco | `QUARTIL.INC` |
+| `atividade_modulo7.py` | Ponto de milhar por coluna, identificador gravado como texto e datas DD/MM/AAAA convertidas (item 6). `juntar` com NOT EXISTS (item 7). Nomes de coluna sem acento, como Municipio em vez de munic_pio: se o banco for refeito, a consulta antiga que use o nome antigo precisa ser ajustada. Três consultas registradas bastam | `NOT EXISTS` |
+| `atividade_modulo8.py` | O formulário `entregas/modulo8-indicadores.csv` ganhou as colunas formula, polaridade, destinatario e decisao. O `painel` recusa o formulário antigo: peça "execute atividade_modulo8.py com o comando atualizar", preencha as colunas novas e gere o painel de novo. O `b1` só aprova o repositório publicado depois do último Push origin | `atualizar` |
+| `atividade_modulo9.py` | O formulário `entregas/modulo9-fluxo.csv` ganhou a linha manutencao_minutos_por_ano. O arquivo antigo é aceito com aviso, e a manutenção conta como zero. O relatório traz a economia já descontada a manutenção | `manutencao_minutos_por_ano` |
+| `atividade_modulo10.py` | A concordância traz o kappa de Cohen e compara categorias sem diferença de acento e maiúscula. A ficha de fontes pede duas organizações, em vez de três. O `b2` confere doze itens | `kappa` |
+
+**O que você faz.**
+
+1. Se não vai rodar nenhum desses scripts de novo, mantenha a cópia antiga. Nada do que você entregou precisa ser refeito por causa da versão nova.
+2. Se vai rodar algum, troque antes pela versão de 15 nov. 2026, pelo procedimento do início da página, e confira com o texto da tabela.
+3. Se o número que você vai citar muda com a versão nova (atípicos do módulo 6, contagens do módulo 7, valores do painel do módulo 8, economia do módulo 9, concordância do módulo 10), use o da versão nova e registre a troca no seu caderno de prompts.

@@ -12,17 +12,27 @@ O QUE ESTE ARQUIVO E
     Voce nao precisa saber programar. Voce precisa saber pedir ao agente que
     ele execute o script, e depois preencher um arquivo de planilha.
 
-COMO USAR (peca ao agente, no opencode desktop)
+COMO USAR
 
-    1) "execute o arquivo atividade_modulo1.py com o comando iniciar"
-       O script cria o formulario em entregas/modulo1-mapa-de-tarefas.csv
+    No modulo 1 ainda nao ha agente instalado. O aluno monta o formulario a
+    mao, no Excel, no Google Planilhas ou no Bloco de Notas, com o cabecalho
+    abaixo na primeira linha e uma tarefa por linha:
 
-    2) Abra esse arquivo no Excel (ou no editor de texto) e preencha as suas
-       dez tarefas. Salve mantendo o formato CSV, separado por ponto e virgula.
+    tarefa;quem_executa;frequencia;destino;esforco_1a5;ganho_horas_mes;base_da_estimativa;risco_1a5
 
-    3) "execute o arquivo atividade_modulo1.py com o comando conferir"
-       O script valida o preenchimento, ordena as tarefas por prioridade e
-       gera o mapa em entregas/modulo1-mapa-de-tarefas.md
+    O separador pode ser ponto e virgula ou virgula. O arquivo pode ser
+    gravado em UTF-8 ou no formato padrao do Excel no Windows.
+
+    No modulo 2, com o opencode desktop instalado, peca ao agente:
+
+    1) "execute atividade_modulo1.py com o comando conferir"
+       O script le entregas/modulo1-mapa-de-tarefas.csv, valida o
+       preenchimento, ordena as tarefas por prioridade e gera o mapa em
+       entregas/modulo1-mapa-de-tarefas.md
+
+    O comando iniciar cria o formulario vazio, com a linha de exemplo. Ele e
+    usado na demonstracao do professor e nao sobrescreve arquivo existente:
+       "execute atividade_modulo1.py com o comando iniciar"
 
     Se quiser ver as instrucoes de novo, peca: "execute atividade_modulo1.py"
     sem nenhum comando.
@@ -32,13 +42,15 @@ O QUE O SCRIPT NAO FAZ
     julgamento. O script so confere se o preenchimento esta completo e
     coerente, e organiza o resultado.
 
-Nao precisa instalar nada. Roda com o Python que ja vem com o ambiente.
+Usa apenas a biblioteca padrao do Python 3. Nao precisa instalar pacote.
 =============================================================================
 """
 
 import csv
+import io
 import os
 import sys
+import unicodedata
 from datetime import date
 
 # Quando o script esta na pasta scripts/ do repositorio, as pastas de trabalho
@@ -73,8 +85,8 @@ EXEMPLO = [
         "mensal",
         "automatizar",
         "2",
-        "6",
-        "leva cerca de 1h30 por unidade, quatro vezes por mes",
+        "5,4",
+        "1 vez por mes x 6 h (1h30 x 4 unidades) x 90% poupado = 5,4 h",
         "2",
     ]
 ]
@@ -151,10 +163,64 @@ def iniciar():
     return 0
 
 
+def sem_acento(txt):
+    txt = unicodedata.normalize("NFKD", txt or "")
+    return "".join(c for c in txt if not unicodedata.combining(c))
+
+
+def chave(txt):
+    """Normaliza o nome de uma coluna: minusculas, sem acento e sem espacos."""
+    return sem_acento(txt).strip().lower().replace(" ", "_")
+
+
+def ler_texto():
+    """Le o CSV em UTF-8 ou, se falhar, no formato padrao do Excel no Windows."""
+    with open(CSV, "rb") as f:
+        bruto = f.read()
+    for cod in ("utf-8-sig", "cp1252"):
+        try:
+            return bruto.decode(cod)
+        except UnicodeDecodeError:
+            continue
+    return bruto.decode("latin-1")
+
+
 def ler_linhas():
-    with open(CSV, newline="", encoding="utf-8-sig") as f:
-        linhas = list(csv.DictReader(f, delimiter=SEP))
-    return [l for l in linhas if (l.get("tarefa") or "").strip()]
+    """Devolve (linhas, colunas_faltando). Aceita ';' ou ',' como separador."""
+    texto = ler_texto()
+    primeira = texto.splitlines()[0] if texto.strip() else ""
+    sep = SEP if primeira.count(SEP) >= primeira.count(",") else ","
+    leitor = csv.reader(io.StringIO(texto, newline=""), delimiter=sep)
+    tabela = list(leitor)
+    if not tabela:
+        return [], []
+    cab = [chave(c) for c in tabela[0]]
+    faltando = [c for c in COLUNAS if c not in cab]
+    linhas = []
+    for reg in tabela[1:]:
+        d = {}
+        for k, v in zip(cab, reg):
+            if k and k not in d:
+                d[k] = v
+        linhas.append(d)
+    # Guarda o numero da linha no arquivo (cabecalho = linha 1) antes de
+    # descartar as linhas vazias, para que as mensagens apontem a linha certa.
+    out = []
+    for n, d in enumerate(linhas, start=2):
+        if (d.get("tarefa") or "").strip():
+            d["_linha"] = n
+            out.append(d)
+    return out, faltando
+
+
+def e_exemplo(l):
+    """A linha so e tratada como exemplo se todas as colunas forem iguais."""
+    for col, val in zip(COLUNAS, EXEMPLO[0]):
+        a = " ".join(sem_acento(l.get(col) or "").lower().split())
+        b = " ".join(sem_acento(val).lower().split())
+        if a != b:
+            return False
+    return True
 
 
 def num(valor, campo, i, erros, inteiro=True, minimo=None, maximo=None):
@@ -185,30 +251,44 @@ def conferir():
     if not os.path.exists(CSV):
         print()
         print("Nao encontrei o arquivo " + CSV)
-        print("Execute primeiro o comando 'iniciar'.")
+        print("Confira se o arquivo que voce montou no modulo 1 esta em entregas/ com o")
+        print("nome modulo1-mapa-de-tarefas.csv. O comando iniciar so serve para criar")
+        print("um formulario vazio.")
         return 1
 
-    linhas = ler_linhas()
+    linhas, faltando = ler_linhas()
     erros = []
     avisos = []
     tarefas = []
+
+    if faltando:
+        print()
+        print("O cabecalho (primeira linha do arquivo) nao tem estas colunas:")
+        for c in faltando:
+            print("  - " + c)
+        print()
+        print("A primeira linha precisa ser exatamente:")
+        print("  " + SEP.join(COLUNAS))
+        print("Corrija o cabecalho e execute 'conferir' de novo.")
+        return 1
 
     if not linhas:
         print()
         print("O arquivo esta vazio. Preencha as tarefas antes de conferir.")
         return 1
 
-    for i, l in enumerate(linhas, start=2):
+    for l in linhas:
+        i = l["_linha"]
         tarefa = (l.get("tarefa") or "").strip()
 
-        if tarefa == EXEMPLO[0][0]:
+        if e_exemplo(l):
             avisos.append("linha %d: a linha de exemplo continua no arquivo" % i)
             continue
 
         if len(tarefa.split()) < 3:
             erros.append("linha %d: a tarefa parece curta demais para ter verbo e objeto" % i)
 
-        destino = (l.get("destino") or "").strip().lower()
+        destino = " ".join(sem_acento(l.get("destino") or "").lower().split())
         if destino not in DESTINOS:
             erros.append(
                 "linha %d: destino deveria ser automatizar, aumentar ou manter humana, veio '%s'"
@@ -247,8 +327,8 @@ def conferir():
         tarefas.append(
             {
                 "tarefa": tarefa,
-                "quem": l.get("quem_executa", "").strip(),
-                "freq": l.get("frequencia", "").strip(),
+                "quem": (l.get("quem_executa") or "").strip(),
+                "freq": (l.get("frequencia") or "").strip(),
                 "destino": destino,
                 "esforco": int(esforco),
                 "ganho": ganho,
@@ -288,7 +368,7 @@ def conferir():
     print()
     print("Mapa gerado em: " + MD)
     print()
-    print("ULTIMO PASSO, E O QUE MAIS VALE NOTA")
+    print("ULTIMO PASSO")
     print("  Abra o arquivo " + MD)
     print("  Escreva, ao final, a sua primeira acao: uma tarefa, uma frase, o que")
     print("  voce faria na segunda-feira. Depois escreva uma linha sobre o que")
@@ -318,7 +398,7 @@ def gerar_mapa(tarefas, avisos):
     L.append("")
     L.append("Preencher nome e matricula: ______________________________")
     L.append("")
-    L.append("## 1. Ordem de ataque")
+    L.append("## 1. Ordem de prioridade")
     L.append("")
     L.append(
         "Tarefas ordenadas por ganho dividido por esforco, excluidas as de risco alto "
@@ -329,8 +409,9 @@ def gerar_mapa(tarefas, avisos):
     L.append("|---|---|---|---|---|---|---|")
     for i, t in enumerate(primeiros, 1):
         L.append(
-            "| %d | %s | %s | %d | %s | %d | %.1f |"
-            % (i, t["tarefa"], t["destino"], t["esforco"], fmt(t["ganho"]), t["risco"], t["prio"])
+            "| %d | %s | %s | %d | %s | %d | %s |"
+            % (i, t["tarefa"], t["destino"], t["esforco"], fmt(t["ganho"]), t["risco"],
+               ("%.1f" % t["prio"]).replace(".", ","))
         )
     L.append("")
     if primeiros:
@@ -343,8 +424,9 @@ def gerar_mapa(tarefas, avisos):
         L.append("## 2. Risco alto: nao comecar por aqui")
         L.append("")
         L.append(
-            "Um erro visivel numa primeira iniciativa encerra o assunto na organizacao "
-            "por anos. Estas tarefas ficam para depois, com controle explicito."
+            "Risco 4 ou 5 indica dano a terceiro, sancao ou perda irreversivel se o "
+            "erro passar despercebido. Estas tarefas ficam fora da primeira leva e "
+            "pedem controle definido antes."
         )
         L.append("")
         L.append("| Tarefa | Risco | Ganho (h/mes) |")

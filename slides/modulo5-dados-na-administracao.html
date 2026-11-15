@@ -271,7 +271,7 @@ body.mexeu #ajuda{opacity:1}
       <span class="mod">MÓDULO 5</span>
       <h1>Dados na Administração</h1>
       <span class="tracinho"></span>
-      <p class="sub">De onde vem o dado, em que ele não se pode confiar, e quem responde por ele</p>
+      <p class="sub">De onde vem o dado, até onde se pode confiar nele e quem responde por ele</p>
       <p class="pe">DECC0294 · Tecnologia da Informação e Comunicação Aplicada à Administração · 2026.2</p>
     </section>
 <section class="slide conteudo" data-i="1">
@@ -293,7 +293,7 @@ body.mexeu #ajuda{opacity:1}
     <article class="ciclo">
       <span class="topo" style="background:#0AB0AB"></span>
       <span class="rot" >CICLO 5.2</span>
-      <h3>Onde os dados moram e como saem de lá</h3>
+      <h3>Onde os dados ficam e como são extraídos</h3>
       <div class="pe">
         <span class="rule" style="background:#0AB0AB"></span>
         <span class="rot2">ENTREGA</span>
@@ -323,23 +323,46 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Estrutura do módulo</span>
-      <span class="pag">2 / 32</span>
+      <span class="pag">2 / 38</span>
     </footer>
   </section>
-<section class="slide divisor" data-i="2">
+<section class="slide conteudo" data-i="2">
+    <span class="barra"></span>
+    <span class="eyebrow">VISÃO GERAL DO MÓDULO</span>
+    <h2>As palavras deste módulo</h2>
+    <p class="sub">Termos usados em todos os ciclos. Os termos de cada ciclo são definidos no slide em que aparecem</p>
+    <div class="corpo"><table class="tab apertada">
+      <tr><th style="width:24%">TERMO</th><th>DEFINIÇÃO</th></tr>
+      <tr><td><strong>Base de dados (dataset)</strong></td><td>Conjunto de registros sobre o mesmo tipo de objeto, como contratos ou fornecedores. Cada linha é um registro, e cada coluna é um campo.</td></tr>
+      <tr><td><strong>Fonte de dados</strong></td><td>Sistema, planilha ou órgão de onde a base vem. Uma fonte pode gerar várias bases.</td></tr>
+      <tr><td><strong>CSV (comma-separated values)</strong></td><td>Arquivo de texto puro com um registro por linha e os campos separados por vírgula ou por ponto e vírgula. Abre no Excel e no Bloco de Notas.</td></tr>
+      <tr><td><strong>Agente de IA</strong></td><td>Programa que usa um modelo de linguagem para ler e gravar arquivos da sua pasta e executar comandos a seu pedido. Na disciplina, o opencode (módulo 2).</td></tr>
+      <tr><td><strong>Script</strong></td><td>Arquivo de instruções em Python que o agente escreve e executa. O resultado é um arquivo gravado ou um número impresso na tela.</td></tr>
+      <tr><td><strong>API (application programming interface)</strong></td><td>Endereço que um programa consulta para receber dados de outro sistema sem passar por uma tela (módulo 4).</td></tr>
+      <tr><td><strong>Pastas do projeto</strong></td><td><span class="mono">dados/</span> guarda as bases, <span class="mono">saidas/</span> guarda os scripts e os resultados do agente, e <span class="mono">entregas/</span> guarda o que é avaliado.</td></tr>
+      <tr><td><strong>Repositório, commit e Push origin</strong></td><td>Repositório é a pasta do projeto cujo histórico de versões o Git, programa de controle de versões, registra. Commit é a gravação de uma versão, com mensagem. Push origin é o botão do GitHub Desktop que envia as versões gravadas à cópia da pasta no site GitHub (módulo 2).</td></tr>
+      <tr><td><strong>Regra do NÃO INFORMADO</strong></td><td>Campo sem fonte recebe o texto NÃO INFORMADO. Nem você nem o agente completam o campo com suposição.</td></tr>
+    </table></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Visão geral</span>
+      <span class="pag">3 / 38</span>
+    </footer>
+  </section>
+<section class="slide divisor" data-i="3">
       <span class="filete"></span>
       <div class="esq"><span class="rot">CICLO</span><span class="num">5.1</span></div>
       <div class="dir">
         <h2>De onde nasce o dado da organização</h2>
         <p class="etapas">Teoria · Demonstração · Prática · Entrega</p>
       </div>
-      <span class="pag">3 / 32</span>
+      <span class="pag">4 / 38</span>
     </section>
-<section class="slide conteudo" data-i="3">
+<section class="slide conteudo" data-i="4">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.1 · TEORIA</span>
-    <h2>Três origens, três confiabilidades diferentes</h2>
-    <p class="sub">A origem do dado prediz o tipo de erro que ele carrega</p>
+    <h2>Três origens do dado e o erro típico de cada uma</h2>
+    <p class="sub">A origem indica o tipo de erro que o dado costuma carregar</p>
     <div class="corpo"><div class="cards cols-3">
     <article class="card">
       <header style="background:#D4B277">TRANSACIONAL</header>
@@ -368,7 +391,7 @@ body.mexeu #ajuda{opacity:1}
         <div class="bloco">
           <span class="rule" style="background:#0AB0AB"></span>
           <span class="rot">Erro típico</span>
-          <p>Campo em branco, grafia livre do mesmo nome, e categoria escolhida por hábito e não por regra.</p>
+          <p>Campo em branco, grafia livre do mesmo nome, e categoria escolhida sem regra de classificação definida.</p>
         </div>
     </article>
     <article class="card">
@@ -378,7 +401,7 @@ body.mexeu #ajuda{opacity:1}
         <div class="bloco">
           <span class="rule" style="background:#FEC84D"></span>
           <span class="rot">Exemplos</span>
-          <p>IBGE, Banco Central, PNCP, índice setorial, pesquisa de mercado contratada.</p>
+          <p>IBGE (Instituto Brasileiro de Geografia e Estatística), Banco Central, PNCP (Portal Nacional de Contratações Públicas), índice setorial, pesquisa de mercado contratada.</p>
         </div>
         <div class="bloco">
           <span class="rule" style="background:#FEC84D"></span>
@@ -389,15 +412,15 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.1 · Teoria</span>
-      <span class="pag">4 / 32</span>
+      <span class="pag">5 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="4">
+<section class="slide conteudo" data-i="5">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.1 · TEORIA</span>
-    <h2>Estruturado, semiestruturado e o resto</h2>
+    <h2>Estruturado, semiestruturado e não estruturado</h2>
     <p class="sub">A forma do dado define quanto trabalho existe antes da análise</p>
-    <div class="corpo"><div class="cards cols-3">
+    <div class="corpo"><div class="cards cols-3 baixos" style="height:calc(100% - 132px)">
     <article class="card">
       <header style="background:#D4B277">ESTRUTURADO</header>
       <h3>Linhas e colunas, com tipo definido</h3>
@@ -410,7 +433,7 @@ body.mexeu #ajuda{opacity:1}
         <div class="bloco">
           <span class="rule" style="background:#D4B277"></span>
           <span class="rot">Trabalho antes da análise</span>
-          <p>Pouco. É o formato que você quer alcançar, e o alvo de tudo que vier nos próximos encontros.</p>
+          <p>Pouco. É o formato que as análises dos próximos módulos usam.</p>
         </div>
     </article>
     <article class="card">
@@ -420,12 +443,12 @@ body.mexeu #ajuda{opacity:1}
         <div class="bloco">
           <span class="rule" style="background:#0AB0AB"></span>
           <span class="rot">O que é</span>
-          <p>A resposta JSON de uma API, um arquivo XML de nota fiscal, um log de sistema.</p>
+          <p>A resposta JSON de uma API, o arquivo XML da nota fiscal eletrônica, o log de um sistema.</p>
         </div>
         <div class="bloco">
           <span class="rule" style="background:#0AB0AB"></span>
           <span class="rot">Trabalho antes da análise</span>
-          <p>Médio. Precisa ser achatado em tabela, e a escolha de o que virar coluna já é uma decisão de análise.</p>
+          <p>Médio. Precisa ser convertido em tabela (achatamento), e a escolha do que vira coluna já é uma decisão de análise.</p>
         </div>
     </article>
     <article class="card">
@@ -442,14 +465,16 @@ body.mexeu #ajuda{opacity:1}
           <span class="rot">Trabalho antes da análise</span>
           <p>Alto. Os modelos de linguagem atuais extraem campos de texto quando recebem a lista de campos, o que reduziu o custo desta etapa. A conferência continua manual.</p>
         </div>
-    </article></div></div>
+    </article></div>
+    <div class="def" style="margin-top:14px"><span class="rot">JSON, XML, log e achatamento</span>
+      <p>JSON (JavaScript Object Notation) e XML (Extensible Markup Language) são formatos de texto que guardam cada valor junto com o nome do campo, com campos dentro de campos. Log é o registro de eventos gravado pelo próprio sistema, uma linha por evento, com data e hora. Achatamento (flattening) é transformar os campos aninhados em colunas, como <span class="mono">endereco.municipio</span>.</p></div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.1 · Teoria</span>
-      <span class="pag">5 / 32</span>
+      <span class="pag">6 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="5">
+<section class="slide conteudo" data-i="6">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.1 · TEORIA</span>
     <h2>Onde o agente de IA acerta e onde erra com dados</h2>
@@ -464,7 +489,7 @@ body.mexeu #ajuda{opacity:1}
       <tr><td><strong>Escrever script de leitura, limpeza ou cruzamento</strong><span class="s">Python sobre CSV ou planilha</span></td>
           <td><span class="chip ok">ADEQUADO COM REVISÃO</span><br>O agente escreve o código e o executa na sua pasta.</td>
           <td>Filtro ou regra de correspondência diferente da que foi pedida.</td>
-          <td>Script gravado em <span class="mono">saidas/</span> e lido antes do uso.</td></tr>
+          <td>Script gravado em <span class="mono">saidas/</span> e conferido nos três passos do slide 14.</td></tr>
       <tr><td><strong>Calcular dentro da resposta</strong><span class="s">percentual, total ou média no texto</span></td>
           <td><span class="chip med">IRREGULAR</span><br>O número escrito na resposta não vem de uma conta executada.</td>
           <td>Valor com a ordem de grandeza certa e os dígitos errados.</td>
@@ -474,15 +499,15 @@ body.mexeu #ajuda{opacity:1}
           <td>Inventário aparentemente completo, que descreve uma organização genérica.</td>
           <td>Regra do NÃO INFORMADO em todo campo sem fonte.</td></tr>
     </table>
-    <div class="def" style="margin-top:14px"><span class="rot">Saída estruturada (structured output)</span>
-      <p>Recurso das APIs de modelos de linguagem que obriga a resposta a seguir um esquema JSON definido. Assegura o formato dos campos e não verifica se o conteúdo extraído está correto.</p></div></div>
+    <div class="def" style="margin-top:14px"><span class="rot">Esquema (schema) e saída estruturada (structured output)</span>
+      <p>Esquema é a lista dos campos esperados, com o tipo de cada um (texto, número, data). Saída estruturada é o recurso das APIs de modelos de linguagem que obriga a resposta a seguir um esquema. Assegura o formato dos campos e não verifica se o conteúdo extraído está correto.</p></div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.1 · Teoria</span>
-      <span class="pag">6 / 32</span>
+      <span class="pag">7 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="6">
+<section class="slide conteudo" data-i="7">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.1 · DEMONSTRAÇÃO</span>
     <h2>Inventário das fontes que a organização já tem</h2>
@@ -503,34 +528,39 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.1 · Demonstração</span>
-      <span class="pag">7 / 32</span>
+      <span class="pag">8 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="7">
+<section class="slide conteudo" data-i="8">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.1 · PRÁTICA</span>
     <h2>Sua vez: três fontes da sua organização</h2>
     <p class="sub">Individual</p>
-    <div class="corpo"><ol class="steps cols-1 " style="--linhas:4">
+    <div class="corpo"><ol class="steps cols-1 compacto" style="--linhas:4;height:auto">
     <li><span class="num">1</span>
-      <div><strong>Escolha três fontes de origens diferentes</strong><p>Uma transacional, uma de cadastro e uma externa. Se a organização não tiver uma das origens, registre a ausência no inventário.</p></div>
+      <div><strong>Escolha três fontes de origens diferentes</strong><p>Uma transacional, uma de cadastro e uma externa (slide 5). Se a organização não tiver uma das origens, registre a ausência numa linha do inventário.</p></div>
     </li>
     <li><span class="num">2</span>
-      <div><strong>Descreva cada fonte em cinco campos</strong><p>O que registra, quem alimenta, frequência, formato de saída e quem autoriza a exportação.</p></div>
+      <div><strong>Escreva num rascunho o que você sabe de cada fonte</strong><p>O que registra, quem alimenta, frequência, formato de saída e quem autoriza a exportação. Deixe em branco o que você não sabe.</p></div>
     </li>
     <li><span class="num">3</span>
-      <div><strong>Registre como NÃO INFORMADO o que você não sabe</strong><p>Não peça ao agente que complete esses campos. As lacunas definem as perguntas que você levará à organização.</p></div>
+      <div><strong>Peça o arquivo ao agente e cole o rascunho em seguida</strong><p>"Monte um CSV com as colunas fonte, origem, forma, o_que_registra, quem_alimenta, frequencia, formato, quem_autoriza e a_quem_perguntar. Use só o que escrevi abaixo. Campo em branco recebe NÃO INFORMADO. Grave em entregas/modulo5-ciclo1-inventario.csv."</p></div>
     </li>
     <li><span class="num">4</span>
-      <div><strong>Classifique cada fonte pela forma do dado</strong><p>Estruturado, semiestruturado ou não estruturado, conforme o slide 5.</p></div>
-    </li></ol></div>
+      <div><strong>Classifique a forma e compare com o rascunho</strong><p>Em forma, estruturado, semiestruturado ou não estruturado (slide 6). Em a_quem_perguntar, o setor ou a pessoa que responderia cada lacuna.</p></div>
+    </li>
+    </ol>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:14px">
+      <div class="caixa teal"><span class="rot">RESULTADO ESPERADO</span><p>Um CSV com três linhas e nove colunas. Cada célula NÃO INFORMADO corresponde a um espaço em branco do rascunho, e cada lacuna tem um destinatário em a_quem_perguntar.</p></div>
+      <div class="caixa vinho"><span class="rot">SE O RESULTADO FOR OUTRO</span><p>Se o agente preencheu um campo que você deixou em branco, troque o valor por NÃO INFORMADO e repita o pedido com a frase "não complete nada por conta própria". Se o Excel mostrar tudo numa coluna só, peça ponto e vírgula como separador.</p></div>
+    </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.1 · Prática</span>
-      <span class="pag">8 / 32</span>
+      <span class="pag">9 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="8">
+<section class="slide conteudo" data-i="9">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.1 · ENTREGA</span>
     <h2>Inventário de três fontes</h2>
@@ -538,7 +568,7 @@ body.mexeu #ajuda{opacity:1}
     <div class="corpo"><div class="entrega">
     <section class="lista">
       <header>O QUE ENTREGAR</header>
-      <ul><li>Três fontes de origens diferentes, com os cinco campos preenchidos.</li><li>A classificação de cada fonte pela forma do dado.</li><li>A lista dos campos registrados como NÃO INFORMADO.</li><li>Para cada lacuna, o setor ou a pessoa a quem você faria a pergunta.</li></ul>
+      <ul><li>Três fontes de origens diferentes, com as nove colunas do slide 9, e NÃO INFORMADO onde não houver fonte.</li><li>A classificação de cada fonte pela forma do dado.</li><li>A lista dos campos registrados como NÃO INFORMADO.</li><li>Para cada lacuna, o setor ou a pessoa a quem você faria a pergunta.</li></ul>
     </section>
     <div class="lado">
       <section class="box onde">
@@ -554,19 +584,19 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.1 · Entrega</span>
-      <span class="pag">9 / 32</span>
+      <span class="pag">10 / 38</span>
     </footer>
   </section>
-<section class="slide divisor" data-i="9">
+<section class="slide divisor" data-i="10">
       <span class="filete"></span>
       <div class="esq"><span class="rot">CICLO</span><span class="num">5.2</span></div>
       <div class="dir">
         <h2>Onde os dados ficam e como são extraídos</h2>
         <p class="etapas">Teoria · Demonstração · Prática · Entrega</p>
       </div>
-      <span class="pag">10 / 32</span>
+      <span class="pag">11 / 38</span>
     </section>
-<section class="slide conteudo" data-i="10">
+<section class="slide conteudo" data-i="11">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.2 · TEORIA</span>
     <h2>O caminho do dado até a decisão</h2>
@@ -590,10 +620,10 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.2 · Teoria</span>
-      <span class="pag">11 / 32</span>
+      <span class="pag">12 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="11">
+<section class="slide conteudo" data-i="12">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.2 · TEORIA</span>
     <h2>Três formas de extrair o dado do sistema</h2>
@@ -620,7 +650,7 @@ body.mexeu #ajuda{opacity:1}
         <div class="bloco">
           <span class="rule" style="background:#0AB0AB"></span>
           <span class="rot">Quando se usa</span>
-          <p>Rotina semanal ou mensal, com layout acordado entre quem envia e quem recebe.</p>
+          <p>Rotina semanal ou mensal, com layout acordado entre quem envia e quem recebe. Layout é a ordem, o nome e o formato das colunas.</p>
         </div>
         <div class="bloco">
           <span class="rule" style="background:#0AB0AB"></span>
@@ -634,31 +664,57 @@ body.mexeu #ajuda{opacity:1}
         <div class="bloco">
           <span class="rule" style="background:#FEC84D"></span>
           <span class="rot">Quando se usa</span>
-          <p>Consulta repetida a dado que precisa estar atual (módulo 4). Agentes de IA acessam APIs por conectores padronizados, como o Model Context Protocol (MCP).</p>
+          <p>Consulta repetida a dado que precisa estar atual (módulo 4). O agente de IA acessa APIs por conectores, como os do Model Context Protocol (MCP), padrão aberto de ligação entre agente e sistema.</p>
         </div>
         <div class="bloco">
           <span class="rule" style="background:#FEC84D"></span>
           <span class="rot">Risco</span>
-          <p>Depende de credencial, rede e de alguém que responda pelo acesso. O conector age com as permissões da credencial que recebeu.</p>
+          <p>Depende de rede, de alguém que responda pelo acesso e de credencial, a chave ou senha que identifica quem consulta. O conector age com as permissões dessa credencial.</p>
         </div>
     </article></div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.2 · Teoria</span>
-      <span class="pag">12 / 32</span>
+      <span class="pag">13 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="12">
+<section class="slide conteudo" data-i="13">
+    <span class="barra"></span>
+    <span class="eyebrow">CICLO 5.2 · TEORIA</span>
+    <h2>Como conferir um script sem saber programar</h2>
+    <p class="sub">Três passos antes de usar o resultado de qualquer script do agente. Os módulos 6, 7 e 8 repetem este procedimento</p>
+    <div class="corpo"><div class="fluxo" style="--n:3">
+      <div class="etapa" style="--cor:#D4B277"><span class="n">1</span><h4>Explicação em linguagem comum</h4>
+        <p><i>"Explique o script saidas/cruzar.py passo a passo, sem termos de programação: que arquivos lê, que linhas descarta, que regra junta as bases e o que grava."</i></p>
+        <p>Confira se cada regra da explicação é a que você pediu, como a coluna usada para juntar.</p></div>
+      <div class="etapa" style="--cor:#0AB0AB"><span class="n">2</span><h4>Contagens de entrada e saída</h4>
+        <p><i>"Altere o script para imprimir quantas linhas leu de cada arquivo, quantas descartou, com o motivo, e quantas gravou."</i></p>
+        <p>Confira a conta: linhas lidas = linhas gravadas + linhas descartadas.</p></div>
+      <div class="etapa" style="--cor:#8D0333"><span class="n">3</span><h4>Dois números refeitos à mão</h4>
+        <p>Abra o resultado no Excel e refaça dois números do script, por exemplo um total de linhas com o filtro e uma contagem com CONT.SE, a função que conta as células que atendem a um critério.</p>
+        <p>Confira se os dois coincidem.</p></div>
+    </div>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:16px">
+      <div class="caixa dourado"><span class="rot">EXEMPLO COM O CRUZAMENTO DO SLIDE 15</span><p>O script leu 5 linhas da sua base e 217 municípios do IBGE. Gravou 3 linhas com par em saidas/cruzamento.csv e listou 2 nomes sem par. Conta: 5 = 3 + 2. No Excel, a sua base tem 5 linhas e o arquivo de cruzamento tem 3, os mesmos números do script.</p></div>
+      <div class="caixa vinho"><span class="rot">SE UM NÚMERO NÃO BATER</span><p>Não use o resultado. Mostre a diferença ao agente, por exemplo "o script diz 3 pares e a planilha mostra 4", e peça que ele corrija o script. Depois repita os três passos.</p></div>
+    </div></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Ciclo 5.2 · Teoria</span>
+      <span class="pag">14 / 38</span>
+    </footer>
+  </section>
+<section class="slide conteudo" data-i="14">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.2 · DEMONSTRAÇÃO</span>
     <h2>Cruzar a sua base com uma base pública</h2>
-    <p class="sub">O mesmo script do módulo 4, agora aplicado ao seu projeto</p>
+    <p class="sub">O script do módulo 4 grava em dados/api-municipios.csv os 217 municípios do Maranhão, e o agente cruza</p>
     <div class="corpo"><div class="prompt compacto">
     <span class="rot">UMA EXECUÇÃO DO SCRIPT E UMA INSTRUÇÃO AO AGENTE</span>
     <p><span class="cmd">"execute atividade_modulo4.py com o comando apis municipios MA"</span></p>
     <p>"Cruze dados/api-municipios.csv com dados/[seu arquivo] pelo nome do município. Grave o script em saidas/cruzar.py, o resultado em saidas/cruzamento.csv e os nomes sem correspondência em saidas/nao-encontrados.md."</p>
   </div>
-  <div class="duascol" style="--esq:1.45fr;--dir:1fr;height:auto">
+  <div class="duascol" style="--esq:700px;--dir:1fr;height:auto">
     <div class="col"><svg class="fig" viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
   <defs><marker id="pt" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6"><circle cx="5" cy="5" r="4" fill="#0AB0AB"/></marker></defs>
   <rect x="0" y="0" width="250" height="34" fill="#8D0333"/>
@@ -684,50 +740,131 @@ body.mexeu #ajuda{opacity:1}
   <g stroke="#C9962E" stroke-width="2.5" stroke-dasharray="7 5" fill="none">
     <path d="M252,106 C330,106 360,66 438,64"/><path d="M252,152 C330,152 360,110 438,108"/>
   </g>
-  <text x="392" y="97" text-anchor="middle" font-size="13" fill="#8a6514" font-style="italic">abreviação</text>
-  <text x="392" y="143" text-anchor="middle" font-size="13" fill="#8a6514" font-style="italic">sem acento</text>
-  <g font-size="13.5" fill="#6B6B6B">
+  <text x="392" y="97" text-anchor="middle" font-size="14" fill="#8a6514" font-style="italic">abreviação</text>
+  <text x="392" y="143" text-anchor="middle" font-size="14" fill="#8a6514" font-style="italic">sem acento</text>
+  <g font-size="14" fill="#6B6B6B">
     <line x1="0" y1="287" x2="34" y2="287" stroke="#0AB0AB" stroke-width="3"/><text x="42" y="292">par pelo nome exato</text>
     <line x1="262" y1="287" x2="296" y2="287" stroke="#C9962E" stroke-width="2.5" stroke-dasharray="7 5"/><text x="304" y="292">recuperável com normalização</text><rect x="510" y="279" width="16" height="16" fill="#FBE9EE" stroke="#e7b9c7"/><text x="532" y="292">sem par</text>
   </g>
 </svg></div>
     <div class="col" style="gap:10px">
-      <div class="caixa vinho"><span class="rot">TAXA DE CORRESPONDÊNCIA</span><p>3 de 5 registros com par pelo nome exato (60%). Com normalização de caixa, acento e abreviação, 5 de 5.</p></div>
-      <div class="caixa teal"><span class="rot">CHAVE ESTÁVEL</span><p>O código IBGE de sete dígitos identifica o município sem ambiguidade. Se as duas bases o têm, ele é a chave do cruzamento.</p></div>
-      <div class="caixa dourado"><span class="rot">POR QUE GRAVAR O SCRIPT</span><p>A regra de normalização fica escrita e pode ser lida e corrigida.</p></div>
+      <div class="caixa vinho"><span class="rot">TAXA DE CORRESPONDÊNCIA</span><p>Registros com par ÷ registros da sua base. Pelo nome exato, 3 ÷ 5 = 60%. Com normalização, que padroniza o texto antes de comparar (minúsculas, sem acento, abreviação por extenso), 5 ÷ 5 = 100%. A regra fica escrita no script e é conferida no slide 14.</p></div>
+      <div class="caixa teal"><span class="rot">CHAVE DO CRUZAMENTO</span><p>Coluna que identifica o mesmo registro nas duas bases. O código IBGE de sete dígitos identifica o município sem ambiguidade e, se as duas bases o têm, é a chave preferida.</p></div>
     </div>
   </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.2 · Demonstração</span>
-      <span class="pag">13 / 32</span>
+      <span class="pag">15 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="13">
+<section class="slide conteudo" data-i="15">
+    <span class="barra"></span>
+    <span class="eyebrow">CICLO 5.2 · DEMONSTRAÇÃO</span>
+    <h2>A chave do cruzamento em cada base pública</h2>
+    <p class="sub">As três bases que o script do módulo 4 baixa usam chaves diferentes, e cada chave pede um ajuste antes de cruzar</p>
+    <div class="corpo"><table class="tab apertada">
+      <tr><th style="width:24%">BASE E PEDIDO AO AGENTE</th><th style="width:19%">ARQUIVO GRAVADO</th><th style="width:16%">CHAVE</th><th style="width:20%">AJUSTE NAS DUAS BASES</th><th>EXEMPLO</th></tr>
+      <tr><td><strong>Municípios do IBGE</strong><span class="s mono">apis municipios MA</span></td><td class="mono">dados/api-municipios.csv</td><td>Código IBGE ou nome do município</td><td>Nome normalizado, ou código de sete dígitos lido como texto</td><td>"S. Luís" e "São Luís" viram "sao luis"</td></tr>
+      <tr><td><strong>Série do Banco Central</strong><span class="s mono">apis serie 433 01/01/2025 31/08/2026</span><span class="s">433 é o IPCA, índice oficial de inflação</span></td><td class="mono">dados/api-serie.csv</td><td>Data, reduzida ao mês</td><td>Data dd/mm/aaaa vira aaaa-mm nas duas bases</td><td>15/03/2026 na sua base e 01/03/2026 na série viram 2026-03</td></tr>
+      <tr><td><strong>Contratações do PNCP</strong><span class="s mono">apis contratacoes MA 20260801 20260810</span></td><td class="mono">dados/api-contratacoes.csv</td><td>CNPJ do órgão comprador, na coluna orgaoEntidade.cnpj</td><td>Retirar ponto, barra e hífen, mantendo zeros à esquerda e letras</td><td>01.234.567/0001-95 vira 01234567000195 (CNPJ fictício)</td></tr>
+    </table>
+    <p style="font-size:14px;color:#6B6B6B;margin-top:6px">O pedido completo é "execute atividade_modulo4.py com o comando", seguido do texto da primeira coluna. PNCP é o Portal Nacional de Contratações Públicas. O comando traz só pregão eletrônico (modalidade 6) e até 50 registros por consulta. A IN RFB 2.229/2024 prevê, a partir de jul. 2026, CNPJ novo com letras nas 12 primeiras posições (agenciagov.ebc.com.br, consulta em 15/11/2026).</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px">
+      <div class="caixa vinho"><span class="rot">ZERO À ESQUERDA</span><p>O Excel lê CNPJ e código como número e apaga o zero à esquerda. Peça que a chave seja lida como texto.</p></div>
+      <div class="caixa teal"><span class="rot">VÁRIOS REGISTROS NO MESMO MÊS</span><p>A série tem um valor por mês. Cada registro da sua base recebe o valor do seu mês, e o número de linhas da sua base não muda.</p></div>
+      <div class="caixa dourado"><span class="rot">SEM COLUNA EM COMUM</span><p>Sem nenhuma das três chaves na sua base, não há cruzamento. Registre a ausência na entrega.</p></div>
+    </div></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Ciclo 5.2 · Demonstração</span>
+      <span class="pag">16 / 38</span>
+    </footer>
+  </section>
+<section class="slide conteudo" data-i="16">
+    <span class="barra"></span>
+    <span class="eyebrow">CICLO 5.2 · DEMONSTRAÇÃO</span>
+    <h2>Converter a planilha .xlsx em CSV</h2>
+    <p class="sub">O script lê melhor um CSV com uma linha de cabeçalho e um registro por linha</p>
+    <div class="corpo"><div class="def"><span class="rot">Pasta de trabalho do Excel (.xlsx) e CSV</span>
+      <p>O .xlsx guarda várias abas, fórmulas, cores, células mescladas e linhas de título ou de total. O CSV guarda só o texto de uma tabela. A conversão escolhe uma aba, uma linha de cabeçalho e o separador. A codificação UTF-8 é o padrão de gravação de texto que preserva os acentos. BOM (byte order mark) é a marca no início do arquivo que avisa ao Excel que o texto está em UTF-8.</p></div>
+    <div class="duascol" style="--esq:1.25fr;--dir:1fr;height:auto;margin-top:14px">
+      <div class="col">
+        <div class="prompt compacto" style="margin-bottom:0"><span class="rot">PEDIDO AO AGENTE</span>
+          <p>"Converta dados/contratos.xlsx em CSV. Use só a aba Contratos, a linha 1 como cabeçalho, ponto e vírgula como separador e codificação UTF-8 com BOM, para o Excel reconhecer os acentos. Grave o script em saidas/converter.py e o resultado em dados/contratos.csv. Imprima o número de linhas e de colunas da aba e do CSV."</p></div>
+        <p style="font-size:15px;color:#6B6B6B">Troque o nome do arquivo, da aba e a linha do cabeçalho pelos da sua planilha. Se a tabela começa na linha 4, diga "a linha 4 como cabeçalho".</p>
+      </div>
+      <div class="col" style="gap:12px">
+        <div class="caixa teal"><span class="rot">RESULTADO ESPERADO</span><p>As contagens da aba e do CSV iguais. No Excel, o CSV mostra uma coluna por campo, sem fórmulas e com os acentos corretos.</p></div>
+        <div class="caixa vinho"><span class="rot">SE O RESULTADO FOR OUTRO</span><p>Contagens diferentes: há linhas de título, em branco ou de total na aba. Diga ao agente onde a tabela começa e termina. Acentos trocados: peça de novo a codificação UTF-8 com BOM. Valor como 1,5E+13: a coluna precisa ser lida como texto.</p></div>
+      </div>
+    </div></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Ciclo 5.2 · Demonstração</span>
+      <span class="pag">17 / 38</span>
+    </footer>
+  </section>
+<section class="slide conteudo" data-i="17">
+    <span class="barra"></span>
+    <span class="eyebrow">CICLO 5.2 · DEMONSTRAÇÃO</span>
+    <h2>Dicionário de dados mínimo</h2>
+    <p class="sub">Uma linha por coluna da base, para que quem receba o arquivo entenda cada campo sem perguntar</p>
+    <div class="corpo"><div class="def"><span class="rot">Dicionário de dados (data dictionary)</span>
+      <p>Tabela que descreve cada coluna de uma base: nome, significado, tipo e formato ou unidade. Significado que não consta do arquivo nem foi informado pelo setor recebe NÃO INFORMADO.</p></div>
+    <div class="duascol" style="--esq:1.45fr;--dir:1fr;height:auto;margin-top:14px">
+      <div class="col">
+        <table class="tab apertada">
+          <tr><th>COLUNA</th><th>SIGNIFICADO</th><th>TIPO E FORMATO</th></tr>
+          <tr><td class="mono">cnpj_fornecedor</td><td>CNPJ da empresa contratada</td><td>texto de 14 caracteres, sem pontos</td></tr>
+          <tr><td class="mono">valor_total</td><td>Valor global do contrato</td><td>número em reais, vírgula decimal</td></tr>
+          <tr><td class="mono">data_assinatura</td><td>Data em que o contrato foi assinado</td><td>data dd/mm/aaaa</td></tr>
+          <tr><td class="mono">situacao</td><td class="lac">NÃO INFORMADO</td><td>texto, valores vigente e encerrado</td></tr>
+        </table>
+        <div class="caixa vinho"><span class="rot">SE O RESULTADO FOR OUTRO</span><p>Significado inventado para sigla ou código: troque por NÃO INFORMADO e leve a pergunta ao dono do dado.</p></div>
+      </div>
+      <div class="col" style="gap:12px">
+        <div class="prompt compacto" style="margin-bottom:0"><span class="rot">PEDIDO AO AGENTE</span>
+          <p>"Monte o dicionário de dados de dados/contratos.csv com as colunas coluna, significado e tipo_e_formato. Use só o cabeçalho e as vinte primeiras linhas. Onde o significado não estiver no arquivo, escreva NÃO INFORMADO."</p></div>
+        <div class="caixa teal"><span class="rot">RESULTADO ESPERADO</span><p>Uma linha para cada coluna do CSV. Você completa os significados que conhece e copia a tabela para a entrega do ciclo.</p></div>
+      </div>
+    </div></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Ciclo 5.2 · Demonstração</span>
+      <span class="pag">18 / 38</span>
+    </footer>
+  </section>
+<section class="slide conteudo" data-i="18">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.2 · PRÁTICA</span>
     <h2>Sua vez: baixe e cruze</h2>
     <p class="sub">Individual</p>
-    <div class="corpo"><ol class="steps cols-1 " style="--linhas:4">
+    <div class="corpo"><ol class="steps cols-1 compacto" style="--linhas:4;height:auto">
     <li><span class="num">1</span>
-      <div><strong>Escolha a base pública que serve ao seu projeto</strong><p>Municípios do IBGE, séries do Banco Central ou contratações do PNCP. Se a rede bloquear o acesso, use o arquivo de reserva da turma virtual.</p></div>
+      <div><strong>Baixe a base pública que serve ao seu projeto</strong><p>Municípios, série do Banco Central ou contratações do PNCP, com o pedido do slide 16. Se a rede bloquear o acesso, use o arquivo de reserva publicado na turma virtual.</p></div>
     </li>
     <li><span class="num">2</span>
-      <div><strong>Traga a base para dados/ e examine o arquivo</strong><p>Número de linhas e de colunas, significado de cada coluna e data de referência dos dados.</p></div>
+      <div><strong>Prepare a sua base</strong><p>Converta a planilha em CSV (slide 17) e monte o dicionário de dados (slide 18). Exclua antes as colunas com dado pessoal (slide 25).</p></div>
     </li>
     <li><span class="num">3</span>
-      <div><strong>Cruze com a sua base por script</strong><p>Use o campo comum às duas bases. Se não houver campo comum, registre a ausência, porque ela limita o que o projeto consegue responder.</p></div>
+      <div><strong>Peça o cruzamento por script</strong><p>"Cruze dados/[sua base].csv com dados/api-[base].csv pela coluna [chave], com o ajuste [do slide 16]. Grave o script em saidas/cruzar.py, o resultado em saidas/cruzamento.csv e os registros sem par em saidas/nao-encontrados.md. Imprima as linhas lidas, com par e sem par."</p></div>
     </li>
     <li><span class="num">4</span>
-      <div><strong>Meça a taxa de correspondência</strong><p>Registros com par divididos pelo total de registros da sua base. Liste os que ficaram sem par e classifique o motivo de cada um.</p></div>
-    </li></ol></div>
+      <div><strong>Confira e registre</strong><p>Aplique os três passos do slide 14. Em entregas/modulo5-ciclo2-cruzamento.md, escreva a URL de origem, a data do download, a taxa de correspondência, os registros sem par com o motivo e o dicionário.</p></div>
+    </li>
+    </ol>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:14px">
+      <div class="caixa teal"><span class="rot">RESULTADO ESPERADO</span><p>A saída do script mostra linhas lidas = com par + sem par. A taxa é com par ÷ linhas da sua base, e cada registro sem par tem um motivo: grafia, abreviação, fora do recorte ou chave vazia.</p></div>
+      <div class="caixa vinho"><span class="rot">SE O RESULTADO FOR OUTRO</span><p>Taxa zero: a chave tem formato diferente nas duas bases, aplique o ajuste do slide 16. Contagem que não fecha: peça a correção do script. Taxa de 100% na primeira tentativa: confira no passo 1 do slide 14 se o cruzamento foi de fato feito.</p></div>
+    </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.2 · Prática</span>
-      <span class="pag">14 / 32</span>
+      <span class="pag">19 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="14">
+<section class="slide conteudo" data-i="19">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.2 · ENTREGA</span>
     <h2>Base pública baixada e cruzada</h2>
@@ -735,7 +872,7 @@ body.mexeu #ajuda{opacity:1}
     <div class="corpo"><div class="entrega">
     <section class="lista">
       <header>O QUE ENTREGAR</header>
-      <ul><li>A base pública em dados/, com a URL de origem e a data do download.</li><li>O script do cruzamento e o arquivo resultante.</li><li>A taxa de correspondência, em número absoluto e em percentual.</li><li>A lista dos registros sem par, com o motivo provável de cada um.</li></ul>
+      <ul><li>A base pública em dados/, com a URL de origem e a data do download.</li><li>O script do cruzamento e o arquivo resultante.</li><li>A taxa de correspondência, em número absoluto e em percentual.</li><li>A lista dos registros sem par, com o motivo provável de cada um.</li><li>O dicionário de dados da sua base (slide 18).</li></ul>
     </section>
     <div class="lado">
       <section class="box onde">
@@ -751,31 +888,31 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.2 · Entrega</span>
-      <span class="pag">15 / 32</span>
+      <span class="pag">20 / 38</span>
     </footer>
   </section>
-<section class="slide divisor" data-i="15">
+<section class="slide divisor" data-i="20">
       <span class="filete"></span>
       <div class="esq"><span class="rot">CICLO</span><span class="num">5.3</span></div>
       <div class="dir">
         <h2>Qualidade e governança de dados</h2>
         <p class="etapas">Teoria · Prática · Entrega</p>
       </div>
-      <span class="pag">16 / 32</span>
+      <span class="pag">21 / 38</span>
     </section>
-<section class="slide conteudo" data-i="16">
+<section class="slide conteudo" data-i="21">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.3 · TEORIA</span>
     <h2>Seis dimensões da qualidade de dados</h2>
     <p class="sub">Cada dimensão tem uma medida própria, calculada sobre a base que você tem em mãos</p>
-    <div class="corpo"><div class="grade"><div class="dim" style="--cor:#FEC84D"><h4>Completude<small>completeness</small></h4><p>Proporção de campos obrigatórios efetivamente preenchidos.</p><span class="med"><b>MEDIDA</b><br>valores preenchidos ÷ total de registros, por coluna</span></div><div class="dim" style="--cor:#8D0333"><h4>Unicidade<small>uniqueness</small></h4><p>Cada entidade do mundo aparece uma única vez na base.</p><span class="med"><b>MEDIDA</b><br>registros duplicados ÷ total de registros</span></div><div class="dim" style="--cor:#0AB0AB"><h4>Validade<small>validity</small></h4><p>O valor obedece ao formato, ao tipo e ao domínio definidos para o campo.</p><span class="med"><b>MEDIDA</b><br>valores fora da regra ÷ total (CNPJ com dígito verificador errado, data impossível)</span></div><div class="dim" style="--cor:#D4B277"><h4>Consistência<small>consistency</small></h4><p>O mesmo fato tem o mesmo valor em registros ou sistemas diferentes.</p><span class="med"><b>MEDIDA</b><br>divergências entre fontes, ou grafias distintas da mesma entidade</span></div><div class="dim" style="--cor:#6B6B6B"><h4>Exatidão<small>accuracy</small></h4><p>O valor registrado corresponde ao objeto real. É a dimensão de verificação mais cara.</p><span class="med"><b>MEDIDA</b><br>conferência contra fonte independente ou verificação de campo, por amostra</span></div><div class="dim" style="--cor:#3b8fbf"><h4>Atualidade<small>timeliness</small></h4><p>O dado representa a realidade no período em que será usado.</p><span class="med"><b>MEDIDA</b><br>data da última atualização comparada ao período da análise</span></div></div><p class="fonte-nota">Fonte: DAMA UK (2013), <i>The six primary dimensions for data quality assessment</i>. A ISO/IEC 25012 detalha as mesmas dimensões em quinze características.</p></div>
+    <div class="corpo"><div class="grade" style="height:calc(100% - 40px)"><div class="dim" style="--cor:#FEC84D"><h4>Completude<small>completeness</small></h4><p>Proporção de campos obrigatórios efetivamente preenchidos.</p><span class="med"><b>MEDIDA</b><br>valores preenchidos ÷ total de registros, por coluna</span></div><div class="dim" style="--cor:#8D0333"><h4>Unicidade<small>uniqueness</small></h4><p>Cada entidade do mundo aparece uma única vez na base.</p><span class="med"><b>MEDIDA</b><br>registros duplicados ÷ total de registros</span></div><div class="dim" style="--cor:#0AB0AB"><h4>Validade<small>validity</small></h4><p>O valor obedece ao formato, ao tipo e ao domínio definidos para o campo.</p><span class="med"><b>MEDIDA</b><br>valores fora da regra ÷ total (CNPJ com dígito verificador errado, data impossível)</span></div><div class="dim" style="--cor:#D4B277"><h4>Consistência<small>consistency</small></h4><p>O mesmo fato tem o mesmo valor em registros ou sistemas diferentes.</p><span class="med"><b>MEDIDA</b><br>divergências entre fontes, ou grafias distintas da mesma entidade</span></div><div class="dim" style="--cor:#6B6B6B"><h4>Exatidão<small>accuracy</small></h4><p>O valor registrado corresponde ao objeto real. É a dimensão de verificação mais cara.</p><span class="med"><b>MEDIDA</b><br>conferência contra fonte independente ou verificação de campo, por amostra</span></div><div class="dim" style="--cor:#3b8fbf"><h4>Atualidade<small>timeliness</small></h4><p>O dado representa a realidade no período em que será usado.</p><span class="med"><b>MEDIDA</b><br>data da última atualização comparada ao período da análise</span></div></div><p class="fonte-nota">Fonte: DAMA UK (2013), <i>The six primary dimensions for data quality assessment</i>. A ISO/IEC 25012:2008 adota modelo próprio, com quinze características classificadas como inerentes ao dado, dependentes do sistema ou as duas coisas, entre elas exatidão, completude, consistência, credibilidade e atualidade (iso.org/standard/35736, consulta em 15/11/2026).</p></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.3 · Teoria</span>
-      <span class="pag">17 / 32</span>
+      <span class="pag">22 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="17">
+<section class="slide conteudo" data-i="22">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.3 · TEORIA</span>
     <h2>As dimensões aplicadas a uma base de fornecedores</h2>
@@ -784,12 +921,12 @@ body.mexeu #ajuda{opacity:1}
     <div class="col">
     <table class="tab">
       <tr><th>#</th><th>RAZÃO SOCIAL</th><th>CNPJ</th><th>MUNICÍPIO</th><th>ATUALIZAÇÃO</th></tr>
-      <tr><td>1</td><td>Papelaria Ribamar Ltda</td><td class="mono">12.345.678/0001-90</td><td>São Luís</td><td>03/2026</td></tr>
-      <tr><td>2</td><td class="lac"><i class="badge">1</i>Papelaria Ribamar LTDA</td><td class="mono lac">12.345.678/0001-90</td><td>São Luís</td><td>03/2026</td></tr>
+      <tr><td>1</td><td>Papelaria Ribamar Ltda</td><td class="mono">12.345.678/0001-95</td><td>São Luís</td><td>03/2026</td></tr>
+      <tr><td>2</td><td class="lac"><i class="badge">1</i>Papelaria Ribamar LTDA</td><td class="mono lac">12.345.678/0001-95</td><td>São Luís</td><td>03/2026</td></tr>
       <tr><td>3</td><td>Construtora Itaqui S.A.</td><td class="lac"><i class="badge">2</i>(vazio)</td><td>São Luís</td><td>11/2025</td></tr>
       <tr><td>4</td><td>Gráfica Atenas</td><td class="mono lac"><i class="badge">3</i>11.111.111/1111-11</td><td>Imperatriz</td><td>08/2025</td></tr>
-      <tr><td>5</td><td>Limpeza Norte ME</td><td class="mono">98.765.432/0001-10</td><td class="lac"><i class="badge">4</i>S. Luís</td><td>02/2026</td></tr>
-      <tr><td>6</td><td>Transportes Delta</td><td class="mono">45.678.912/0001-34</td><td>Caxias</td><td class="lac"><i class="badge">5</i>05/2021</td></tr>
+      <tr><td>5</td><td>Limpeza Norte ME</td><td class="mono">98.765.432/0001-98</td><td class="lac"><i class="badge">4</i>S. Luís</td><td>02/2026</td></tr>
+      <tr><td>6</td><td>Transportes Delta</td><td class="mono">45.678.912/0001-55</td><td>Caxias</td><td class="lac"><i class="badge">5</i>05/2021</td></tr>
     </table>
     <div class="caixa dourado"><span class="rot">A MEDIDA NA BASE COMPLETA</span>
       <p>Na base de 400 fornecedores, 62 estão sem CNPJ. A completude da coluna é 338 ÷ 400 = 84,5%. Os 62 registros ficam fora de qualquer cruzamento por CNPJ até serem completados ou excluídos, com a decisão registrada.</p></div>
@@ -798,7 +935,7 @@ body.mexeu #ajuda{opacity:1}
       <ul class="legenda">
         <li><i class="badge">1</i><span><b>Unicidade.</b> A linha 2 repete a linha 1 com outra caixa na razão social. A contagem de fornecedores sai inflada.</span></li>
         <li><i class="badge">2</i><span><b>Completude.</b> CNPJ vazio em campo obrigatório.</span></li>
-        <li><i class="badge">3</i><span><b>Validade.</b> O CNPJ tem formato correto e dígitos verificadores inválidos.</span></li>
+        <li><i class="badge">3</i><span><b>Validade.</b> O CNPJ tem formato correto e dígitos verificadores inválidos. Os CNPJs das demais linhas são fictícios, com dígitos verificadores válidos.</span></li>
         <li><i class="badge">4</i><span><b>Consistência.</b> Abreviação diferente da grafia usada nas demais linhas.</span></li>
         <li><i class="badge">5</i><span><b>Atualidade.</b> Cadastro sem revisão desde 2021. Um registro correto na época da coleta pode estar desatualizado hoje.</span></li>
       </ul>
@@ -808,10 +945,10 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.3 · Teoria</span>
-      <span class="pag">18 / 32</span>
+      <span class="pag">23 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="18">
+<section class="slide conteudo" data-i="23">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.3 · TEORIA</span>
     <h2>Governança: quem responde pelo dado</h2>
@@ -850,33 +987,33 @@ body.mexeu #ajuda{opacity:1}
       <div class="caixa dourado"><span class="rot">DONO DO DADO</span><p>Gestor da área que gera o dado. Decide o que conta como cliente ativo ou como despesa executada. Responde pela definição dos campos e pelas regras de preenchimento.</p></div>
       <div class="caixa teal"><span class="rot">CUSTODIANTE</span><p>Em geral, a área de TI. Responde por acesso, cópia de segurança e integridade técnica. O significado dos campos fica fora da sua alçada.</p></div>
       <div class="caixa vinho"><span class="rot">USUÁRIO</span><p>Usa o dado dentro da finalidade autorizada e comunica ao dono o defeito que encontrar. A correção feita só na própria planilha mantém o erro na origem.</p></div>
-      <p class="rodape-corpo" style="font-size:14px;color:#6B6B6B;margin-top:0">O DAMA-DMBOK descreve também o curador de dados (data steward), que aplica no dia a dia as regras definidas pelo dono. Em organizações pequenas, a mesma pessoa acumula os dois papéis.</p>
+      <p class="rodape-corpo" style="font-size:14px;color:#6B6B6B;margin-top:0">O DAMA-DMBOK, guia de gestão de dados da DAMA International (2017), descreve também o curador de dados (data steward), que aplica no dia a dia as regras definidas pelo dono. Em organizações pequenas, a mesma pessoa acumula os dois papéis.</p>
     </div>
   </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.3 · Teoria</span>
-      <span class="pag">19 / 32</span>
+      <span class="pag">24 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="19">
+<section class="slide conteudo" data-i="24">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.3 · TEORIA</span>
     <h2>LGPD para quem manuseia uma base</h2>
     <p class="sub">Lei nº 13.709/2018. Três verificações antes de abrir um arquivo com dado pessoal</p>
-    <div class="corpo"><div class="cards cols-3 baixos" style="height:calc(100% - 22px)">
+    <div class="corpo"><div class="cards cols-3 baixos" style="height:calc(100% - 44px)">
     <article class="card">
       <header style="background:#D4B277">FINALIDADE</header>
-      <h3>Para que o dado foi coletado? <span style='font-weight:400;font-size:15px;color:#6B6B6B'>Art. 6º, I</span></h3>
+      <h3>Para que o dado foi coletado? <span style='font-weight:400;font-size:15px;color:#6B6B6B'>Arts. 6º, I, e 7º</span></h3>
         <div class="bloco">
           <span class="rule" style="background:#D4B277"></span>
           <span class="rot">A regra</span>
-          <p>O tratamento segue a finalidade informada ao titular na coleta. Uso para finalidade incompatível exige nova base legal.</p>
+          <p>Vale a finalidade informada ao titular, sem uso posterior incompatível. Finalidade nova exige uma das dez bases legais do art. 7º.</p>
         </div>
         <div class="bloco">
           <span class="rule" style="background:#D4B277"></span>
           <span class="rot">Na prática</span>
-          <p>Cadastro coletado para entrega de produto não se torna base de pesquisa acadêmica sem nova autorização.</p>
+          <p>Cadastro de entrega só vira base de pesquisa com outra base legal, como consentimento (inciso I). O inciso IV vale só para órgão de pesquisa público ou privado sem fins lucrativos (art. 5º, XVIII).</p>
         </div>
     </article>
     <article class="card">
@@ -906,18 +1043,18 @@ body.mexeu #ajuda{opacity:1}
           <span class="rot">Atenção</span>
           <p>Trocar o nome por um código é pseudonimização. O dado continua pessoal enquanto existir a tabela de correspondência. Idade, bairro e cargo combinados também identificam.</p>
         </div>
-    </article></div><p class="fonte-nota">Lei nº 13.709/2018 (LGPD). O tema volta, com mais profundidade, no módulo 12.</p></div>
+    </article></div><p class="fonte-nota">Dado pessoal: informação sobre pessoa natural identificada ou identificável (art. 5º, I). Titular: a pessoa a quem o dado se refere. Tratamento: toda operação com o dado, inclusive copiar e analisar (art. 5º, X). Fonte: Lei nº 13.709/2018 (LGPD), texto no portal do Planalto, consulta em 15/11/2026. O tema volta no módulo 12.</p></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.3 · Teoria</span>
-      <span class="pag">20 / 32</span>
+      <span class="pag">25 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="20">
+<section class="slide conteudo" data-i="25">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.3 · TEORIA</span>
     <h2>O que o agente envia ao provedor do modelo</h2>
-    <p class="sub">O modelo roda no servidor do provedor. O conteúdo que o agente lê segue junto com a instrução</p>
+    <p class="sub">O modelo roda no servidor do provedor, a empresa que o hospeda. O que o agente lê segue com a instrução</p>
     <div class="corpo"><svg class="fig" viewBox="0 0 1168 186" xmlns="http://www.w3.org/2000/svg">
   <defs><marker id="sp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8D0333"/></marker></defs>
   <rect x="0" y="20" width="270" height="104" fill="#F5F5F5" stroke="#D4B277" stroke-width="2.5"/>
@@ -930,7 +1067,7 @@ body.mexeu #ajuda{opacity:1}
   <text x="585" y="106" text-anchor="middle" font-size="14" fill="#6B6B6B">roda no computador do laboratório</text>
   <rect x="898" y="20" width="270" height="104" fill="#FBE9EE" stroke="#8D0333" stroke-width="2.5"/>
   <text x="1033" y="52" text-anchor="middle" font-size="16" font-weight="700" fill="#8D0333">PROVEDOR DO MODELO</text>
-  <text x="1033" y="80" text-anchor="middle" font-size="15" fill="#1A1A1A">servidor nos EUA ou na Europa</text>
+  <text x="1033" y="80" text-anchor="middle" font-size="15" fill="#1A1A1A">servidor nos EUA, na UE ou na China</text>
   <text x="1033" y="106" text-anchor="middle" font-size="14" fill="#6B6B6B">gera a resposta</text>
   <g stroke="#8D0333" stroke-width="2.5" fill="none">
     <path d="M274,72 L434,72" marker-end="url(#sp)"/>
@@ -953,40 +1090,75 @@ body.mexeu #ajuda{opacity:1}
       <div><strong>Peça leitura parcial quando a pergunta for sobre a estrutura</strong><p>Cabeçalho e vinte linhas bastam para o agente escrever o script. O script roda na sua máquina e só o resultado impresso volta ao modelo.</p></div>
     </li>
     <li><span class="num">3</span>
-      <div><strong>Leia a política de privacidade do modelo escolhido</strong><p>Enviar dado pessoal a servidor no exterior é transferência internacional (art. 33) e exige base legal.</p></div>
+      <div><strong>Confira a condição do modelo escolhido (slide 27)</strong><p>Enviar dado pessoal a servidor no exterior é transferência internacional, permitida só nas hipóteses do art. 33 da LGPD.</p></div>
     </li></ol></div>
-    <p class="fonte-nota">Fonte: OpenCode Zen, seção Privacy (opencode.ai/docs/zen), consultada em 2 nov. 2026. A lista de modelos gratuitos e as condições mudam com frequência.</p></div>
+    <p class="fonte-nota">Fonte: OpenCode Zen, seção Privacy (opencode.ai/docs/zen), consulta em 15/11/2026. A lista de modelos gratuitos e as condições mudam a cada poucas semanas.</p></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.3 · Teoria</span>
-      <span class="pag">21 / 32</span>
+      <span class="pag">26 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="21">
+<section class="slide conteudo" data-i="26">
+    <span class="barra"></span>
+    <span class="eyebrow">CICLO 5.3 · TEORIA</span>
+    <h2>Modelos gratuitos e transferência internacional</h2>
+    <p class="sub">Condições declaradas pelo OpenCode Zen e regras da LGPD para enviar dado pessoal ao exterior</p>
+    <div class="corpo"><div class="duascol" style="--esq:1.22fr;--dir:1fr;height:calc(100% - 40px)">
+      <div class="col" style="gap:6px">
+        <table class="tab apertada">
+          <tr><th style="width:46%">CONDIÇÃO DECLARADA NO PERÍODO GRATUITO</th><th>MODELOS</th></tr>
+          <tr><td>Os dados podem ser usados para aprimorar o modelo</td><td>Big Pickle, Iceman Free, Inkling 2 Small Free, MiMo-V2.6-Flash Free e Flint 40B Free (este retém por 30 dias)</td></tr>
+          <tr><td class="lac">Uso de teste. Não enviar dado pessoal ou confidencial. O uso é registrado</td><td>Nemotron 3 Ultra Free, Nemotron 3.5 Lightning Free e Nemotron 3.5 Super VL Free, da NVIDIA</td></tr>
+          <tr><td class="lac">Hospedado na China, sem treino e sem retenção</td><td>LongCat 2.5 Free</td></tr>
+          <tr><td>Sem treino, retenção por 30 dias</td><td>Beam Free</td></tr>
+          <tr><td>Regra geral: retenção zero e sem treino</td><td>GLM-5.3-Flash Free, DeepSeek V4.1 Flash Free, MiniMax M3.1 Flash Free e Jev 1.13 Free</td></tr>
+        </table>
+        <p style="font-size:14px;color:#6B6B6B">A página afirma que todos os modelos ficam nos EUA e na UE e, na mesma seção, indica o LongCat 2.5 Free hospedado na China.</p>
+      </div>
+      <div class="col" style="gap:10px">
+        <div class="caixa vinho"><span class="rot">LGPD, ART. 33</span><p>A transferência de dado pessoal ao exterior só é permitida nas hipóteses do art. 33, entre elas o país com proteção adequada (inciso I) e as cláusulas-padrão contratuais (inciso II).</p></div>
+        <div class="caixa dourado"><span class="rot">DESTINO ADEQUADO</span><p>A Resolução CD/ANPD nº 32/2026, de 26 jan. 2026, reconheceu a União Europeia, com Islândia, Liechtenstein e Noruega, como destino com proteção adequada. É o único reconhecimento da ANPD até a consulta. EUA e China não o têm.</p></div>
+        <div class="caixa teal"><span class="rot">CLÁUSULAS-PADRÃO</span><p>A Resolução CD/ANPD nº 19/2024 aprovou o regulamento de transferência internacional e o texto das cláusulas-padrão, que o contrato adota sem alteração. O aluno não tem como conferir esse contrato entre a plataforma e o provedor. Por isso, a regra da disciplina é não enviar dado pessoal ao agente.</p></div>
+      </div>
+    </div>
+    <p class="fonte-nota">Fontes: OpenCode Zen, seção Privacy (opencode.ai/docs/zen). ANPD, página Transferência Internacional de Dados (gov.br/anpd). Lei nº 13.709/2018, art. 33. Consulta em 15/11/2026.</p></div>
+    <footer>
+      <span class="inst">UFMA · Curso de Administração · DECC0294</span>
+      <span class="centro">Ciclo 5.3 · Teoria</span>
+      <span class="pag">27 / 38</span>
+    </footer>
+  </section>
+<section class="slide conteudo" data-i="27">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.3 · PRÁTICA</span>
     <h2>Sua vez: diagnostique a sua base</h2>
     <p class="sub">Individual</p>
-    <div class="corpo"><ol class="steps cols-1 " style="--linhas:4">
+    <div class="corpo"><ol class="steps cols-1 compacto" style="--linhas:4;height:auto">
     <li><span class="num">1</span>
-      <div><strong>Meça completude e unicidade por script</strong><p>"Para cada coluna de dados/[arquivo], calcule o percentual de valores vazios e o número de valores distintos. Grave o script em saidas/qualidade.py e o resultado em saidas/qualidade.csv." Confira dois números na planilha.</p></div>
+      <div><strong>Meça completude e unicidade por script</strong><p>"Para cada coluna de dados/[sua base].csv, calcule o percentual de valores preenchidos e o número de valores distintos, e conte as linhas repetidas. Imprima o total de linhas lidas. Grave o script em saidas/qualidade.py e o resultado em saidas/qualidade.csv."</p></div>
     </li>
     <li><span class="num">2</span>
-      <div><strong>Verifique validade e consistência</strong><p>Formato de CNPJ, datas e valores com vírgula decimal. Grafias diferentes para a mesma entidade, que distorcem qualquer contagem.</p></div>
+      <div><strong>Confira dois números à mão</strong><p>Escolha duas colunas. No Excel, filtre cada uma por (Vazias) e compare a contagem com a do script. Siga os três passos do slide 14.</p></div>
     </li>
     <li><span class="num">3</span>
-      <div><strong>Verifique a atualidade</strong><p>Identifique a data mais recente da base e compare com o período que o projeto precisa analisar.</p></div>
+      <div><strong>Verifique validade, consistência, atualidade e exatidão</strong><p>Formato de CNPJ e de datas, vírgula decimal, grafias diferentes da mesma entidade e a data mais recente comparada ao período do projeto. Exatidão: confira cinco registros contra a fonte original ou escreva NÃO MEDIDO.</p></div>
     </li>
     <li><span class="num">4</span>
-      <div><strong>Aplique as três verificações da LGPD</strong><p>Se houver dado pessoal, exclua as colunas desnecessárias agora, antes de continuar com o agente e antes de gravar no repositório.</p></div>
-    </li></ol></div>
+      <div><strong>Aplique as três verificações da LGPD (slide 25)</strong><p>Se houver dado pessoal, exclua as colunas desnecessárias agora, antes de continuar com o agente e antes de gravar no repositório.</p></div>
+    </li>
+    </ol>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:14px">
+      <div class="caixa teal"><span class="rot">RESULTADO ESPERADO</span><p>saidas/qualidade.csv com uma linha por coluna da base, e os dois números refeitos à mão iguais aos do script. Completude = preenchidos ÷ total de linhas, como 338 ÷ 400 = 84,5% no slide 23.</p></div>
+      <div class="caixa vinho"><span class="rot">SE O RESULTADO FOR OUTRO</span><p>Se a planilha mostra menos vazios que o script, ou mais, há células só com espaço. Peça ao agente que trate espaço como vazio e rode de novo. Base sem nenhuma data: registre a atualidade como NÃO MEDIDO.</p></div>
+    </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.3 · Prática</span>
-      <span class="pag">22 / 32</span>
+      <span class="pag">28 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="22">
+<section class="slide conteudo" data-i="28">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.3 · ENTREGA</span>
     <h2>Diagnóstico de qualidade</h2>
@@ -994,7 +1166,7 @@ body.mexeu #ajuda{opacity:1}
     <div class="corpo"><div class="entrega">
     <section class="lista">
       <header>O QUE ENTREGAR</header>
-      <ul><li>A tabela de completude e unicidade por coluna, com o script que a produziu.</li><li>Dois números conferidos por você na planilha, comparados com o resultado do script.</li><li>Os valores inválidos e as inconsistências de grafia encontrados.</li><li>A data mais recente da base e a indicação de que ela cobre ou não o período do projeto.</li><li>As colunas excluídas por necessidade, se a base tinha dado pessoal.</li></ul>
+      <ul><li>A tabela de completude e unicidade por coluna, com o script que a produziu.</li><li>Dois números conferidos por você na planilha, comparados com o resultado do script.</li><li>Os valores inválidos e as inconsistências de grafia encontrados, e a exatidão conferida em cinco registros ou registrada como NÃO MEDIDO.</li><li>A data mais recente da base e a indicação de que ela cobre ou não o período do projeto.</li><li>As colunas excluídas por necessidade, se a base tinha dado pessoal.</li></ul>
     </section>
     <div class="lado">
       <section class="box onde">
@@ -1010,31 +1182,31 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.3 · Entrega</span>
-      <span class="pag">23 / 32</span>
+      <span class="pag">29 / 38</span>
     </footer>
   </section>
-<section class="slide divisor" data-i="23">
+<section class="slide divisor" data-i="29">
       <span class="filete"></span>
       <div class="esq"><span class="rot">CICLO</span><span class="num">5.4</span></div>
       <div class="dir">
         <h2>Mapa de dados e fechamento da entrega A2</h2>
         <p class="etapas">Teoria · Demonstração · Prática · Entrega</p>
       </div>
-      <span class="pag">24 / 32</span>
+      <span class="pag">30 / 38</span>
     </section>
-<section class="slide conteudo" data-i="24">
+<section class="slide conteudo" data-i="30">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.4 · TEORIA</span>
     <h2>Mapa de dados: de onde veio esse número?</h2>
     <p class="sub">Registro, por fonte, da origem, da extração, da qualidade medida e dos responsáveis</p>
-    <div class="corpo"><div class="ficha"><div class="grupo" style="--cor:#D4B277"><header>1. Liga o indicador à fonte<span>o que é e de onde vem</span></header><dl><dt>fonte</dt><dd>Sistema de protocolo da autarquia</dd><dt>origem</dt><dd>transacional</dd><dt>forma</dt><dd>estruturado</dd><dt>o_que_registra</dt><dd>Cada documento recebido, com data, assunto, setor de destino e situação</dd></dl></div><div class="grupo" style="--cor:#0AB0AB"><header>2. Permite refazer a extração<span>como e quando</span></header><dl><dt>como_e_obtida</dt><dd>exportação manual</dd><dt>data_da_extracao</dt><dd>15/09/2026</dd></dl></div><div class="grupo" style="--cor:#FEC84D"><header>3. Declara a qualidade conhecida<span>medida no ciclo 5.3</span></header><dl><dt>completude_percentual</dt><dd>92</dd><dt>principal_inconsistencia</dt><dd>Setor de destino em branco em 8% dos registros de 2024</dd></dl></div><div class="grupo" style="--cor:#8D0333"><header>4. Nomeia quem responde<span>ciclo 5.3, governança</span></header><dl><dt>dono_do_dado</dt><dd>Coordenação de Protocolo</dd><dt>custodiante</dt><dd>Setor de TI</dd></dl></div></div><p class="rodape-corpo">Uma linha por fonte, com as dez colunas do formulário do script. A linha acima é o exemplo que o comando <span class="mono">iniciar</span> grava. Com o mapa, quem assumir o trabalho depois consegue refazer a análise sem depender da memória de quem a fez.</p></div>
+    <div class="corpo"><div class="ficha" style="height:calc(100% - 84px)"><div class="grupo" style="--cor:#D4B277"><header>1. Liga o indicador à fonte<span>o que é e de onde vem</span></header><dl><dt>fonte</dt><dd>Sistema de protocolo da autarquia</dd><dt>origem</dt><dd>transacional</dd><dt>forma</dt><dd>estruturado</dd><dt>o_que_registra</dt><dd>Cada documento recebido, com data, assunto, setor de destino e situação</dd></dl></div><div class="grupo" style="--cor:#0AB0AB"><header>2. Permite refazer a extração<span>como e quando</span></header><dl><dt>como_e_obtida</dt><dd>exportação manual</dd><dt>data_da_extracao</dt><dd>15/09/2026</dd></dl></div><div class="grupo" style="--cor:#FEC84D"><header>3. Declara a qualidade conhecida<span>medida no ciclo 5.3</span></header><dl><dt>completude_percentual</dt><dd>92</dd><dt>principal_inconsistencia</dt><dd>Setor de destino em branco em 8% dos registros de 2024</dd></dl></div><div class="grupo" style="--cor:#8D0333"><header>4. Nomeia quem responde<span>ciclo 5.3, governança</span></header><dl><dt>dono_do_dado</dt><dd>Coordenação de Protocolo</dd><dt>custodiante</dt><dd>Setor de TI</dd></dl></div></div><p class="rodape-corpo">Uma linha por fonte, com as dez colunas do formulário do script. A linha acima é o exemplo que o comando <span class="mono">iniciar</span> grava. Fonte que você não extraiu nem mediu recebe NÃO MEDIDO em data_da_extracao e completude_percentual. Com o mapa, quem assumir o trabalho depois refaz a análise sem depender da memória de quem a fez.</p></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.4 · Teoria</span>
-      <span class="pag">25 / 32</span>
+      <span class="pag">31 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="25">
+<section class="slide conteudo" data-i="31">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.4 · DEMONSTRAÇÃO</span>
     <h2>O script monta o mapa e confere a A2</h2>
@@ -1054,40 +1226,45 @@ body.mexeu #ajuda{opacity:1}
         <span class="arq">entregas/A2-relatorio.md</span></div>
     </div>
     <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:20px">
-      <div class="caixa vinho"><span class="rot">O QUE O COMANDO CONFERIR RECUSA</span><p>Linha sem data de extração ou sem responsável, e mapa com menos de quatro fontes ou sem nenhuma fonte externa.</p></div>
-      <div class="caixa teal"><span class="rot">NÃO INFORMADO É ACEITO</span><p>Em dono e custodiante, o mapa aceita NÃO INFORMADO. Descobrir quem responde pelo dado faz parte do trabalho de campo.</p></div>
+      <div class="caixa vinho"><span class="rot">O QUE O COMANDO CONFERIR RECUSA</span><p>Linha com data de extração, completude ou responsável em branco. Mapa com menos de quatro fontes, sem fonte externa ou sem nenhuma fonte com data e completude medidas.</p></div>
+      <div class="caixa teal"><span class="rot">NÃO INFORMADO E NÃO MEDIDO SÃO ACEITOS</span><p>Dono e custodiante aceitam NÃO INFORMADO. Data de extração e completude aceitam NÃO MEDIDO para fonte que você não extraiu. Descobrir quem responde pelo dado faz parte do trabalho de campo.</p></div>
     </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.4 · Demonstração</span>
-      <span class="pag">26 / 32</span>
+      <span class="pag">32 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="26">
+<section class="slide conteudo" data-i="32">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.4 · PRÁTICA</span>
     <h2>Sua vez: monte o mapa e feche o bloco</h2>
     <p class="sub">Individual. A conferência da A2 precisa rodar antes do fim do encontro</p>
-    <div class="corpo"><ol class="steps cols-1 " style="--linhas:4">
+    <div class="corpo"><ol class="steps cols-1 compacto" style="--linhas:4;height:auto">
     <li><span class="num">1</span>
-      <div><strong>Preencha o mapa com as três fontes do ciclo 5.1</strong><p>Acrescente a base pública do ciclo 5.2. São quatro linhas, no mínimo.</p></div>
+      <div><strong>Crie o formulário</strong><p>"execute atividade_modulo5.py com o comando iniciar". O script grava entregas/modulo5-mapa-de-dados.csv com as dez colunas e uma linha de exemplo, que você apaga.</p></div>
     </li>
     <li><span class="num">2</span>
-      <div><strong>Traga a qualidade medida no ciclo 5.3</strong><p>Completude e principal inconsistência de cada fonte.</p></div>
+      <div><strong>Preencha quatro linhas no mínimo</strong><p>As três fontes do ciclo 5.1 e a base pública do ciclo 5.2, com origem externo. Fonte que você não extraiu nem mediu recebe NÃO MEDIDO em data_da_extracao e completude_percentual. Responsável desconhecido recebe NÃO INFORMADO.</p></div>
     </li>
     <li><span class="num">3</span>
-      <div><strong>Rode a conferência do mapa e corrija</strong><p>O script recusa linha sem data de extração e sem responsável. Esses dois campos permitem refazer a análise depois.</p></div>
+      <div><strong>Rode a conferência do mapa</strong><p>"execute atividade_modulo5.py com o comando conferir". Corrija cada linha que o script apontar e rode de novo.</p></div>
     </li>
     <li><span class="num">4</span>
-      <div><strong>Rode a conferência da A2 e corrija o que faltar</strong><p>Depois disso, grave e publique o repositório com a mensagem "entrega A2".</p></div>
-    </li></ol></div>
+      <div><strong>Rode a conferência da A2 e publique</strong><p>"execute atividade_modulo5.py com o comando a2". Depois, no GitHub Desktop, faça o commit com a mensagem "entrega A2" e clique em Push origin.</p></div>
+    </li>
+    </ol>
+    <div class="duascol" style="--esq:1fr;--dir:1fr;height:auto;margin-top:14px">
+      <div class="caixa teal"><span class="rot">RESULTADO ESPERADO</span><p>O conferir termina com "Mapa gerado em: entregas\modulo5-mapa-de-dados.md". O a2 mostra [OK] nos doze itens e grava entregas/A2-relatorio.md.</p></div>
+      <div class="caixa vinho"><span class="rot">SE O RESULTADO FOR OUTRO</span><p>O conferir lista o problema por linha, como "linha 3: data_da_extracao precisa estar em dd/mm/aaaa". O a2 marca [FALTA] no item ausente e diz o nome do arquivo que procurou. Crie ou renomeie o arquivo e rode de novo.</p></div>
+    </div></div>
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.4 · Prática</span>
-      <span class="pag">27 / 32</span>
+      <span class="pag">33 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="27">
+<section class="slide conteudo" data-i="33">
     <span class="barra"></span>
     <span class="eyebrow">CICLO 5.4 · ENTREGA A2</span>
     <h2>Entrega A2: 60% da nota 1</h2>
@@ -1111,10 +1288,10 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Ciclo 5.4 · Entrega</span>
-      <span class="pag">28 / 32</span>
+      <span class="pag">34 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="28">
+<section class="slide conteudo" data-i="34">
     <span class="barra"></span>
     <span class="eyebrow">BALANÇO</span>
     <h2>O que você tem ao fim do bloco</h2>
@@ -1140,7 +1317,7 @@ body.mexeu #ajuda{opacity:1}
         <div class="bloco">
           <span class="rule" style="background:#0AB0AB"></span>
           <span class="rot">O que é</span>
-          <p>Uma base pública na pasta, cruzada com a sua, com a qualidade medida nas seis dimensões.</p>
+          <p>Uma base pública na pasta, cruzada com a sua. Cinco dimensões de qualidade medidas e a exatidão conferida por amostra ou registrada como NÃO MEDIDO.</p>
         </div>
         <div class="bloco">
           <span class="rule" style="background:#0AB0AB"></span>
@@ -1165,10 +1342,10 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Balanço do módulo</span>
-      <span class="pag">29 / 32</span>
+      <span class="pag">35 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="29">
+<section class="slide conteudo" data-i="35">
     <span class="barra"></span>
     <span class="eyebrow">PRÓXIMOS PASSOS</span>
     <h2>Módulo 6: o que preparar</h2>
@@ -1184,7 +1361,7 @@ body.mexeu #ajuda{opacity:1}
       <div><strong>Anote três perguntas de gestão que o projeto deve responder</strong><p>"Qual unidade gasta mais por atendimento?" é uma pergunta de gestão. "Qual é a média?" é uma pergunta de estatística e não serve como ponto de partida.</p></div>
     </li>
     <li><span class="num">4</span>
-      <div><strong>Leia o capítulo 3 de Sharda, Delen e Turban</strong><p>Natureza dos dados, modelagem estatística e visualização. O texto está na turma virtual.</p></div>
+      <div><strong>Leitura complementar: capítulo 3 de Sharda, Delen e Turban</strong><p>Natureza dos dados, modelagem estatística e visualização. O texto está na turma virtual e não é pré-requisito do módulo 6.</p></div>
     </li>
     <li><span class="num">5</span>
       <div><strong>Confira a nota 1 quando for publicada</strong><p>Item pendente da A2 pode ser corrigido até a semana seguinte.</p></div>
@@ -1192,23 +1369,23 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Próximos passos</span>
-      <span class="pag">30 / 32</span>
+      <span class="pag">36 / 38</span>
     </footer>
   </section>
-<section class="slide conteudo" data-i="30">
+<section class="slide conteudo" data-i="36">
     <span class="barra"></span>
     <span class="eyebrow">DÚVIDAS FREQUENTES</span>
     <h2>Perguntas que aparecem neste módulo</h2>
     
     <div class="corpo"><ol class="steps cols-2 compacto" style="--linhas:3">
     <li><span class="num">1</span>
-      <div><strong>"A organização não me libera o dado."</strong><p>Registre no mapa quem negou e por quê. A negativa é um achado de governança, e o projeto segue com base pública.</p></div>
+      <div><strong>"A organização não me libera o dado."</strong><p>Registre a fonte no mapa com NÃO MEDIDO em data e completude, e escreva quem negou e o motivo em principal_inconsistencia. O projeto segue com base pública.</p></div>
     </li>
     <li><span class="num">2</span>
       <div><strong>"Posso usar uma base do meu estágio?"</strong><p>Sim, com autorização de quem responde por ela e sem dado pessoal identificável. Sem autorização, use base pública.</p></div>
     </li>
     <li><span class="num">3</span>
-      <div><strong>"O cruzamento quase não encontrou pares."</strong><p>Na maior parte dos casos, a chave é texto dos dois lados. Procure um código numérico comum às duas bases.</p></div>
+      <div><strong>"O cruzamento quase não encontrou pares."</strong><p>Na maior parte dos casos, a chave é texto dos dois lados. Procure um código comum às duas bases, como o código IBGE ou o CNPJ (slide 16).</p></div>
     </li>
     <li><span class="num">4</span>
       <div><strong>"A base tem CPF."</strong><p>Exclua a coluna antes de qualquer outra etapa e antes de gravar no repositório. O que foi publicado no GitHub permanece no histórico.</p></div>
@@ -1222,10 +1399,10 @@ body.mexeu #ajuda{opacity:1}
     <footer>
       <span class="inst">UFMA · Curso de Administração · DECC0294</span>
       <span class="centro">Dúvidas frequentes</span>
-      <span class="pag">31 / 32</span>
+      <span class="pag">37 / 38</span>
     </footer>
   </section>
-<section class="slide fim" data-i="31">
+<section class="slide fim" data-i="37">
       <span class="filete"></span>
       <h1>Módulo 5 concluído</h1>
       <p>A nota 1 está fechada. A partir do próximo encontro, o trabalho é feito sobre a base que você montou e diagnosticou hoje.</p>
@@ -1234,7 +1411,7 @@ body.mexeu #ajuda{opacity:1}
 </div>
 <div id="barra">
   <button id="ant" title="Anterior">&#8249;</button>
-  <input id="atual" value="1" title="Ir para o slide"> <span>/ 32</span>
+  <input id="atual" value="1" title="Ir para o slide"> <span>/ 38</span>
   <button id="prox" title="Próximo">&#8250;</button>
   <button id="tela" title="Tela cheia">&#9744;</button>
 </div>

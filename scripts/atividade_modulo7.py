@@ -30,7 +30,7 @@ COMO USAR (peca ao agente, no opencode desktop)
        registros sem par dos dois lados.
 
     5) "execute atividade_modulo7.py com o comando registrar"
-       Cria entregas/modulo7-consultas.csv para voce registrar as cinco
+       Cria entregas/modulo7-consultas.csv para voce registrar as tres
        perguntas.
 
     6) "execute atividade_modulo7.py com o comando conferir"
@@ -42,6 +42,20 @@ A REGRA QUE O SCRIPT APLICA
     Toda consulta fica gravada com o SQL usado. Numero sem consulta gravada
     nao e auditavel, e a pergunta "de onde veio esse numero" fica sem resposta.
 
+COMO O COMANDO banco DECIDE O TIPO DE CADA COLUNA
+    - Identificador (nome com cnpj, cpf, codigo, cod_, id, ou algum valor com
+      zero a esquerda, como 00123) e gravado como TEXT, sem perder zeros.
+    - Data DD/MM/AAAA (90% ou mais dos valores preenchidos) e convertida para
+      AAAA-MM-DD e gravada como TEXT. Assim a ordem e o filtro por data
+      funcionam.
+    - Numero (90% ou mais dos valores preenchidos) vira INTEGER ou REAL. Em
+      CSV com ponto e virgula, o ponto e lido como separador de milhar quando a
+      coluna tem virgula decimal em algum valor, ou quando todo valor com ponto
+      tem o formato de milhar (12.480). A decisao e por coluna e aparece na
+      saida.
+    - Valor que nao pode ser convertido (n/d, 31/02/2026) e gravado vazio e
+      contado na saida como valor descartado, coluna por coluna.
+
 Nao precisa instalar nada. Usa o sqlite3 que ja vem com o Python.
 =============================================================================
 """
@@ -51,6 +65,7 @@ import os
 import re
 import sqlite3
 import sys
+import unicodedata
 from datetime import date, datetime
 
 # Quando o script esta na pasta scripts/ do repositorio, as pastas de trabalho
@@ -66,6 +81,7 @@ REGISTRO = os.path.join("entregas", "modulo7-consultas.csv")
 RELATORIO = os.path.join("entregas", "modulo7-relatorio.md")
 COLS_REGISTRO = ["pergunta", "arquivo_sql", "resultado", "linhas_antes_do_filtro",
                  "linhas_depois_do_filtro", "conferencia", "precisou_corrigir"]
+MINIMO_CONSULTAS = 3
 
 
 def titulo(t):
@@ -75,10 +91,24 @@ def titulo(t):
     print("=" * 74)
 
 
-def numero(v):
+_MILHAR = re.compile(r"^-?\d{1,3}(\.\d{3})+$")
+_VIRGULA_DECIMAL = re.compile(r"^-?\d{1,3}(\.\d{3})*,\d+$|^-?\d+,\d+$")
+_DATA_BR = re.compile(r"^(\d{1,2})/(\d{1,2})/(\d{4})$")
+_DATA_ISO = re.compile(r"^(\d{4})-(\d{2})-(\d{2})$")
+_NOME_ID = re.compile(r"cnpj|cpf|codigo|^cod_|_cod_|_cod$|^cod$|^id$|^id_|_id_|_id$")
+
+
+def _limpo(v):
+    return str(v or "").replace("R$", "").replace(" ", "").strip()
+
+
+def numero(v, milhar=False):
+    """Converte o texto de uma celula em numero. Com milhar=True, "12.480"
+    vale 12480. Sem, vale 12,48 (ponto decimal). Devolve None se nao for
+    numero."""
     if v is None:
         return None
-    t = str(v).strip().replace("R$", "").strip()
+    t = _limpo(v)
     if not t:
         return None
     if re.match(r"^-?\d{1,3}(\.\d{3})+,\d+$", t):
@@ -87,8 +117,41 @@ def numero(v):
         t = t.replace(",", ".")
     elif re.match(r"^-?\d{1,3}(,\d{3})+\.\d+$", t):
         t = t.replace(",", "")
+    elif milhar and _MILHAR.match(t):
+        t = t.replace(".", "")
     try:
         return float(t)
+    except ValueError:
+        return None
+
+
+def coluna_com_ponto_de_milhar(preenchidos, sep):
+    """Decisao por coluna. O ponto e separador de milhar se algum valor usa
+    virgula decimal (padrao brasileiro) ou se, em CSV com ponto e virgula,
+    todo valor com ponto tem o formato de milhar (1 a 3 algarismos e grupos
+    de 3). Em CSV separado por virgula, o ponto e decimal."""
+    valores = [_limpo(v) for v in preenchidos]
+    if any(_VIRGULA_DECIMAL.match(v) for v in valores):
+        return True
+    if sep != ";":
+        return False
+    com_ponto = [v for v in valores if "." in v]
+    return bool(com_ponto) and all(_MILHAR.match(v) for v in com_ponto)
+
+
+def data_iso(v):
+    """DD/MM/AAAA ou AAAA-MM-DD viram AAAA-MM-DD. Data inexistente devolve None."""
+    t = (v or "").strip()
+    m = _DATA_BR.match(t)
+    if m:
+        d, mes, a = int(m.group(1)), int(m.group(2)), int(m.group(3))
+    else:
+        m = _DATA_ISO.match(t)
+        if not m:
+            return None
+        a, mes, d = int(m.group(1)), int(m.group(2)), int(m.group(3))
+    try:
+        return date(a, mes, d).isoformat()
     except ValueError:
         return None
 
@@ -112,30 +175,46 @@ def ler_csv(caminho):
     return list(csv.DictReader(bruto.splitlines(), delimiter=sep)), sep
 
 
+def sem_acento(t):
+    t = unicodedata.normalize("NFKD", t or "")
+    return "".join(ch for ch in t if not unicodedata.combining(ch))
+
+
 def nome_tabela(caminho):
     base = os.path.splitext(os.path.basename(caminho))[0]
-    base = re.sub(r"[^0-9a-zA-Z_]", "_", base).strip("_").lower()
+    base = re.sub(r"[^0-9a-zA-Z_]", "_", sem_acento(base)).strip("_").lower()
     if not base or base[0].isdigit():
         base = "t_" + base
     return base
 
 
 def nome_coluna(c):
-    c = re.sub(r"[^0-9a-zA-Z_]", "_", (c or "").strip()).strip("_").lower()
+    c = re.sub(r"[^0-9a-zA-Z_]", "_", sem_acento((c or "").strip())).strip("_").lower()
     return c or "coluna"
 
 
-def tipo_coluna(valores):
-    preenchidos = [v for v in valores if (v or "").strip()]
+def tipo_coluna(nome, valores, sep):
+    """Devolve (tipo, regra). regra: 'id', 'data', 'milhar', 'numero' ou
+    'texto'. Ver COMO O COMANDO banco DECIDE O TIPO, no inicio do arquivo."""
+    preenchidos = [v.strip() for v in valores if (v or "").strip()]
     if not preenchidos:
-        return "TEXT"
-    nums = [numero(v) for v in preenchidos]
+        return "TEXT", "texto"
+    if _NOME_ID.search(nome) or any(re.match(r"^0\d+$", v) for v in preenchidos):
+        return "TEXT", "id"
+    if any(_DATA_BR.match(v) for v in preenchidos):
+        datas = [v for v in preenchidos if data_iso(v)]
+        if len(datas) >= 0.9 * len(preenchidos):
+            return "TEXT", "data"
+    milhar = coluna_com_ponto_de_milhar(preenchidos, sep)
+    nums = [numero(v, milhar) for v in preenchidos]
     nums = [x for x in nums if x is not None]
     if len(nums) < 0.9 * len(preenchidos):
-        return "TEXT"
+        return "TEXT", "texto"
+    regra = "milhar" if milhar and any("." in _limpo(v) and "," not in v
+                                       for v in preenchidos) else "numero"
     if all(abs(x - round(x)) < 1e-9 for x in nums):
-        return "INTEGER"
-    return "REAL"
+        return "INTEGER", regra
+    return "REAL", regra
 
 
 def criar_banco(arquivos):
@@ -164,24 +243,36 @@ def criar_banco(arquivos):
         tabela = nome_tabela(caminho)
         originais = list(linhas[0].keys())
         colunas = [nome_coluna(c) for c in originais]
-        tipos = [tipo_coluna([l.get(o) for l in linhas]) for o in originais]
+        decisoes = [tipo_coluna(c, [l.get(o) for l in linhas], sep)
+                    for c, o in zip(colunas, originais)]
+        tipos = [d[0] for d in decisoes]
+        regras = [d[1] for d in decisoes]
 
         cur.execute("DROP TABLE IF EXISTS %s" % tabela)
         cur.execute("CREATE TABLE %s (%s)" %
                     (tabela, ", ".join("%s %s" % (c, t) for c, t in zip(colunas, tipos))))
 
         rejeitadas = 0
+        descartados = {}   # coluna -> [quantidade, primeiro exemplo]
         for l in linhas:
             valores = []
-            for o, t in zip(originais, tipos):
+            for c, o, t, r in zip(colunas, originais, tipos, regras):
                 v = (l.get(o) or "").strip()
                 if v == "":
                     valores.append(None)
+                    continue
+                if r == "data":
+                    x = data_iso(v)
                 elif t in ("INTEGER", "REAL"):
-                    x = numero(v)
-                    valores.append(int(x) if (x is not None and t == "INTEGER") else x)
+                    x = numero(v, r == "milhar")
+                    if x is not None and t == "INTEGER":
+                        x = int(round(x))
                 else:
-                    valores.append(v)
+                    x = v
+                if x is None:
+                    d = descartados.setdefault(c, [0, v])
+                    d[0] += 1
+                valores.append(x)
             try:
                 cur.execute("INSERT INTO %s VALUES (%s)" %
                             (tabela, ",".join("?" * len(valores))), valores)
@@ -191,7 +282,8 @@ def criar_banco(arquivos):
         cur.execute("SELECT COUNT(*) FROM %s" % tabela)
         gravadas = cur.fetchone()[0]
         resumo.append((tabela, caminho, len(linhas), gravadas, rejeitadas,
-                       list(zip(colunas, tipos))))
+                       list(zip(colunas, tipos)), list(zip(colunas, regras)),
+                       descartados))
 
     con.close()
 
@@ -201,11 +293,28 @@ def criar_banco(arquivos):
         return 1
 
     print()
-    for tabela, caminho, no_csv, gravadas, rejeitadas, cols in resumo:
+    algum_descarte = False
+    for tabela, caminho, no_csv, gravadas, rejeitadas, cols, regras, desc in resumo:
         print("TABELA %s  (de %s)" % (tabela, caminho))
         print("  linhas no CSV: %d | gravadas: %d | rejeitadas: %d"
               % (no_csv, gravadas, rejeitadas))
         print("  colunas: " + ", ".join("%s %s" % (c, t) for c, t in cols))
+        ids = [c for c, r in regras if r == "id"]
+        datas = [c for c, r in regras if r == "data"]
+        milhar = [c for c, r in regras if r == "milhar"]
+        if ids:
+            print("  identificador gravado como texto: " + ", ".join(ids))
+        if datas:
+            print("  data convertida para AAAA-MM-DD: " + ", ".join(datas))
+        if milhar:
+            print("  ponto lido como separador de milhar: " + ", ".join(milhar))
+        if desc:
+            algum_descarte = True
+            print("  valores descartados (gravados vazios): " +
+                  ", ".join("%s %d (ex.: %s)" % (c, d[0], d[1][:20])
+                            for c, d in desc.items()))
+        else:
+            print("  valores descartados (gravados vazios): 0")
         if no_csv != gravadas:
             print("  ATENCAO: a contagem nao bate. Descubra por que antes de consultar.")
         print()
@@ -214,7 +323,10 @@ def criar_banco(arquivos):
     print()
     print("PROXIMO PASSO")
     print("  Confira as contagens contra o perfil do modulo 6.")
-    print("  Coluna de valor que ficou TEXT e virgula decimal: corrija o CSV e refaca.")
+    if algum_descarte:
+        print("  Ha valores descartados. Corrija esses valores no CSV, ou registre por")
+        print("  que ficam vazios, e rode o comando banco de novo.")
+    print("  Coluna de valor que ficou TEXT: veja os valores no CSV e refaca.")
     return 0
 
 
@@ -243,8 +355,29 @@ def esquema():
 
 def proximo_numero():
     os.makedirs("saidas", exist_ok=True)
-    existentes = [f for f in os.listdir("saidas") if re.match(r"^consulta-\d+\.sql$", f)]
-    return len(existentes) + 1
+    # O maior numero ja usado mais um. Assim um arquivo apagado no meio da
+    # sequencia nao faz a proxima consulta sobrescrever outra.
+    usados = [int(m.group(1)) for m in
+              (re.match(r"^consulta-(\d+)\.(sql|csv)$", f) for f in os.listdir("saidas"))
+              if m]
+    return max(usados) + 1 if usados else 1
+
+
+# Acoes que o comando sql deixa a consulta fazer: ler tabelas e usar funcoes.
+# Qualquer outra (CREATE, INSERT, REPLACE, ATTACH, PRAGMA...) e negada.
+_ACOES_LEITURA = {getattr(sqlite3, "SQLITE_SELECT", 21), getattr(sqlite3, "SQLITE_READ", 20),
+                  getattr(sqlite3, "SQLITE_FUNCTION", 31), getattr(sqlite3, "SQLITE_RECURSIVE", 33)}
+
+
+def _so_leitura(acao, *_):
+    return sqlite3.SQLITE_OK if acao in _ACOES_LEITURA else sqlite3.SQLITE_DENY
+
+
+def recusa_leitura():
+    print()
+    print("Este comando so executa consultas de leitura (SELECT ou WITH ... SELECT).")
+    print("Para recriar tabelas, corrija o CSV e use o comando 'banco'.")
+    return 1
 
 
 def executar(consulta):
@@ -258,20 +391,25 @@ def executar(consulta):
         print("Faltou a consulta. Uso: sql SELECT ... FROM ...")
         return 1
 
-    proibidos = ("drop ", "delete ", "update ", "insert ", "alter ")
-    if any(p in consulta.lower() for p in proibidos):
-        print()
-        print("Este comando so executa consultas de leitura (SELECT).")
-        print("Para recriar tabelas, use o comando 'banco'.")
-        return 1
+    # Tres barreiras: a consulta comeca por SELECT ou WITH, o banco e aberto
+    # so para leitura, e o autorizador nega toda acao que nao seja ler.
+    if not re.match(r"^\s*(select|with)\b", consulta, re.IGNORECASE):
+        return recusa_leitura()
 
-    con = sqlite3.connect(BANCO)
+    caminho_ro = os.path.abspath(BANCO).replace("\\", "/")
+    from urllib.request import pathname2url
+    con = sqlite3.connect("file:%s?mode=ro" % pathname2url(caminho_ro), uri=True)
+    con.set_authorizer(_so_leitura)
     cur = con.cursor()
     try:
         cur.execute(consulta)
         colunas = [d[0] for d in cur.description] if cur.description else []
         linhas = cur.fetchall()
     except sqlite3.Error as e:
+        texto = str(e).lower()
+        if "not authorized" in texto or "readonly" in texto or "read-only" in texto:
+            con.close()
+            return recusa_leitura()
         print()
         print("A consulta nao rodou: %s" % e)
         print()
@@ -338,14 +476,23 @@ def juntar(args):
         cur.execute("SELECT COUNT(*) FROM %s AS x JOIN %s AS y ON x.%s = y.%s"
                     % (a, b, chave, chave))
         n_join = cur.fetchone()[0]
-        cur.execute("SELECT COUNT(*) FROM %s WHERE %s NOT IN (SELECT %s FROM %s)"
-                    % (a, chave, chave, b))
+        # NOT EXISTS, e nao NOT IN: com NOT IN, uma unica chave vazia na outra
+        # tabela faz a contagem de registros sem par sair zero.
+        # A linha com chave vazia nao tem par e entra na contagem de sem par.
+        cur.execute("SELECT COUNT(*) FROM %s AS x WHERE NOT EXISTS "
+                    "(SELECT 1 FROM %s AS y WHERE y.%s = x.%s)" % (a, b, chave, chave))
         sem_par_a = cur.fetchone()[0]
-        cur.execute("SELECT COUNT(*) FROM %s WHERE %s NOT IN (SELECT %s FROM %s)"
-                    % (b, chave, chave, a))
+        cur.execute("SELECT COUNT(*) FROM %s AS y WHERE NOT EXISTS "
+                    "(SELECT 1 FROM %s AS x WHERE x.%s = y.%s)" % (b, a, chave, chave))
         sem_par_b = cur.fetchone()[0]
-        cur.execute("SELECT COUNT(*) FROM (SELECT %s FROM %s GROUP BY %s HAVING COUNT(*) > 1)"
-                    % (chave, b, chave))
+        cur.execute("SELECT COUNT(*) FROM %s WHERE %s IS NULL OR TRIM(%s) = ''"
+                    % (a, chave, chave))
+        vazia_a = cur.fetchone()[0]
+        cur.execute("SELECT COUNT(*) FROM %s WHERE %s IS NULL OR TRIM(%s) = ''"
+                    % (b, chave, chave))
+        vazia_b = cur.fetchone()[0]
+        cur.execute("SELECT COUNT(*) FROM (SELECT %s FROM %s WHERE %s IS NOT NULL "
+                    "GROUP BY %s HAVING COUNT(*) > 1)" % (chave, b, chave, chave))
         repetidas_b = cur.fetchone()[0]
     except sqlite3.Error as e:
         print()
@@ -357,24 +504,34 @@ def juntar(args):
     print()
     print("  Linhas em %-22s %d" % (a, n_a))
     print("  Linhas em %-22s %d" % (b, n_b))
-    print("  Linhas depois da juncao       %d" % n_join)
+    print("  %-32s %d" % ("Linhas depois da juncao", n_join))
     print("  Sem par em %-21s %d" % (a, sem_par_a))
     print("  Sem par em %-21s %d" % (b, sem_par_b))
+    print("  Chave vazia em %-17s %d (incluidas em sem par)" % (a, vazia_a))
+    print("  Chave vazia em %-17s %d (incluidas em sem par)" % (b, vazia_b))
     print("  Chaves repetidas em %-12s %d" % (b, repetidas_b))
     print()
 
+    # A mensagem nao depende so da contagem: linhas sem par e chave repetida
+    # podem se compensar e deixar a contagem igual com resultado errado.
     if n_join > n_a:
         print("  ATENCAO: a juncao AUMENTOU a contagem.")
-        print("  A chave se repete em %s (%d valor(es) repetido(s))." % (b, repetidas_b))
-        print("  Some linhas foram multiplicadas e qualquer soma sobre o resultado esta inflada.")
-        print("  Investigue antes de seguir. Nao entregue assim.")
     elif n_join < n_a:
-        print("  A juncao DIMINUIU a contagem: %d linha(s) de %s nao encontraram par."
+        print("  A juncao DIMINUIU a contagem.")
+    else:
+        print("  A contagem permaneceu igual.")
+    if repetidas_b > 0:
+        print("  ATENCAO: a chave se repete em %s (%d valor(es) repetido(s))."
+              % (b, repetidas_b))
+        print("  Linhas foram multiplicadas e qualquer soma sobre o resultado esta inflada.")
+        print("  Investigue antes de seguir. Nao entregue assim.")
+    if sem_par_a > 0:
+        print("  %d linha(s) de %s nao encontraram par e ficaram fora do resultado."
               % (sem_par_a, a))
         print("  Isso pode estar certo, mas precisa ser declarado na entrega.")
-    else:
-        print("  A contagem permaneceu igual. E o resultado esperado de uma juncao por")
-        print("  chave unica.")
+    if repetidas_b == 0 and sem_par_a == 0:
+        print("  Cada linha de %s achou um so par. E o resultado esperado de uma" % a)
+        print("  juncao por chave unica.")
 
     tabela = "%s_%s" % (a[:12], b[:12])
     cur.execute("DROP TABLE IF EXISTS %s" % tabela)
@@ -384,7 +541,7 @@ def juntar(args):
     con.close()
     print()
     print("Tabela juntada criada: " + tabela)
-    print("Registre as cinco contagens acima na entrega do ciclo 7.4.")
+    print("Registre as oito contagens acima na entrega do ciclo 7.4.")
     return 0
 
 
@@ -398,7 +555,7 @@ def registrar():
     with open(REGISTRO, "w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f, delimiter=SEP)
         w.writerow(COLS_REGISTRO)
-        for _ in range(5):
+        for _ in range(MINIMO_CONSULTAS):
             w.writerow([""] * len(COLS_REGISTRO))
     print()
     print("Formulario criado em: " + REGISTRO)
@@ -469,8 +626,8 @@ def conferir():
                               "resultado": resultado, "antes": antes, "depois": depois,
                               "conferencia": conferencia, "corrigir": corrigir})
 
-    if len(consultas) < 5:
-        erros.append("sao necessarias cinco consultas, e ha %d." % len(consultas))
+    if len(consultas) < MINIMO_CONSULTAS:
+        erros.append("sao necessarias tres consultas, e ha %d." % len(consultas))
 
     print()
     if erros:
@@ -486,7 +643,7 @@ def conferir():
             print("  - " + a)
 
     print()
-    print("Consultas registradas: %d de 5" % len(consultas))
+    print("Consultas registradas: %d (minimo de %d)" % (len(consultas), MINIMO_CONSULTAS))
 
     if erros:
         print()

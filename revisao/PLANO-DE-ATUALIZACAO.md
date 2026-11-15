@@ -159,7 +159,7 @@ Situação informada pelo professor em 14 nov. 2026: o próximo encontro está e
 | 6 | Módulo 15 (feito em 14 nov. 2026, ver `REGISTRO.md`) | Rubrica da C2 com pontos. Escala de avaliadores. Caderno de prompts no portfólio. Formato das apresentações pelo tamanho da turma. Caixa datada do slide 19 |
 | 7 | Errata dos módulos 1 a 10 (feito em 14 nov. 2026, ver `REGISTRO.md`) | Uma página para a turma, só com o que afeta entrega futura: nomes de arquivo que o `c2` aceita e leitura de "12.480" pelo script do módulo 6 para quem reutilizar a base no módulo 11 |
 
-Ficam para a próxima oferta: as fases 2 e 3 inteiras (módulos 1 a 10), o glossário único, a verificação automática de termos, a bibliografia e o programa.
+Em 15 nov. 2026, a pedido do professor, as fases 2 e 3 (módulos 1 a 10) e o glossário único (`revisao/glossario-disciplina.md`) também foram feitos, com README, índice, index.html, planejamento e errata alinhados (ver `REGISTRO.md`). Ficam para a próxima oferta a verificação automática de termos no `auditar_texto.py`, a bibliografia e o programa (fase 5).
 
 ### Fase 0. Antes dos próximos encontros (correção de defeito, sem mudança de desenho)
 
@@ -191,7 +191,7 @@ Os slides não trazem marcação de tempo. Os tempos da apresentação do módul
 6. Caso de reserva completo (organização fictícia com bases, documento, tarefa recorrente e usuário) para quem não tem material próprio, usado dos módulos 5 a 15.
 7. Trocar fontes secundárias por primárias e manter a data de consulta.
 
-### Fase 2. Bloco 1, módulos 1 a 5
+### Fase 2. Bloco 1, módulos 1 a 5 (feito em 15 nov. 2026, ver `REGISTRO.md`)
 
 - Módulo 1: slide de conceito inicial (transformação digital, digitalização, IA generativa, modelo e assistente). Preencher o CSV no encontro 2 e rodar o `conferir` no encontro 3. Reconferir o slide 13.
 - Módulo 2: conta do GitHub criada antes da aula. Ensinar Clone. Inverter os slides 37 e 38. Alinhar a definição de modelo de linguagem com a do módulo 3. Corrigir "arquivo fechado" e a definição de reprodutibilidade. Acrescentar modelos de serviço em nuvem no lugar do detalhe de custo.
@@ -199,7 +199,7 @@ Os slides não trazem marcação de tempo. Os tempos da apresentação do módul
 - Módulo 4: corrigir o slide 25 depois do teste. Mostrar uma saída bem-sucedida no slide 27. Reduzir skill e subagente a uma menção. Definir Node.js e npx ou pedir a configuração ao agente. Usar a instalação de pacote de terceiro como exemplo das quatro perguntas do slide 28.
 - Módulo 5: slide do procedimento de conferência de script. Conversão de .xlsx para .csv. Atualizar o slide 21. Corrigir o slide 20.
 
-### Fase 3. Bloco 2, módulos 6 a 10
+### Fase 3. Bloco 2, módulos 6 a 10 (feito em 15 nov. 2026, ver `REGISTRO.md`)
 
 - Módulo 6: slide de conceito com quartil e amplitude interquartil sobre dez valores. Definir significância e falso positivo ou retirar o cálculo do slide 4. Acrescentar histograma ou diagrama de caixa. Reduzir a prática 6.4 a três números. Corrigir os slides 11 e 16.
 - Módulo 7: reordenar para 7.1, 7.2, 7.4 e 7.3, ou restringir o 7.3 a uma tabela. Reduzir a três consultas. Corrigir a cadeia de datas. Slide de leitura de `SELECT COUNT` antes do slide 7. Cortar STRICT, CROSS JOIN, UNION ALL e 1:1.

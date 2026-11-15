@@ -4,31 +4,68 @@ Estado de cada deck e histórico das revisões. O padrão e o procedimento estã
 
 ## Estado por módulo
 
-Os sinais vêm de `python revisao/auditar_texto.py`, rodado em 2 nov. 2026. Elementos visuais conta os slides com diagrama, fluxo ou tabela anotada.
+Os sinais vêm de `python revisao/auditar_texto.py`, rodado em 15 nov. 2026. A coluna Enc. é o número do encontro no calendário e não aparece nos slides. Elementos visuais, pela contagem de 2 nov. 2026, conta os slides com diagrama, fluxo ou tabela anotada.
 
 | Mód. | Enc. | Deck | Slides | Sinais | Elementos visuais | Situação |
 |---|---|---|---|---|---|---|
-| 1 | 2 | Transformação digital | 36 | 1 | 17 | revisado em 2 nov. 2026, deck inteiro. O sinal restante é "Ensino fundamental", falso positivo |
-| 2 | 3 | Ambiente de trabalho digital | 46 | 0 | 21 | revisado em 2 nov. 2026, deck inteiro, mantida a adaptação de set. 2026 |
-| 3 | 4 | IA e engenharia de prompt | 44 | 0 | 20 | revisado em 2 nov. 2026, deck inteiro, mantida a adaptação de set. 2026 |
-| 4 | 5 | Do prompt ao artefato | 42 | 0 | 20 | revisado em 2 nov. 2026, deck inteiro, mantida a adaptação de set. 2026 |
-| 5 | 6 | Dados na Administração | 32 | 0 | 11 | revisado em 2 nov. 2026, slides 6 a 32 (ver abaixo) |
-| 6 | 7 | Análise exploratória | 31 | 2 | 15 | revisado em 2 nov. 2026, deck inteiro (ver abaixo). Os dois sinais restantes são falsos positivos: "significativa" como termo estatístico e o separador ';' na saída do script |
-| 7 | 8 | Dados estruturados e consulta | 31 | 0 | 14 | revisado em 2 nov. 2026, deck inteiro |
-| 8 | 9 | Visualização e painéis | 31 | 0 | 13 | revisado em 2 nov. 2026, deck inteiro |
-| 9 | 10 | Automação | 31 | 0 | 13 | revisado em 2 nov. 2026, deck inteiro |
-| 10 | 11 | Pesquisa e análise qualitativa | 31 | 0 | 13 | revisado em 2 nov. 2026, deck inteiro |
-| 11 | 12 | Aprendizado de máquina | 29 | 0 | 11 | revisado em 2 nov. 2026, deck inteiro |
-| 12 | 13 | Governança, LGPD e cibersegurança | 29 | 0 | 11 | revisado em 2 nov. 2026, deck inteiro |
-| 13 | 14 | Decisão apoiada por IA | 28 | 0 | 10 | revisado em 2 nov. 2026, deck inteiro |
-| 14 | 15 | Produto digital e ágil | 27 | 0 | 10 | revisado em 2 nov. 2026, deck inteiro |
-| 15 | 16 | Projeto integrador | 26 | 0 | 12 | revisado em 2 nov. 2026, deck inteiro |
+| 1 | 2 | Transformação digital | 40 | 15 (falsos positivos: "Ensino fundamental" e ponto e vírgula dentro do CSV de exemplo) | 17 | revisado em 15 nov. 2026 pela regra de slide autossuficiente e pelo plano de atualização (workflow) |
+| 2 | 3 | Ambiente de trabalho digital | 51 | 0 | 21 | revisado em 15 nov. 2026 pela regra de slide autossuficiente e pelo plano de atualização (workflow) |
+| 3 | 4 | IA e engenharia de prompt | 44 | 0 | 20 | revisado em 15 nov. 2026 pela regra de slide autossuficiente e pelo plano de atualização (workflow) |
+| 4 | 5 | Do prompt ao artefato | 47 | 0 | 20 | revisado em 15 nov. 2026 pela regra de slide autossuficiente e pelo plano de atualização (workflow) |
+| 5 | 6 | Dados na Administração | 38 | 0 | 11 | revisado em 15 nov. 2026 pela regra de slide autossuficiente e pelo plano de atualização (workflow) |
+| 6 | 7 | Análise exploratória | 34 | 1 (ponto e vírgula em saída de script) | 15 | revisado em 15 nov. 2026 pela regra de slide autossuficiente e pelo plano de atualização (workflow) |
+| 7 | 8 | Dados estruturados e consulta | 35 | 0 | 14 | revisado em 15 nov. 2026 pela regra de slide autossuficiente e pelo plano de atualização (workflow) |
+| 8 | 9 | Visualização e painéis | 35 | 0 | 13 | revisado em 15 nov. 2026 pela regra de slide autossuficiente e pelo plano de atualização (workflow) |
+| 9 | 10 | Automação | 35 | 0 | 13 | revisado em 15 nov. 2026 pela regra de slide autossuficiente e pelo plano de atualização (workflow) |
+| 10 | 11 | Pesquisa e análise qualitativa | 35 | 0 | 13 | revisado em 15 nov. 2026 pela regra de slide autossuficiente e pelo plano de atualização (workflow) |
+| 11 | 12 | Aprendizado de máquina | 30 | 0 | 11 | revisado em 14 nov. 2026, pacote do plano de atualização |
+| 12 | 13 | Governança, LGPD e cibersegurança | 33 | 0 | 11 | revisado em 14 nov. 2026 pela regra de slide autossuficiente (workflow) |
+| 13 | 14 | Decisão apoiada por IA | 36 | 0 | 10 | revisado em 14 nov. 2026 pela regra de slide autossuficiente (workflow) |
+| 14 | 15 | Produto digital e ágil | 35 | 0 | 10 | revisado em 14 nov. 2026 pela regra de slide autossuficiente (workflow) |
+| 15 | 16 | Projeto integrador | 30 | 0 | 12 | revisado em 14 nov. 2026 pela regra de slide autossuficiente (workflow) |
 
-Todos os 15 decks foram revisados pelo padrão do guia em 2 nov. 2026. Próximas ações: resolver as pendências dos scripts listadas abaixo, reconferir antes de cada encontro as informações datadas (modelos gratuitos do OpenCode Zen, PL 2338/2023, regulamentação da ANPD) e abrir os decks no laboratório com a Segoe UI.
+Todos os 15 decks foram revisados pelo padrão do guia em 2 nov. 2026 e, de novo, pela regra de slide autossuficiente em 14 nov. (módulos 11 a 15) e em 15 nov. 2026 (módulos 1 a 10). Total atual: 558 slides. Próximas ações: resolver as pendências dos scripts listadas abaixo, reconferir antes de cada encontro as informações datadas (modelos gratuitos do OpenCode Zen, PL 2338/2023, regulamentação da ANPD) e abrir os decks no laboratório com a Segoe UI.
 
 Em 2 nov. 2026 os marcadores de tempo foram retirados de todos os decks (ver histórico). A contagem de slides acima já reflete o estado posterior.
 
 ## Histórico
+
+### 15 nov. 2026, módulos 1 a 10, coerência dos 15 módulos e glossário, por workflow
+
+Executado por um workflow de 31 agentes, com o mesmo desenho do de 14 nov. Um agente por módulo aplicou a regra de slide autossuficiente e os achados do plano de atualização, um revisor independente conferiu cada módulo e um agente corrigiu as falhas apontadas. Nove dos dez módulos reprovaram na primeira revisão, e o módulo 6 foi aprovado com observações. Depois, um agente conferiu a coerência entre os 15 módulos e os arquivos de raiz, e outro montou o glossário.
+
+Contagem de slides: módulo 1 de 36 para 40, módulo 2 de 46 para 51, módulo 3 sem mudança (44), módulo 4 de 42 para 47, módulo 5 de 32 para 38, módulo 6 de 31 para 34, módulos 7 a 10 de 31 para 35. Em todos, as práticas passaram a trazer o pedido ao agente, os passos, o resultado esperado e o que fazer se o resultado for outro, e cada termo é definido na primeira ocorrência.
+
+Mudanças de conteúdo de maior peso:
+- Módulo 1: slides novos de transformação digital em três fases (Verhoef et al., 2021) e de aprendizado de máquina, modelo de linguagem, IA generativa e assistente. Dados de plataformas trocados pela PNAD Contínua 2025 (IBGE, 4 set. 2026). Tema 1291 do STF atualizado. Tabela dos estudos de exposição com a métrica de cada um. Formulário em CSV preenchido à mão no módulo 1 e conferido pelo agente no módulo 2.
+- Módulo 2: o conferir do módulo 1 entrou na prática do ciclo 2.3, e a A1 passou a exigir o .csv do mapa.
+- Módulo 3: definições de modelo de linguagem e de token com fonte. O script 3 avisa "faltam casos" antes da lista de problemas.
+- Módulo 5: CNPJs do exemplo com dígitos verificadores válidos, salvo o caso inválido de propósito (conferido pelo cálculo).
+- Módulo 6: quartis pelo método do QUARTIL.INC do Excel, histograma em texto, três atípicos por coluna e log de três números.
+- Módulo 7: o juntar usa NOT EXISTS e conta chave vazia, o script lê ponto de milhar por coluna e grava identificador como texto.
+- Módulo 8: definições de painel e de HTML, razão de contraste da WCAG 2.2, b1 conferindo também o relatório contra o último commit.
+- Módulo 9: o gerar tolera linhas vazias e campos além do cabeçalho.
+- Módulo 10: uma regra única para trecho não encontrado nos slides 7 a 9. Referência ao TCU retirada por não ter sido conferida.
+
+Coerência: remissões entre módulos (255 citações), nomes de entrega contra os comandos a2, b1, b2, c1 e c2, definição de agente de IA unificada como "programa que usa um modelo de linguagem", "ordem de ataque" trocado por "ordem de prioridade" no módulo 8. README, índice, index.html e planejamento alinhados aos títulos e às contagens de slides. Errata da turma na versão de 15 nov. 2026, com o item 9 (o que muda ao rodar de novo os scripts 1 a 10).
+
+Glossário: `revisao/glossario-disciplina.md`, 279 termos com o equivalente em inglês, a definição e o módulo e slide onde aparecem, e uma seção com 20 definições que variam entre decks.
+
+Fora do workflow, no fechamento: o script 8 passou a ler o ponto de milhar por coluna na série do painel, pela regra do script 11 (testado com cinco formatos de CSV), e a errata foi ajustada. O script 13 manda pedir o c1 ao agente em vez de rodar `python`.
+
+Conferência final, refeita fora do workflow: auditoria com sinais só falsos positivos (módulos 1 e 6), conferir_slides.js sem estouro nos 15 decks, numeração de data-i e de página conferida nos 15 decks (capa e encerramento sem número, como antes), py_compile nos 15 scripts, teste da pasta de aluno fictícia com 11 de 11 verificações. Imagens abertas: módulo 1, slide 3, módulo 2, slide 30, módulo 5, slide 23, módulo 8, slide 17.
+
+Decisões que ficaram com o professor:
+- Módulo 2: a A1 agora exige o modulo1-mapa-de-tarefas.csv (cinco arquivos). Quem já entregou e rodar o conferir de novo sem o .csv verá FALTA. Manter ou voltar a quatro arquivos.
+- Módulo 2: nome com que o provedor aparece no opencode desktop do laboratório (OpenCode Zen, Console ou pay-as-you-go), para deixar um só no slide 29.
+- Módulo 6: três atípicos individuais por coluna e log de três números. O método novo de quartis muda as cercas, e o mesmo arquivo pode gerar formulário diferente do que a turma recebeu. Publicar a base de reserva citada na prática 6.3.
+- Módulo 8: o b1 aprova a entrega com a linha "Nome e matrícula" em branco e só imprime lembrete.
+- Módulo 9: o iniciar ainda grava três linhas vazias no CSV de variáveis, que o gerar tolera.
+- Módulo 10: conferir a lista inteira quando um trecho não é encontrado pode passar do tempo da prática em documento longo.
+- Módulo 1: conferir no portal do STF o andamento do RE 1.446.336 (Tema 1291) antes da próxima oferta.
+- Tempos dos roteiros 1 a 10 redistribuídos para os decks maiores. Conferir em aula.
+- Divisores dos módulos 2, 4 e 5 listam "Conceito" e "Conferência" além das quatro etapas de ciclo. Padronizar ou manter.
+- Não conferidos nas fontes nesta rodada: números dos estudos de exposição (módulo 1, slides 21 e 22), Rubin (1976) e Little e Rubin (1987) no módulo 6, ranking OSWorld-Verified no módulo 9.
 
 ### 14 nov. 2026, módulos 12 a 15 e errata da turma, por workflow
 

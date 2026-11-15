@@ -611,7 +611,7 @@ def cmd_conferir():
     print("  mapa-documento.md         cinco categorias com trecho de origem")
     print("  devolutiva.md             conclusao fundamentada, norma conferida, uso declarado")
     print()
-    print("Agora rode: python atividade_modulo13.py c1")
+    print("Agora peca ao agente: execute atividade_modulo13.py com o comando c1")
 
 
 ITENS_C1 = [

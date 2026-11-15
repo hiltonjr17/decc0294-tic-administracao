@@ -14,10 +14,14 @@ O QUE ESTE ARQUIVO E
 COMO USAR (peca ao agente, no opencode desktop)
 
     1) "execute o arquivo atividade_modulo2.py com o comando criar"
-       Cria as cinco pastas, o README.md, o AGENTS.md e o .gitignore.
+       Cria as quatro pastas (dados, prompts, saidas, entregas), o README.md,
+       o AGENTS.md e o .gitignore. Rode logo depois de instalar o opencode.
 
-    2) Preencha o README.md e o AGENTS.md, e mova para entregas/ os arquivos
-       do modulo 1.
+    2) Mova para entregas/ os arquivos do modulo 1 (tres fichas .md e o
+       formulario modulo1-mapa-de-tarefas.csv) e peca
+       "execute atividade_modulo1.py com o comando conferir", que grava o
+       mapa entregas/modulo1-mapa-de-tarefas.md. Preencha o README.md e o
+       AGENTS.md.
 
     3) "execute o arquivo atividade_modulo2.py com o comando conferir"
        Verifica tudo o que a entrega A1 exige e escreve o relatorio em
@@ -29,13 +33,16 @@ COMO USAR (peca ao agente, no opencode desktop)
 ONDE SALVAR ESTE ARQUIVO
     Na raiz da pasta do seu projeto, junto do README.md.
 
-Nao precisa instalar nada. Roda com o Python que ja vem com o ambiente.
+Nao precisa instalar nada alem do Python. O script le o repositorio direto
+dos arquivos da pasta .git, sem depender do programa git, e conta as versoes
+tambem num repositorio clonado em outra maquina.
 =============================================================================
 """
 
 import os
 import re
 import sys
+import zlib
 from datetime import datetime
 
 # Quando o script esta na pasta scripts/ do repositorio, as pastas de trabalho
@@ -154,7 +161,7 @@ venv/
 LEIAME_ENTREGAS = """# Pasta de entregas
 
 Aqui ficam os arquivos que valem nota. Um arquivo por atividade, com o nome
-que o roteiro do encontro indicar.
+que o slide de entrega do modulo indicar.
 
 Nomes esperados ate o modulo 2:
 
@@ -172,16 +179,22 @@ LEIAME_PROMPTS = """# Caderno de prompts
 Um arquivo por tecnica. Cada arquivo guarda a instrucao que funcionou, o que
 ela produziu e o que precisou de ajuste.
 
-Este caderno e cobrado na entrega final do semestre. Escrever aqui a cada
-encontro custa cinco minutos. Reconstruir no fim do semestre custa um dia.
+Registre cada tecnica no encontro em que foi usada. O caderno e cobrado na
+entrega final do semestre.
 """
 
 ESPERADOS_M1 = [
     "modulo1-ciclo1-verificacao.md",
     "modulo1-ciclo2-comparacao.md",
     "modulo1-ciclo3-tarefas.md",
+    "modulo1-mapa-de-tarefas.csv",
     "modulo1-mapa-de-tarefas.md",
 ]
+
+
+def exibir(caminho):
+    """Caminho com barra normal, igual em qualquer sistema."""
+    return caminho.replace(os.sep, "/")
 
 
 def titulo(txt):
@@ -209,10 +222,10 @@ def criar():
 
     for p in PASTAS:
         if os.path.isdir(p):
-            mantidos.append(p + os.sep)
+            mantidos.append(p + "/")
         else:
             os.makedirs(p, exist_ok=True)
-            criados.append(p + os.sep)
+            criados.append(p + "/")
 
     escrever("README.md", README, criados, mantidos)
     escrever("AGENTS.md", AGENTS, criados, mantidos)
@@ -226,23 +239,26 @@ def criar():
     if criados:
         print("CRIADO (%d):" % len(criados))
         for c in criados:
-            print("  + " + c)
+            print("  + " + exibir(c))
     if mantidos:
         print()
         print("JA EXISTIA, nada foi sobrescrito (%d):" % len(mantidos))
         for m in mantidos:
-            print("  = " + m)
+            print("  = " + exibir(m))
 
     print()
     print("PROXIMOS PASSOS, NESTA ORDEM")
     print()
-    print("  1. Abra README.md e substitua os PREENCHER pelo seu nome, matricula")
+    print("  1. Mova para entregas/ os arquivos modulo1-* que estao nesta pasta")
+    print("     (tres fichas .md e o formulario .csv). Depois peca ao agente:")
+    print('     "execute atividade_modulo1.py com o comando conferir"')
+    print("     e escreva as secoes 6 e 7 do mapa gerado.")
+    print()
+    print("  2. Abra README.md e substitua os PREENCHER pelo seu nome, matricula")
     print("     e pela organizacao ou base que voce vai usar no semestre.")
     print()
-    print("  2. Abra AGENTS.md e preencha as quatro secoes. Leia os comentarios:")
+    print("  3. Abra AGENTS.md e preencha as quatro secoes. Leia os comentarios:")
     print("     eles explicam o que entra em cada uma. Apague os comentarios depois.")
-    print()
-    print("  3. Mova para entregas/ os quatro arquivos do modulo 1.")
     print()
     print("  4. Instale o GitHub Desktop, adicione esta pasta e publique como")
     print("     repositorio PRIVADO.")
@@ -265,24 +281,197 @@ def secoes_agents(texto):
     return out
 
 
+def _ler_ref(git, nome):
+    """Devolve o hash (40 caracteres) de uma referencia, ou None."""
+    caminho = os.path.join(git, *nome.split("/"))
+    if os.path.isfile(caminho):
+        with open(caminho, encoding="utf-8", errors="replace") as f:
+            v = f.read().strip()
+        if v.startswith("ref:"):
+            return _ler_ref(git, v[4:].strip())
+        return v if re.fullmatch(r"[0-9a-f]{40}", v) else None
+    packed = os.path.join(git, "packed-refs")
+    if os.path.isfile(packed):
+        with open(packed, encoding="utf-8", errors="replace") as f:
+            for linha in f:
+                partes = linha.strip().split(" ")
+                if len(partes) == 2 and partes[1] == nome:
+                    return partes[0]
+    return None
+
+
+class _Objetos:
+    """Leitura de objetos do git, soltos ou em pacotes, sem o programa git."""
+
+    def __init__(self, git):
+        self.git = git
+        self.pacotes = []  # (caminho do .pack, dict hash -> deslocamento)
+        pasta = os.path.join(git, "objects", "pack")
+        if os.path.isdir(pasta):
+            for nome in sorted(os.listdir(pasta)):
+                if nome.endswith(".idx"):
+                    pack = os.path.join(pasta, nome[:-4] + ".pack")
+                    if os.path.isfile(pack):
+                        self.pacotes.append((pack, self._indice(os.path.join(pasta, nome))))
+
+    @staticmethod
+    def _indice(caminho):
+        with open(caminho, "rb") as f:
+            d = f.read()
+        if d[:4] != b"\xfftOc" or int.from_bytes(d[4:8], "big") != 2:
+            return {}
+        n = int.from_bytes(d[8 + 255 * 4:8 + 256 * 4], "big")
+        p_hash = 8 + 256 * 4
+        p_crc = p_hash + 20 * n
+        p_off = p_crc + 4 * n
+        p_grande = p_off + 4 * n
+        out = {}
+        for i in range(n):
+            h = d[p_hash + 20 * i:p_hash + 20 * i + 20].hex()
+            off = int.from_bytes(d[p_off + 4 * i:p_off + 4 * i + 4], "big")
+            if off & 0x80000000:
+                k = off & 0x7FFFFFFF
+                off = int.from_bytes(d[p_grande + 8 * k:p_grande + 8 * k + 8], "big")
+            out[h] = off
+        return out
+
+    def ler(self, h):
+        """Devolve (tipo, conteudo) do objeto, ou None se nao existir."""
+        solto = os.path.join(self.git, "objects", h[:2], h[2:])
+        if os.path.isfile(solto):
+            with open(solto, "rb") as f:
+                bruto = zlib.decompress(f.read())
+            cab, _, corpo = bruto.partition(b"\0")
+            return cab.split(b" ")[0].decode(), corpo
+        for pack, idx in self.pacotes:
+            if h in idx:
+                return self._do_pacote(pack, idx[h])
+        return None
+
+    def _do_pacote(self, pack, off):
+        nomes = {1: "commit", 2: "tree", 3: "blob", 4: "tag"}
+        with open(pack, "rb") as f:
+            f.seek(off)
+            c = f.read(1)[0]
+            tipo = (c >> 4) & 7
+            while c & 0x80:
+                c = f.read(1)[0]
+            base = None
+            if tipo == 6:  # delta sobre objeto anterior do mesmo pacote
+                c = f.read(1)[0]
+                rel = c & 0x7F
+                while c & 0x80:
+                    c = f.read(1)[0]
+                    rel = ((rel + 1) << 7) | (c & 0x7F)
+                base = self._do_pacote(pack, off - rel)
+            elif tipo == 7:  # delta sobre objeto indicado pelo hash
+                base = self.ler(f.read(20).hex())
+            dz = zlib.decompressobj()
+            dados = b""
+            while not dz.eof:
+                bloco = f.read(65536)
+                if not bloco:
+                    break
+                dados += dz.decompress(bloco)
+        if tipo in nomes:
+            return nomes[tipo], dados
+        if base is None:
+            return None
+        return base[0], self._aplicar_delta(base[1], dados)
+
+    @staticmethod
+    def _aplicar_delta(base, delta):
+        i = 0
+        for _ in range(2):  # tamanho da base e tamanho do resultado
+            while delta[i] & 0x80:
+                i += 1
+            i += 1
+        out = bytearray()
+        while i < len(delta):
+            op = delta[i]
+            i += 1
+            if op & 0x80:
+                ini = tam = 0
+                for k in range(4):
+                    if op & (1 << k):
+                        ini |= delta[i] << (8 * k)
+                        i += 1
+                for k in range(3):
+                    if op & (1 << (4 + k)):
+                        tam |= delta[i] << (8 * k)
+                        i += 1
+                out += base[ini:ini + (tam or 0x10000)]
+            else:
+                out += delta[i:i + op]
+                i += op
+        return bytes(out)
+
+
+def _contar_versoes(git, topo):
+    """Conta os commits alcancaveis a partir de topo, seguindo os pais.
+    Devolve (quantidade, primeira linha da mensagem do topo)."""
+    objs = _Objetos(git)
+    rasos = set()
+    raso = os.path.join(git, "shallow")
+    if os.path.isfile(raso):
+        with open(raso, encoding="utf-8", errors="replace") as f:
+            rasos = {l.strip() for l in f if l.strip()}
+    vistos, fila, mensagem = set(), [topo], None
+    while fila:
+        h = fila.pop()
+        if h in vistos:
+            continue
+        obj = objs.ler(h)
+        if obj is None or obj[0] != "commit":
+            continue
+        vistos.add(h)
+        cab, _, msg = obj[1].decode("utf-8", "replace").partition("\n\n")
+        if h == topo and msg.strip():
+            mensagem = msg.strip().splitlines()[0]
+        if h in rasos:
+            continue
+        for linha in cab.splitlines():
+            if linha.startswith("parent "):
+                fila.append(linha[7:].strip())
+    return len(vistos), mensagem
+
+
 def info_git():
-    """Le o estado do repositorio direto dos arquivos, sem depender do git."""
+    """Le o estado do repositorio direto dos arquivos, sem depender do git.
+
+    As versoes sao contadas seguindo os commits a partir do HEAD, nos objetos
+    soltos e nos pacotes. Assim a contagem tambem funciona num repositorio
+    clonado, em que o registro local (.git/logs/HEAD) comeca sem commits."""
     dados = {"repo": False, "commits": 0, "remoto": None, "ultima": None}
-    if not os.path.isdir(".git"):
+    git = ".git"
+    if not os.path.isdir(git):
         return dados
     dados["repo"] = True
 
-    logs = os.path.join(".git", "logs", "HEAD")
+    # registro local: reserva para o caso de a leitura dos objetos falhar
+    reflog = 0
+    logs = os.path.join(git, "logs", "HEAD")
     if os.path.exists(logs):
         with open(logs, encoding="utf-8", errors="replace") as f:
             linhas = [l for l in f.read().splitlines() if l.strip()]
         # cada linha do reflog termina com "<acao>: <mensagem>" depois de um TAB
         acoes = [l.split("\t", 1)[1].strip() for l in linhas if "\t" in l]
-        dados["commits"] = sum(1 for a in acoes if a.startswith("commit"))
+        reflog = sum(1 for a in acoes if a.startswith("commit"))
         if acoes:
             dados["ultima"] = acoes[-1]
 
-    cfg = os.path.join(".git", "config")
+    try:
+        topo = _ler_ref(git, "HEAD")
+        if topo:
+            n, msg = _contar_versoes(git, topo)
+            dados["commits"] = n
+            if msg:
+                dados["ultima"] = msg
+    except Exception:
+        dados["commits"] = 0
+    dados["commits"] = max(dados["commits"], reflog)
+
+    cfg = os.path.join(git, "config")
     if os.path.exists(cfg):
         with open(cfg, encoding="utf-8", errors="replace") as f:
             m = re.search(r'\[remote "origin"\][^\[]*?url\s*=\s*(\S+)', f.read(), re.DOTALL)
@@ -339,8 +528,10 @@ def conferir():
     itens.append((
         not faltam_m1,
         "Entregas do modulo 1 na pasta entregas/",
-        "Os quatro arquivos estao no lugar." if not faltam_m1
-        else "Faltam: " + ", ".join(faltam_m1)
+        "Os cinco arquivos estao no lugar." if not faltam_m1
+        else "Faltam: " + ", ".join(faltam_m1) + "."
+        + (" O mapa .md e gravado pelo comando conferir de atividade_modulo1.py."
+           if "modulo1-mapa-de-tarefas.md" in faltam_m1 else "")
     ))
 
     # 5. ficha do ciclo 2.1

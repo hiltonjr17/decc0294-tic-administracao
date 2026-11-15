@@ -28,7 +28,7 @@ A identidade visual segue o Manual de Identidade Visual UFMA 2024, na paleta cla
 
 ## Os scripts das atividades
 
-Rodam com a biblioteca padrão do Python, sem `pip install`, sem acesso à rede e sem modelo de linguagem. O aluno não digita comandos: o agente do opencode executa por ele.
+Rodam com a biblioteca padrão do Python, sem `pip install` e sem modelo de linguagem. Só o comando `apis` do módulo 4 acessa a rede, para consultar APIs públicas. O aluno não digita comandos: o agente do opencode executa por ele.
 
 Cada script recusa entrega incompleta e diz, item por item, o que falta. Executar qualquer um deles sem argumento imprime as instruções de uso.
 
@@ -43,13 +43,13 @@ No repositório, os scripts ficam em `scripts/` e gravam nas pastas de trabalho 
 | `atividade_modulo5.py` | iniciar, conferir, a2 |
 | `atividade_modulo6.py` | perfil, atipicos, log, conferir |
 | `atividade_modulo7.py` | banco, esquema, sql, juntar, registrar, conferir |
-| `atividade_modulo8.py` | iniciar, painel, conferir, b1 |
+| `atividade_modulo8.py` | iniciar, painel, atualizar, conferir, b1 |
 | `atividade_modulo9.py` | iniciar, gerar, conferir |
-| `atividade_modulo10.py` | fontes, codificar, concordancia, conferir, b2 |
+| `atividade_modulo10.py` | fontes, codificar, concordancia, conferir, conferir fontes, b2 |
 | `atividade_modulo11.py` | iniciar, prever, conferir |
 | `atividade_modulo12.py` | varrer, inventario, incidente, conferir |
-| `atividade_modulo13.py` | matriz, avaliar, devolutiva, conferir, c1 |
-| `atividade_modulo14.py` | produto, backlog, priorizar, teste, conferir |
+| `atividade_modulo13.py` | reserva, matriz, avaliar, devolutiva, conferir, c1 |
+| `atividade_modulo14.py` | produto, backlog, priorizar, partida, teste, conferir |
 | `atividade_modulo15.py` | c2, apresentacao, pares, portfolio |
 
 ## Os módulos
@@ -60,8 +60,8 @@ A coluna Slides abre o deck já renderizado no navegador, via GitHub Pages. A co
 |---|---|---|---|---|---|
 | 1 | 2 | Transformação digital e o trabalho do administrador | [Slides](https://tadeugomes.github.io/decc0294-tic-administracao/slides/modulo1-transformacao-digital.html) | [Script](scripts/atividade_modulo1.py) | |
 | 2 | 3 | Ambiente de trabalho digital | [Slides](https://tadeugomes.github.io/decc0294-tic-administracao/slides/modulo2-ambiente-de-trabalho-digital.html) | [Script](scripts/atividade_modulo2.py) | A1 |
-| 3 | 4 | IA, modelos de linguagem e engenharia de prompt | [Slides](https://tadeugomes.github.io/decc0294-tic-administracao/slides/modulo3-ia-e-engenharia-de-prompt.html) | [Script](scripts/atividade_modulo3.py) | |
-| 4 | 5 | Do prompt ao artefato | [Slides](https://tadeugomes.github.io/decc0294-tic-administracao/slides/modulo4-do-prompt-ao-artefato.html) | [Script](scripts/atividade_modulo4.py) | |
+| 3 | 4 | Inteligência artificial, modelos de linguagem e engenharia de prompt | [Slides](https://tadeugomes.github.io/decc0294-tic-administracao/slides/modulo3-ia-e-engenharia-de-prompt.html) | [Script](scripts/atividade_modulo3.py) | |
+| 4 | 5 | Do prompt ao artefato: arquivos, agentes e configuração | [Slides](https://tadeugomes.github.io/decc0294-tic-administracao/slides/modulo4-do-prompt-ao-artefato.html) | [Script](scripts/atividade_modulo4.py) | |
 | 5 | 6 | Dados na Administração | [Slides](https://tadeugomes.github.io/decc0294-tic-administracao/slides/modulo5-dados-na-administracao.html) | [Script](scripts/atividade_modulo5.py) | A2 |
 | 6 | 7 | Análise exploratória de dados | [Slides](https://tadeugomes.github.io/decc0294-tic-administracao/slides/modulo6-analise-exploratoria.html) | [Script](scripts/atividade_modulo6.py) | |
 | 7 | 8 | Dados estruturados e consulta | [Slides](https://tadeugomes.github.io/decc0294-tic-administracao/slides/modulo7-dados-estruturados-e-consulta.html) | [Script](scripts/atividade_modulo7.py) | |

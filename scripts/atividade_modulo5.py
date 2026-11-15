@@ -30,9 +30,14 @@ COMO USAR (peca ao agente, no opencode desktop)
     Sem nenhum comando, o script imprime estas instrucoes.
 
 A REGRA QUE O SCRIPT APLICA
-    Quatro fontes no minimo, e ao menos uma externa. Linha sem data de
-    extracao e sem responsavel e recusada: sao esses dois campos que tornam
-    a analise refazivel.
+    Quatro fontes no minimo, e ao menos uma externa. Linha com data de
+    extracao, completude ou responsavel em branco e recusada: sao esses
+    campos que tornam a analise refazivel.
+
+    Fonte que voce nao extraiu nem mediu recebe NAO MEDIDO em
+    data_da_extracao e em completude_percentual. Responsavel desconhecido
+    recebe NAO INFORMADO. Pelo menos uma fonte precisa ter data e
+    completude medidas. Acentos e maiusculas sao ignorados na leitura.
 
 Nao precisa instalar nada. Roda com o Python que ja vem com o ambiente.
 =============================================================================
@@ -42,6 +47,7 @@ import csv
 import os
 import re
 import sys
+import unicodedata
 from datetime import date, datetime
 
 # Quando o script esta na pasta scripts/ do repositorio, as pastas de trabalho
@@ -75,6 +81,14 @@ ORIGENS = {"transacional", "cadastro", "externo"}
 FORMAS = {"estruturado", "semiestruturado", "nao estruturado"}
 OBTENCOES = {"exportacao manual", "arquivo periodico", "api"}
 NAO_SEI = "nao informado"
+NAO_MEDIDO = "nao medido"
+
+
+def norm(texto):
+    """Minusculas, sem acento e com espacos simples, para comparar respostas."""
+    t = unicodedata.normalize("NFKD", (texto or "").strip().lower())
+    t = "".join(c for c in t if not unicodedata.combining(c))
+    return " ".join(t.split())
 
 EXEMPLO = [
     "Sistema de protocolo da autarquia",
@@ -131,9 +145,11 @@ def iniciar():
     print()
     print("  data_da_extracao           dd/mm/aaaa. Quando voce pegou este dado.")
     print("                             Obrigatorio: sem ele ninguem refaz a analise.")
+    print("                             Fonte que voce nao extraiu: NAO MEDIDO.")
     print()
     print("  completude_percentual      Percentual de preenchimento medido no ciclo 5.3.")
     print("                             Numero de 0 a 100, sem o sinal.")
+    print("                             Fonte que voce nao mediu: NAO MEDIDO.")
     print()
     print("  principal_inconsistencia   O defeito mais relevante que voce encontrou.")
     print("                             Se nao encontrou nenhum, escreva 'nenhuma'.")
@@ -145,6 +161,7 @@ def iniciar():
     print("                             Se voce nao sabe, escreva NAO INFORMADO.")
     print()
     print("Sao necessarias %d fontes, e pelo menos uma precisa ser externa." % MINIMO)
+    print("Pelo menos uma fonte precisa ter data e completude medidas.")
     print("A primeira linha vem preenchida como exemplo. Apague-a ou substitua-a.")
     print()
     print("Quando terminar:")
@@ -172,16 +189,16 @@ def conferir():
             avisos.append("linha %d: a linha de exemplo continua no arquivo" % i)
             continue
 
-        origem = (l.get("origem") or "").strip().lower()
+        origem = norm(l.get("origem"))
         if origem not in ORIGENS:
             erros.append("linha %d: origem deveria ser transacional, cadastro ou externo" % i)
 
-        forma = (l.get("forma") or "").strip().lower()
+        forma = norm(l.get("forma"))
         if forma not in FORMAS:
             erros.append("linha %d: forma deveria ser estruturado, semiestruturado ou "
                          "nao estruturado" % i)
 
-        obtencao = (l.get("como_e_obtida") or "").strip().lower()
+        obtencao = norm(l.get("como_e_obtida"))
         if obtencao not in OBTENCOES:
             erros.append("linha %d: como_e_obtida deveria ser exportacao manual, "
                          "arquivo periodico ou api" % i)
@@ -192,23 +209,36 @@ def conferir():
                          "Diga o que cada linha da base representa." % i)
 
         data = (l.get("data_da_extracao") or "").strip()
-        if not re.match(r"^\d{2}/\d{2}/\d{4}$", data):
-            erros.append("linha %d: data_da_extracao precisa estar em dd/mm/aaaa" % i)
+        data_medida = False
+        if norm(data) == NAO_MEDIDO:
+            data = "NAO MEDIDO"
+        elif not re.match(r"^\d{2}/\d{2}/\d{4}$", data):
+            erros.append("linha %d: data_da_extracao precisa estar em dd/mm/aaaa, "
+                         "ou NAO MEDIDO se voce nao extraiu esta fonte" % i)
         else:
             try:
                 datetime.strptime(data, "%d/%m/%Y")
+                data_medida = True
             except ValueError:
                 erros.append("linha %d: data_da_extracao nao e uma data valida" % i)
 
-        bruto = (l.get("completude_percentual") or "").strip().replace(",", ".").replace("%", "")
-        try:
-            completude = float(bruto)
-            if not (0 <= completude <= 100):
-                erros.append("linha %d: completude_percentual deveria estar entre 0 e 100" % i)
+        bruto = (l.get("completude_percentual") or "").strip()
+        completude = None
+        completude_medida = False
+        if norm(bruto) != NAO_MEDIDO:
+            numero_txt = bruto.replace(",", ".").replace("%", "").strip()
+            try:
+                completude = float(numero_txt)
+                if 0 <= completude <= 100:
+                    completude_medida = True
+                else:
+                    erros.append("linha %d: completude_percentual deveria estar entre 0 e 100"
+                                 % i)
+                    completude = None
+            except ValueError:
+                erros.append("linha %d: completude_percentual deveria ser um numero de 0 a "
+                             "100, ou NAO MEDIDO se voce nao mediu esta fonte" % i)
                 completude = None
-        except ValueError:
-            erros.append("linha %d: completude_percentual deveria ser um numero de 0 a 100" % i)
-            completude = None
 
         inconsistencia = (l.get("principal_inconsistencia") or "").strip()
         if not inconsistencia:
@@ -232,11 +262,21 @@ def conferir():
             "nome": nome, "origem": origem, "forma": forma, "registra": registra,
             "obtencao": obtencao, "data": data, "completude": completude,
             "inconsistencia": inconsistencia, "dono": dono, "custodiante": custodiante,
+            "medida": data_medida and completude_medida,
         })
 
     externas = [f for f in fontes if f["origem"] == "externo"]
+    medidas = [f for f in fontes if f["medida"]]
     lacunas = sum(1 for f in fontes
-                  if f["dono"].lower() == NAO_SEI or f["custodiante"].lower() == NAO_SEI)
+                  if norm(f["dono"]) == NAO_SEI or norm(f["custodiante"]) == NAO_SEI)
+
+    if len(fontes) < MINIMO:
+        erros.append("faltam fontes: sao %d de %d" % (len(fontes), MINIMO))
+    if not externas:
+        erros.append("nenhuma fonte externa. O cruzamento do ciclo 5.2 precisa entrar no mapa.")
+    if fontes and not medidas:
+        erros.append("nenhuma fonte tem data de extracao e completude medidas. A base "
+                     "diagnosticada no ciclo 5.3 precisa entrar no mapa com os dois numeros.")
 
     print()
     if erros:
@@ -255,12 +295,8 @@ def conferir():
     print()
     print("Fontes mapeadas: %d (minimo %d)." % (len(fontes), MINIMO))
     print("Fontes externas: %d (minimo 1)." % len(externas))
+    print("Fontes com data e completude medidas: %d (minimo 1)." % len(medidas))
     print("Responsaveis ainda desconhecidos: %d." % lacunas)
-
-    if len(fontes) < MINIMO:
-        erros.append("faltam fontes: sao %d de %d" % (len(fontes), MINIMO))
-    if not externas:
-        erros.append("nenhuma fonte externa. O cruzamento do ciclo 5.2 precisa entrar no mapa.")
 
     if erros:
         print()
@@ -293,9 +329,11 @@ def gerar_mapa(fontes, avisos, lacunas):
     L.append("| Fonte | Origem | Forma | Obtencao | Extracao | Completude | Dono |")
     L.append("|---|---|---|---|---|---|---|")
     for f in fontes:
-        L.append("| %s | %s | %s | %s | %s | %s%% | %s |"
+        L.append("| %s | %s | %s | %s | %s | %s | %s |"
                  % (f["nome"], f["origem"], f["forma"], f["obtencao"], f["data"],
-                    ("%.0f" % f["completude"]) if f["completude"] is not None else "-",
+                    (("%.1f" % f["completude"]).rstrip("0").rstrip(".").replace(".", ",")
+                     + "%") if f["completude"] is not None
+                    else "NAO MEDIDO",
                     f["dono"]))
     L.append("")
     L.append("## Detalhe por fonte")
@@ -315,6 +353,19 @@ def gerar_mapa(fontes, avisos, lacunas):
         L.append("")
         L.append("Em %d fonte(s) o dono ou o custodiante ainda e desconhecido." % lacunas)
         L.append("ESCREVA AQUI a quem voce perguntaria para preencher cada uma:")
+        L.append("")
+        L.append("- ")
+        L.append("")
+    nao_medidas = [f["nome"] for f in fontes if not f["medida"]]
+    if nao_medidas:
+        L.append("## Fontes ainda nao medidas")
+        L.append("")
+        L.append("Fontes com data de extracao ou completude registradas como NAO MEDIDO:")
+        L.append("")
+        for n in nao_medidas:
+            L.append("- %s" % n)
+        L.append("")
+        L.append("ESCREVA AQUI o que falta para extrair e medir cada uma:")
         L.append("")
         L.append("- ")
         L.append("")
