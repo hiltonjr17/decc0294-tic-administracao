@@ -159,7 +159,7 @@ Situação informada pelo professor em 14 nov. 2026: o próximo encontro está e
 | 6 | Módulo 15 (feito em 14 nov. 2026, ver `REGISTRO.md`) | Rubrica da C2 com pontos. Escala de avaliadores. Caderno de prompts no portfólio. Formato das apresentações pelo tamanho da turma. Caixa datada do slide 19 |
 | 7 | Errata dos módulos 1 a 10 (feito em 14 nov. 2026, ver `REGISTRO.md`) | Uma página para a turma, só com o que afeta entrega futura: nomes de arquivo que o `c2` aceita e leitura de "12.480" pelo script do módulo 6 para quem reutilizar a base no módulo 11 |
 
-Em 15 nov. 2026, a pedido do professor, as fases 2 e 3 (módulos 1 a 10) e o glossário único (`revisao/glossario-disciplina.md`) também foram feitos, com README, índice, index.html, planejamento e errata alinhados (ver `REGISTRO.md`). Ficam para a próxima oferta a verificação automática de termos no `auditar_texto.py`, a bibliografia e o programa (fase 5).
+Em 15 nov. 2026, a pedido do professor, as fases 2 e 3 (módulos 1 a 10) e o glossário único (`revisao/glossario-disciplina.md`) também foram feitos, com README, índice, index.html, planejamento e errata alinhados (ver `REGISTRO.md`). Em 16 nov. 2026, a bibliografia e o programa também foram atualizados (fase 5, itens 3 e 4). Fica para a próxima oferta a verificação automática de termos no `auditar_texto.py`.
 
 ### Fase 0. Antes dos próximos encontros (correção de defeito, sem mudança de desenho)
 
@@ -219,8 +219,8 @@ Os slides não trazem marcação de tempo. Os tempos da apresentação do módul
 
 1. Rubrica com níveis e pontos para as seis entregas, publicada no encontro 1.
 2. Reequilibrar a C2: peso maior para o caminho documentado e a conferência, menor para o produto funcionando.
-3. Bibliografia: conferir a tradução da 5ª edição de Sharda, a edição de 2019 de Sutherland e uma obra introdutória em português posterior a 2023 para substituir Taulli. Incluir as normas e os guias gratuitos citados nos decks.
-4. Alinhar `planejamento-disciplina-v2.md` e `programa-decc0294-2026-2.docx` aos decks (ciclos previstos e ausentes).
+3. (Feito em 16 nov. 2026.) Bibliografia: conferir a tradução da 5ª edição de Sharda, a edição de 2019 de Sutherland e uma obra introdutória em português posterior a 2023 para substituir Taulli. Incluir as normas e os guias gratuitos citados nos decks.
+4. (Feito em 16 nov. 2026.) Alinhar `planejamento-disciplina-v2.md` e `programa-decc0294-2026-2.docx` aos decks (ciclos previstos e ausentes).
 5. Fechar as pendências do planejamento: tamanho da turma, restauração das máquinas e prova final.
 
 ## 4. Decisões que dependem do professor

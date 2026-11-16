@@ -128,25 +128,35 @@ Instabilidade. Provedor gratuito muda de modelo e de limite sem aviso. Os roteir
 
 Laudon sai. A edição brasileira é de 2014 e o eixo da disciplina passou para tecnologias que o livro não cobre.
 
+Atualizada em 16 nov. 2026, com cada referência conferida no catálogo da editora ou na fonte oficial. A lista completa, com as normas e os documentos oficiais citados nos slides, está na seção 10 do `programa-decc0294-2026-2.docx`.
+
 Básica:
 
-TAULLI, Tom. Introdução à inteligência artificial: uma abordagem não técnica. São Paulo: Novatec, 2020.
+MOLLICK, Ethan. Cointeligência: a vida e o trabalho com IA. Tradução de Roberta Clapp. [Rio de Janeiro]: Intrínseca, 2025.
 
-SHARDA, Ramesh; DELEN, Dursun; TURBAN, Efraim. Business intelligence e análise de dados para gestão do negócio. 4. ed. Porto Alegre: Bookman, 2019.
+SHARDA, Ramesh; DELEN, Dursun; TURBAN, Efraim. Business intelligence e análise de dados para gestão do negócio. 4. ed. Tradução de Ronald Saraiva de Menezes. Porto Alegre: Bookman, 2019.
 
-SCHWAB, Klaus. A quarta revolução industrial. São Paulo: Edipro, 2016.
+SCHWAB, Klaus. A quarta revolução industrial. Tradução de Daniel Moreira Miranda. São Paulo: Edipro, 2016.
 
 Complementar:
 
-DELEN, Dursun; SHARDA, Ramesh; TURBAN, Efraim. Analytics, data science, and artificial intelligence: systems for decision support. 11. ed. Harlow: Pearson, 2020.
+KNAFLIC, Cole Nussbaumer. Storytelling com dados: um guia sobre visualização de dados para profissionais de negócios. 2. ed. Tradução de João Tortello. Rio de Janeiro: Alta Books, 2019.
 
-SUTHERLAND, Jeff. Scrum: a arte de fazer o dobro do trabalho na metade do tempo. Rio de Janeiro: Leya, 2014.
+SCHWAB, Klaus; DAVIS, Nicholas. Aplicando a quarta revolução industrial. Tradução de Daniel Moreira Miranda. [São Paulo]: Edipro, 2018.
 
-BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais.
+SHARDA, Ramesh; DELEN, Dursun; TURBAN, Efraim. Business intelligence, analytics, data science, and AI. 5th ed. [Hoboken]: Pearson, 2024. Reúne o livro de BI e o antigo Analytics, data science, and artificial intelligence (11. ed., 2020).
 
-Documentação técnica de apoio, para os módulos 2 a 9: documentação do opencode, guias de prompting da Anthropic e da OpenAI, guia do GitHub Desktop.
+SUTHERLAND, Jeff; SUTHERLAND, J. J. Scrum: a arte de fazer o dobro do trabalho na metade do tempo. Tradução de Nina Lua. [Rio de Janeiro]: Sextante, 2019. A edição da Leya (2014) saiu de catálogo.
 
-Correspondência com os módulos: Taulli caps. 1, 3 e 4 nos módulos 3 e 11, cap. 2 no módulo 5, cap. 5 no módulo 9, cap. 8 nos módulos 13 e 14. Sharda, Delen e Turban cap. 1 no módulo 11, cap. 3 nos módulos 6 e 8, caps. 4 a 6 no módulo 11, cap. 9 no módulo 5. Schwab no módulo 1.
+TAULLI, Tom. Introdução à inteligência artificial: uma abordagem não técnica. São Paulo: Novatec, 2020. Passou para a complementar porque é anterior aos modelos de linguagem atuais. O nome da tradutora não foi confirmado e saiu da referência.
+
+VERHOEF, Peter C. et al. Digital transformation: a multidisciplinary reflection and research agenda. Journal of Business Research, v. 122, p. 889-901, 2021. Acesso aberto.
+
+Normas e documentos oficiais: Decreto-Lei 4.657/1942 (LINDB), Lei 9.784/1999, Lei 13.709/2018 (LGPD), Lei 14.133/2021, manual Licitações & contratos do TCU (5. ed., 2023), NIST AI 600-1 (2024), OWASP Top 10 for LLM Applications 2025, Guia do Scrum (2020) e WCAG 2.2 (2023).
+
+Documentação técnica de apoio, para os módulos 2 a 9: documentação do opencode, guias de prompting dos provedores, guia do GitHub Desktop e o glossário da disciplina (`revisao/glossario-disciplina.md`).
+
+Correspondência com os módulos: Taulli caps. 1, 3 e 4 nos módulos 3 e 11, cap. 2 no módulo 5, cap. 5 no módulo 9, cap. 8 nos módulos 13 e 14. Sharda, Delen e Turban cap. 1 no módulo 11, cap. 3 nos módulos 6 e 8, caps. 4 a 6 no módulo 11, cap. 9 no módulo 5. Schwab e Verhoef et al. no módulo 1. Knaflic no módulo 8. Sutherland e o Guia do Scrum no módulo 14. Mollick ainda não tem capítulos associados aos módulos: a correspondência depende da leitura do livro pelo professor.
 
 ## 8. Ordem de produção
 

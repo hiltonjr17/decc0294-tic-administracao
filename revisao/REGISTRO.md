@@ -30,6 +30,36 @@ Em 2 nov. 2026 os marcadores de tempo foram retirados de todos os decks (ver his
 
 ## Histórico
 
+### 16 nov. 2026, programa e bibliografia
+
+Programa (`programa-decc0294-2026-2.docx`) editado no XML, mantendo o leiaute UFMA:
+- Seção 4: as três unidades descrevem o conteúdo dos decks revisados (regressão linear, injeção de instrução, matriz de decisão, Scrum e outros).
+- Seção 5: dois parágrafos novos, sobre os slides autossuficientes com glossário e sobre os scripts de conferência executados pelo agente. "Resultado esperado descrito no roteiro" passou a "no slide".
+- Seção 6: Python 3 nas máquinas do laboratório.
+- Seção 7: o objeto de cada entrega segue os slides de entrega e os comandos a2, b1, b2, c1 e c2. A nota de cada bloco é a média ponderada, e há menção à rubrica de dez pontos da C1 e da C2.
+- Seção 8: a coluna Conteúdo traz os títulos dos ciclos de cada deck, e o módulo 13 tem o título completo.
+- Seção 10: a bibliografia foi reorganizada em básica, complementar, normas e documentos oficiais e documentação técnica.
+
+Bibliografia, conferida por um agente no catálogo das editoras e nas fontes oficiais em 16 nov. 2026:
+- Mollick, Cointeligência (Intrínseca, 2025), substitui Taulli na básica. Taulli passou para a complementar, sem o nome da tradutora, que não foi confirmado.
+- Knaflic passou à 2. ed. de 2019.
+- Schwab e Davis passou a 2018.
+- Sutherland passou à edição da Sextante (2019), com J. J. Sutherland como coautor.
+- O livro de 2020 de Delen, Sharda e Turban foi trocado pela 5. ed. de 2024, que funde as duas obras.
+- Verhoef et al. (2021) entrou na complementar.
+- As normas e os guias citados nos slides entraram com link e data de acesso: LINDB, Lei 9.784/1999, LGPD, Lei 14.133/2021, manual do TCU, NIST AI 600-1, OWASP, Guia do Scrum e WCAG 2.2.
+- Cidades entre colchetes, como manda a NBR 6023, quando não aparecem na fonte consultada.
+- `planejamento-disciplina-v2.md`, seção 7, alinhado.
+
+O documento passou no validador de .docx e foi conferido em PDF exportado pelo Word (9 páginas).
+
+Decisões que ficaram com o professor:
+- Mollick na básica no lugar de Taulli. Associar capítulos aos módulos depende da leitura do livro.
+- Conferir na biblioteca da UFMA quais títulos têm exemplares, porque a bibliografia básica costuma exigir acervo.
+- A frase sobre a rubrica de dez pontos da C1 e da C2 depende da validação das rubricas.
+- Conferir na ficha catalográfica: "4. ed." e tradutor de Sharda (vindos de catálogo de biblioteca e resenha) e as cidades entre colchetes.
+- Inserir a data e assinar o programa antes de lançar no SIGAA.
+
 ### 15 nov. 2026, módulos 1 a 10, coerência dos 15 módulos e glossário, por workflow
 
 Executado por um workflow de 31 agentes, com o mesmo desenho do de 14 nov. Um agente por módulo aplicou a regra de slide autossuficiente e os achados do plano de atualização, um revisor independente conferiu cada módulo e um agente corrigiu as falhas apontadas. Nove dos dez módulos reprovaram na primeira revisão, e o módulo 6 foi aprovado com observações. Depois, um agente conferiu a coerência entre os 15 módulos e os arquivos de raiz, e outro montou o glossário.
