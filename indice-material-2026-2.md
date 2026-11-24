@@ -5,7 +5,7 @@ UFMA, Curso de Administração. Turma T01.
 
 Quinze módulos para os encontros 2 a 16. O encontro 1 é a apresentação da disciplina, já dada.
 
-Cada módulo tem três arquivos: o deck em HTML (abre no navegador, sem instalar nada), o script autoinstrucional das atividades (Python, biblioteca padrão apenas) e o roteiro do professor.
+Cada módulo tem três arquivos: o deck em HTML na pasta `slides/` (abre no navegador, sem instalar nada), o script autoinstrucional das atividades na pasta `scripts/` (Python, biblioteca padrão apenas) e o roteiro do professor na pasta `roteiros/`.
 
 ## Os quinze módulos
 
@@ -13,8 +13,8 @@ Cada módulo tem três arquivos: o deck em HTML (abre no navegador, sem instalar
 |---|---|---|---|
 | 1 | 2 | Transformação digital e o trabalho do administrador | |
 | 2 | 3 | Ambiente de trabalho digital | A1, 40% da nota 1 |
-| 3 | 4 | IA, modelos de linguagem e engenharia de prompt | |
-| 4 | 5 | Do prompt ao artefato | |
+| 3 | 4 | Inteligência artificial, modelos de linguagem e engenharia de prompt | |
+| 4 | 5 | Do prompt ao artefato: arquivos, agentes e configuração | |
 | 5 | 6 | Dados na Administração | A2, 60% da nota 1 |
 | 6 | 7 | Análise exploratória de dados | |
 | 7 | 8 | Dados estruturados e consulta | |
@@ -29,7 +29,7 @@ Cada módulo tem três arquivos: o deck em HTML (abre no navegador, sem instalar
 
 ## Os scripts das atividades
 
-Todos rodam com o Python instalado, sem `pip install`, sem rede e sem modelo de linguagem. O aluno não digita comando: o agente do opencode executa. Todos recusam entrega incompleta e dizem o que falta, item por item.
+Todos rodam com o Python instalado, sem `pip install` e sem modelo de linguagem. Só o comando `apis` do módulo 4 acessa a rede, para consultar APIs públicas. O aluno não digita comando: o agente do opencode executa. Todos recusam entrega incompleta e dizem o que falta, item por item.
 
 | Script | Comandos |
 |---|---|
@@ -40,13 +40,13 @@ Todos rodam com o Python instalado, sem `pip install`, sem rede e sem modelo de 
 | `atividade_modulo5.py` | iniciar, conferir, a2 |
 | `atividade_modulo6.py` | perfil, atipicos, log, conferir |
 | `atividade_modulo7.py` | banco, esquema, sql, juntar, registrar, conferir |
-| `atividade_modulo8.py` | iniciar, painel, conferir, b1 |
+| `atividade_modulo8.py` | iniciar, painel, atualizar, conferir, b1 |
 | `atividade_modulo9.py` | iniciar, gerar, conferir |
-| `atividade_modulo10.py` | fontes, codificar, concordancia, conferir, b2 |
+| `atividade_modulo10.py` | fontes, codificar, concordancia, conferir, conferir fontes, b2 |
 | `atividade_modulo11.py` | iniciar, prever, conferir |
 | `atividade_modulo12.py` | varrer, inventario, incidente, conferir |
-| `atividade_modulo13.py` | matriz, avaliar, devolutiva, conferir, c1 |
-| `atividade_modulo14.py` | produto, backlog, priorizar, teste, conferir |
+| `atividade_modulo13.py` | reserva, matriz, avaliar, devolutiva, conferir, c1 |
+| `atividade_modulo14.py` | produto, backlog, priorizar, partida, teste, conferir |
 | `atividade_modulo15.py` | c2, apresentacao, pares, portfolio |
 
 Rodar qualquer um deles sem argumento imprime as instruções de uso.
@@ -65,13 +65,13 @@ HTML de arquivo único, abrem com duplo clique no navegador. Setas ou clique ava
 
 Paleta clara da identidade visual da UFMA: fundo branco, barra e títulos em vinho, filete dourado no rodapé. Capas, divisores e slides de encerramento em vinho sólido.
 
-Para editar um deck, altere o `build_moduloN.js` correspondente e rode `node build_moduloN.js`. O gerador é o `tema_ufma.js`.
+Os geradores `build_moduloN.js` e `tema_ufma.js` não estão nesta pasta. Enquanto não forem recuperados, os decks são editados direto no HTML, conforme `revisao/GUIA-DE-REVISAO.md`.
 
 ## O que ainda depende de você
 
 Bases de reserva para os encontros 7, 11, 12 e 14, para os alunos que chegarem sem material próprio. Cada roteiro diz qual base o encontro precisa.
 
-O endereço das oito fontes públicas usadas no módulo 4 veio da documentação oficial de cada uma, mas nenhuma chamada pôde ser executada durante a produção do material. Rode `python atividade_modulo4.py apis testar` na máquina do laboratório antes do encontro 5.
+O endereço das oito fontes públicas usadas no módulo 4 veio da documentação oficial de cada uma. Em 15/11/2026, `python scripts/atividade_modulo4.py apis testar` obteve resposta das oito. Repita o teste na máquina do laboratório antes do encontro 5, porque endereço e limite de uso das APIs mudam sem aviso.
 
 A carga horária no programa foi preenchida como 60 h e a unidade como Centro de Ciências Sociais, Curso de Administração. Confirme no SIGAA e corrija o `.docx` se divergir.
 

@@ -103,8 +103,8 @@ const REPO = 'https://github.com/tadeugomes/decc0294-tic-administracao/blob/main
 const M = [
  [1,2,'Transformação digital e o trabalho do administrador','modulo1-transformacao-digital',''],
  [2,3,'Ambiente de trabalho digital','modulo2-ambiente-de-trabalho-digital','A1'],
- [3,4,'IA, modelos de linguagem e engenharia de prompt','modulo3-ia-e-engenharia-de-prompt',''],
- [4,5,'Do prompt ao artefato','modulo4-do-prompt-ao-artefato',''],
+ [3,4,'Inteligência artificial, modelos de linguagem e engenharia de prompt','modulo3-ia-e-engenharia-de-prompt',''],
+ [4,5,'Do prompt ao artefato: arquivos, agentes e configuração','modulo4-do-prompt-ao-artefato',''],
  [5,6,'Dados na Administração','modulo5-dados-na-administracao','A2'],
  [6,7,'Análise exploratória de dados','modulo6-analise-exploratoria',''],
  [7,8,'Dados estruturados e consulta','modulo7-dados-estruturados-e-consulta',''],
@@ -125,9 +125,9 @@ document.getElementById('grade').innerHTML = M.map(function(m,i){
     + '<h3>'+titulo+'</h3>'
     + (ent ? '<span class="ent">Entrega '+ent+'</span>' : '')
     + '<div class="links">'
-    + '<a href="'+arq+'.html">Slides</a>'
-    + '<a href="'+REPO+'roteiro-modulo'+n+'.md">Roteiro</a>'
-    + '<a href="'+REPO+'atividade_modulo'+n+'.py">Script</a>'
+    + '<a href="slides/'+arq+'.html">Slides</a>'
+    + '<a href="'+REPO+'roteiros/roteiro-modulo'+n+'.md">Roteiro</a>'
+    + '<a href="'+REPO+'scripts/atividade_modulo'+n+'.py">Script</a>'
     + '</div></article>';
 }).join('');
 </script>

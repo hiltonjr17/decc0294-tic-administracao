@@ -22,24 +22,26 @@ Um problema herdado precisa de correção: o projeto integrador fecha o módulo 
 
 ## 3. Os quinze módulos
 
-| Enc. | Módulo | Origem | Ciclos |
-|---|---|---|---|
-| 1 | Abertura da disciplina | Realizado | Programa, avaliação, diagnóstico da turma |
-| 2 | 1. Transformação digital e o trabalho do administrador | Refazer a partir de 1.Transformação digital.pptx | Quarta revolução industrial · Sociedade informacional e a empresa brasileira · Automação do trabalho: quais tarefas · Mapa de tarefas automatizáveis |
-| 3 | 2. Ambiente de trabalho digital | Refazer Infraestrutura de TI + conteúdo novo | O que roda onde: local, servidor, nuvem, custo · Arquivos, pastas e formatos do projeto · Instalação e primeiro uso do opencode desktop · Versionamento com GitHub Desktop |
-| 4 | 3. IA, LLM e engenharia de prompt | Módulo 1 atual, ciclos 1.1 e 1.2, expandidos | O que é IA e o que é um LLM · Alucinação e verificação · Os quatro elementos do prompt · Few-shot, chain-of-thought, chain-of-verification, self-consistency |
-| 5 | 4. Do prompt ao artefato: arquivos, agentes e configuração | Módulo 1 atual, ciclos 1.3 e 1.4, portados | Gerar documentos na pasta do projeto · AGENTS.md no repositório · Skills e MCPs · Subagentes e tarefas encadeadas |
-| 6 | 5. Dados na Administração | Módulo 2 ciclo 2.1 + corte de Governança de Dados | Tipos de dados e fontes · Onde os dados moram · Qualidade e governança · Mapa de dados da organização |
-| 7 | 6. Análise exploratória de dados | Módulo 2 ciclo 2.2, expandido | O que a EDA responde · Do CSV ao relatório no opencode desktop · Ausentes, outliers e o que não confiar · Conferir o número que a IA produziu |
-| 8 | 7. Dados estruturados e consulta | Novo | Da planilha à tabela · Modelo relacional em linguagem de gestor · SQL assistido · Juntar fontes: a base do projeto |
-| 9 | 8. Visualização de dados e painéis | Refazer Visualização de Dados.pptx + ciclo 2.3 | Por que a maioria dos gráficos falha · Forma, escala e cor · Do dado ao painel HTML · Painel do projeto |
-| 10 | 9. Automação de documentos e processos | Módulo 2 ciclo 2.4 + Taulli cap. 5 | O que é automatizável no trabalho recorrente · Prompt-templates com variáveis · RPA e automação de processos · Um fluxo repetível que o agente executa |
-| 11 | 10. Pesquisa, documentos longos e análise qualitativa | Módulo 3 atual | Leitura em camadas · Benchmarking com fontes verificadas · Análise de conteúdo · Legislação e teste de alucinação |
-| 12 | 11. Machine learning e analytics para a decisão | Refazer Potencial das Técnicas de Data Science.pptx | Descritiva, preditiva, prescritiva · Supervisionado, não supervisionado, por reforço · Deep learning e IA generativa · Um modelo simples sobre a base do projeto |
-| 13 | 12. Governança de dados, LGPD e cibersegurança | Refazer Cibersegurança + Governança + ciclo 4.3 | LGPD para quem trabalha com dados · Papéis, políticas e metadados · Ataques e defesas com IA · Protocolo de uso seguro |
-| 14 | 13. Decisão apoiada por IA: contratos, editais e devolutivas | Módulo 4 atual, ciclos 4.1 e 4.2 | Análise contratual em camadas · Editais e compra pública · Devolutiva ao gestor · Skill da área, versão final |
-| 15 | 14. Produto digital e gestão ágil | Novo + XP-Extreme Programming.pptx + Scrum | O que é um MVP · Do problema à user story · Construir e publicar um protótipo · Scrum e XP |
-| 16 | 15. Projeto integrador | Fecho do módulo 4, expandido | Consolidação do repositório e do caderno de prompts · Execução final · Apresentação · Balanço |
+A coluna Ciclos traz os títulos dos ciclos como estão nos decks revisados em novembro de 2026, e a coluna Slides o total de slides de cada deck na mesma data. O desenho inicial de cada módulo está registrado na coluna Origem.
+
+| Enc. | Módulo | Origem | Ciclos | Slides |
+|---|---|---|---|---|
+| 1 | Abertura da disciplina | Realizado | Programa, avaliação, diagnóstico da turma | |
+| 2 | 1. Transformação digital e o trabalho do administrador | Refazer a partir de 1.Transformação digital.pptx | A quarta revolução industrial · Sociedade informacional e a empresa brasileira · Automação do trabalho medida por tarefa · Mapa de tarefas automatizáveis | 40 |
+| 3 | 2. Ambiente de trabalho digital | Refazer Infraestrutura de TI + conteúdo novo | Infraestrutura de TI: o que roda onde · A pasta do projeto · opencode desktop: instalação e primeiro uso · GitHub Desktop e a entrega A1 | 51 |
+| 4 | 3. Inteligência artificial, modelos de linguagem e engenharia de prompt | Módulo 1 atual, ciclos 1.1 e 1.2, expandidos | O que é IA e o que é um modelo de linguagem · Alucinação e verificação · Os quatro elementos de um prompt · Técnicas e quando cada uma vale | 44 |
+| 5 | 4. Do prompt ao artefato: arquivos, agentes e configuração | Módulo 1 atual, ciclos 1.3 e 1.4, portados | Gerar documentos na pasta do projeto · AGENTS.md: configurar o comportamento do agente · Estender o agente: um MCP e as APIs públicas · Tarefas encadeadas em etapas | 47 |
+| 6 | 5. Dados na Administração | Módulo 2 ciclo 2.1 + corte de Governança de Dados | De onde nasce o dado da organização · Onde os dados ficam e como são extraídos · Qualidade e governança de dados · Mapa de dados e fechamento da entrega A2 | 38 |
+| 7 | 6. Análise exploratória de dados | Módulo 2 ciclo 2.2, expandido | Da pergunta de gestão à pergunta de dados · Perfil da base · Valores ausentes e atípicos · Conferência dos números calculados pelo agente | 34 |
+| 8 | 7. Dados estruturados e consulta | Novo | Da planilha à tabela · Modelo relacional: entidades, chaves e relações · Perguntas de negócio viram consultas a uma tabela · Junção de tabelas conferida pela contagem | 35 |
+| 9 | 8. Visualização de dados e painéis | Refazer Visualização de Dados.pptx + ciclo 2.3 | Gráfico com pergunta e conclusão · Forma, escala e cor · Do dado ao painel que abre no navegador · O painel do projeto e a entrega B1 | 35 |
+| 10 | 9. Automação de documentos e processos | Módulo 2 ciclo 2.4 + Taulli cap. 5 | O que é automatizável · Modelos de documento com variáveis · Automação de processos e seus limites · Um fluxo repetível e medido | 35 |
+| 11 | 10. Pesquisa, documentos longos e análise qualitativa | Módulo 3 atual | Leitura em camadas de documento longo · Comparação setorial com fontes verificadas · Análise de conteúdo de respostas abertas · Legislação e conferência na fonte oficial | 35 |
+| 12 | 11. Aprendizado de máquina e analytics para a decisão | Refazer Potencial das Técnicas de Data Science.pptx | Descritiva, preditiva e prescritiva · Os três tipos de aprendizado · Aprendizado profundo e IA generativa · Um modelo simples sobre a sua base | 30 |
+| 13 | 12. Governança de dados, LGPD e cibersegurança | Refazer Cibersegurança + Governança + ciclo 4.3 | Que dado pessoal passa por você · Base legal, finalidade e retenção · IA e dado pessoal: o que não vai no prompt · Cibersegurança e resposta a incidente | 33 |
+| 14 | 13. Decisão apoiada por IA: contratos, editais e devolutivas | Módulo 4 atual, ciclos 4.1 e 4.2 | O critério vem antes da alternativa · Leitura crítica de documento de decisão · A devolutiva escrita e assinada · Sensibilidade da decisão e entrega C1 | 36 |
+| 15 | 14. Produto digital e gestão ágil | Novo + XP-Extreme Programming.pptx + Scrum | De processo a produto · Backlog e critério de aceite · A primeira versão, construída · Teste com usuário e iteração | 35 |
+| 16 | 15. Projeto integrador | Fecho do módulo 4, expandido | Conferência da C2 e últimas correções · Apresentações, primeira rodada · Apresentações, segunda rodada · O portfólio e o que continua | 30 |
 
 ## 4. O que muda ao portar para o opencode desktop
 
@@ -75,7 +77,7 @@ Quando um script Python precisa rodar, quem executa é o agente dentro da sessã
 | Potencial das Técnicas de Data Science.pptx | Refazer | Base do módulo 11. Conteúdo de ML ainda válido. As questões do ENADE 2022 são material de avaliação e ficam. A EDA com dados da ANTAQ vira exemplo, não centro |
 | O Que é Governança de Dados.pptx | Cortar | 108 slides para um ciclo. Sobrevivem qualidade de dados, papéis, metadados e LGPD. Apache Atlas e MDM saem, fora do escopo de Administração |
 | Cibersegurança.pptx | Atualizar | Estrutura boa e o caso da ADM Solutions funciona. Falta o que mudou com IA: phishing gerado, deepfake em fraude, injeção de prompt |
-| XP-Extreme Programming.pptx | Absorver | Dezoito slides, fragmento. Entra no ciclo 14.4 junto com Scrum |
+| XP-Extreme Programming.pptx | Absorver | Dezoito slides, fragmento. Entra no ciclo 14.2 junto com Scrum |
 | Técnicas de Data Science-Portos.pptx | Arquivar | Variante setorial do deck de Data Science. Fora do escopo desta turma. Serve como exemplo de aplicação em um ciclo |
 | Temas em Segurança Pública e Direitos Humanos.pptx | Retirar | Não pertence à disciplina |
 | Atividade Dinâmica Avaliativa.docx | Reaproveitar | A dinâmica de grupos por tema com pergunta cruzada funciona. Vira a entrega do módulo 1 |
@@ -102,7 +104,7 @@ B2, no encontro 11, peso 40. Fluxo de automação documentado e síntese de pesq
 
 Nota 3, módulos 11 a 15, encontros 12 a 16.
 
-C1, no encontro 14, peso 40. Protocolo de uso seguro de IA e análise de documento com tabela de riscos e devolutiva ao gestor.
+C1, no encontro 14, peso 40. Modelo preditivo comparado com o palpite simples, varredura e inventário de dados pessoais com base legal, seção de uso seguro no AGENTS.md, plano de resposta a incidente, matriz de decisão com teste de sensibilidade, mapa do documento e devolutiva ao gestor.
 
 C2, no encontro 16, peso 60. Projeto integrador, caderno de prompts consolidado e apresentação.
 
@@ -126,25 +128,35 @@ Instabilidade. Provedor gratuito muda de modelo e de limite sem aviso. Os roteir
 
 Laudon sai. A edição brasileira é de 2014 e o eixo da disciplina passou para tecnologias que o livro não cobre.
 
+Atualizada em 16 nov. 2026, com cada referência conferida no catálogo da editora ou na fonte oficial. A lista completa, com as normas e os documentos oficiais citados nos slides, está na seção 10 do `programa-decc0294-2026-2.docx`.
+
 Básica:
 
-TAULLI, Tom. Introdução à inteligência artificial: uma abordagem não técnica. São Paulo: Novatec, 2020.
+MOLLICK, Ethan. Cointeligência: a vida e o trabalho com IA. Tradução de Roberta Clapp. [Rio de Janeiro]: Intrínseca, 2025.
 
-SHARDA, Ramesh; DELEN, Dursun; TURBAN, Efraim. Business intelligence e análise de dados para gestão do negócio. 4. ed. Porto Alegre: Bookman, 2019.
+SHARDA, Ramesh; DELEN, Dursun; TURBAN, Efraim. Business intelligence e análise de dados para gestão do negócio. 4. ed. Tradução de Ronald Saraiva de Menezes. Porto Alegre: Bookman, 2019.
 
-SCHWAB, Klaus. A quarta revolução industrial. São Paulo: Edipro, 2016.
+SCHWAB, Klaus. A quarta revolução industrial. Tradução de Daniel Moreira Miranda. São Paulo: Edipro, 2016.
 
 Complementar:
 
-DELEN, Dursun; SHARDA, Ramesh; TURBAN, Efraim. Analytics, data science, and artificial intelligence: systems for decision support. 11. ed. Harlow: Pearson, 2020.
+KNAFLIC, Cole Nussbaumer. Storytelling com dados: um guia sobre visualização de dados para profissionais de negócios. 2. ed. Tradução de João Tortello. Rio de Janeiro: Alta Books, 2019.
 
-SUTHERLAND, Jeff. Scrum: a arte de fazer o dobro do trabalho na metade do tempo. Rio de Janeiro: Leya, 2014.
+SCHWAB, Klaus; DAVIS, Nicholas. Aplicando a quarta revolução industrial. Tradução de Daniel Moreira Miranda. [São Paulo]: Edipro, 2018.
 
-BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais.
+SHARDA, Ramesh; DELEN, Dursun; TURBAN, Efraim. Business intelligence, analytics, data science, and AI. 5th ed. [Hoboken]: Pearson, 2024. Reúne o livro de BI e o antigo Analytics, data science, and artificial intelligence (11. ed., 2020).
 
-Documentação técnica de apoio, para os módulos 2 a 9: documentação do opencode, guias de prompting da Anthropic e da OpenAI, guia do GitHub Desktop.
+SUTHERLAND, Jeff; SUTHERLAND, J. J. Scrum: a arte de fazer o dobro do trabalho na metade do tempo. Tradução de Nina Lua. [Rio de Janeiro]: Sextante, 2019. A edição da Leya (2014) saiu de catálogo.
 
-Correspondência com os módulos: Taulli caps. 1, 3 e 4 nos módulos 3 e 11, cap. 2 no módulo 5, cap. 5 no módulo 9, cap. 8 nos módulos 13 e 14. Sharda, Delen e Turban cap. 1 no módulo 11, cap. 3 nos módulos 6 e 8, caps. 4 a 6 no módulo 11, cap. 9 no módulo 5. Schwab no módulo 1.
+TAULLI, Tom. Introdução à inteligência artificial: uma abordagem não técnica. São Paulo: Novatec, 2020. Passou para a complementar porque é anterior aos modelos de linguagem atuais. O nome da tradutora não foi confirmado e saiu da referência.
+
+VERHOEF, Peter C. et al. Digital transformation: a multidisciplinary reflection and research agenda. Journal of Business Research, v. 122, p. 889-901, 2021. Acesso aberto.
+
+Normas e documentos oficiais: Decreto-Lei 4.657/1942 (LINDB), Lei 9.784/1999, Lei 13.709/2018 (LGPD), Lei 14.133/2021, manual Licitações & contratos do TCU (5. ed., 2023), NIST AI 600-1 (2024), OWASP Top 10 for LLM Applications 2025, Guia do Scrum (2020) e WCAG 2.2 (2023).
+
+Documentação técnica de apoio, para os módulos 2 a 9: documentação do opencode, guias de prompting dos provedores, guia do GitHub Desktop e o glossário da disciplina (`revisao/glossario-disciplina.md`).
+
+Correspondência com os módulos: Taulli caps. 1, 3 e 4 nos módulos 3 e 11, cap. 2 no módulo 5, cap. 5 no módulo 9, cap. 8 nos módulos 13 e 14. Sharda, Delen e Turban cap. 1 no módulo 11, cap. 3 nos módulos 6 e 8, caps. 4 a 6 no módulo 11, cap. 9 no módulo 5. Schwab e Verhoef et al. no módulo 1. Knaflic no módulo 8. Sutherland e o Guia do Scrum no módulo 14. Mollick ainda não tem capítulos associados aos módulos: a correspondência depende da leitura do livro pelo professor.
 
 ## 8. Ordem de produção
 
